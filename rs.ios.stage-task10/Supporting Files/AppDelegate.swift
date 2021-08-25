@@ -13,11 +13,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = NewGameVC()
-        self.window?.makeKeyAndVisible()
+        configureNavigationBarAppearance()
+        setupWindow()
         return true
     }
 
+    private func configureNavigationBarAppearance() {
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            NSAttributedString.Key.font: UIFont(name: "Nunito-ExtraBold", size: 17)!
+        ], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            NSAttributedString.Key.font: UIFont(name: "Nunito-ExtraBold", size: 17)!
+        ], for: .highlighted) //fix: not very proud of it :/
+        UINavigationBar.appearance().prefersLargeTitles = true
+        UINavigationBar.appearance().barTintColor       = .RSBackground
+        UINavigationBar.appearance().tintColor          = .RSGreen
+        UINavigationBar.appearance().isTranslucent      = false
+        UINavigationBar.appearance().shadowImage        = UIImage()
+        UINavigationBar.appearance().largeTitleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont(name: "Nunito-ExtraBold", size: 36)!
+        ]
+    }
+    
+    private func setupWindow() {
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let navVC = UINavigationController(rootViewController: NewGameVC())
+        navVC.navigationItem.largeTitleDisplayMode = .always
+        self.window?.rootViewController = navVC
+        self.window?.makeKeyAndVisible()
+    }
 }
 
