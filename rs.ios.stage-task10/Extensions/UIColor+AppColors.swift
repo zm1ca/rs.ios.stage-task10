@@ -11,4 +11,5 @@ extension UIColor {
     
     static let RSGreen      = UIColor(red: 132/255, green: 184/255, blue: 173/255, alpha: 1)
     static let RSBackground = UIColor(red: 35/255,  green: 35/255,  blue: 35/255,  alpha: 1)
+    static let RSShadow     = UIColor(red: 84/255,  green: 120/255, blue: 111/255, alpha: 1)
 }

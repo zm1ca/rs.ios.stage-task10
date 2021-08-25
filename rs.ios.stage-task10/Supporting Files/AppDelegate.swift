@@ -13,12 +13,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        configureNavigationBarAppearance()
+        configureAppearance()
         setupWindow()
         return true
     }
 
-    private func configureNavigationBarAppearance() {
+    private func configureAppearance() {
+        UIApplication.shared.statusBarStyle = .lightContent //fix
         UIBarButtonItem.appearance().setTitleTextAttributes([
             NSAttributedString.Key.font: UIFont(name: "Nunito-ExtraBold", size: 17)!
         ], for: .normal)
