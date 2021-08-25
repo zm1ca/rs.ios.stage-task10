@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		401B117826D66B3300C9B5E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401B117726D66B3300C9B5E1 /* AppDelegate.swift */; };
-		401B117A26D66B3300C9B5E1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401B117926D66B3300C9B5E1 /* SceneDelegate.swift */; };
-		401B117C26D66B3300C9B5E1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401B117B26D66B3300C9B5E1 /* ViewController.swift */; };
-		401B117F26D66B3300C9B5E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 401B117D26D66B3300C9B5E1 /* Main.storyboard */; };
+		401B117C26D66B3300C9B5E1 /* NewGameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401B117B26D66B3300C9B5E1 /* NewGameVC.swift */; };
 		401B118126D66B3600C9B5E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 401B118026D66B3600C9B5E1 /* Assets.xcassets */; };
 		401B118426D66B3600C9B5E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 401B118226D66B3600C9B5E1 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -18,9 +16,7 @@
 /* Begin PBXFileReference section */
 		401B117426D66B3300C9B5E1 /* rs.ios.stage-task10.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "rs.ios.stage-task10.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		401B117726D66B3300C9B5E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		401B117926D66B3300C9B5E1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		401B117B26D66B3300C9B5E1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		401B117E26D66B3300C9B5E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		401B117B26D66B3300C9B5E1 /* NewGameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGameVC.swift; sourceTree = "<group>"; };
 		401B118026D66B3600C9B5E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		401B118326D66B3600C9B5E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		401B118526D66B3600C9B5E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,15 +52,29 @@
 		401B117626D66B3300C9B5E1 /* rs.ios.stage-task10 */ = {
 			isa = PBXGroup;
 			children = (
-				401B117726D66B3300C9B5E1 /* AppDelegate.swift */,
-				401B117926D66B3300C9B5E1 /* SceneDelegate.swift */,
-				401B117B26D66B3300C9B5E1 /* ViewController.swift */,
-				401B117D26D66B3300C9B5E1 /* Main.storyboard */,
+				401B118C26D6733500C9B5E1 /* Screens */,
+				401B118B26D672ED00C9B5E1 /* Supporting Files */,
 				401B118026D66B3600C9B5E1 /* Assets.xcassets */,
+			);
+			path = "rs.ios.stage-task10";
+			sourceTree = "<group>";
+		};
+		401B118B26D672ED00C9B5E1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				401B117726D66B3300C9B5E1 /* AppDelegate.swift */,
 				401B118226D66B3600C9B5E1 /* LaunchScreen.storyboard */,
 				401B118526D66B3600C9B5E1 /* Info.plist */,
 			);
-			path = "rs.ios.stage-task10";
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		401B118C26D6733500C9B5E1 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				401B117B26D66B3300C9B5E1 /* NewGameVC.swift */,
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,7 +136,6 @@
 			files = (
 				401B118426D66B3600C9B5E1 /* LaunchScreen.storyboard in Resources */,
 				401B118126D66B3600C9B5E1 /* Assets.xcassets in Resources */,
-				401B117F26D66B3300C9B5E1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,23 +146,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				401B117C26D66B3300C9B5E1 /* ViewController.swift in Sources */,
+				401B117C26D66B3300C9B5E1 /* NewGameVC.swift in Sources */,
 				401B117826D66B3300C9B5E1 /* AppDelegate.swift in Sources */,
-				401B117A26D66B3300C9B5E1 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		401B117D26D66B3300C9B5E1 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				401B117E26D66B3300C9B5E1 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		401B118226D66B3600C9B5E1 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -288,7 +288,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3Y322LSDU5;
-				INFOPLIST_FILE = "rs.ios.stage-task10/Info.plist";
+				INFOPLIST_FILE = "rs.ios.stage-task10/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -296,7 +297,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zm1caps.rs-ios-stage-task10";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -307,7 +308,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3Y322LSDU5;
-				INFOPLIST_FILE = "rs.ios.stage-task10/Info.plist";
+				INFOPLIST_FILE = "rs.ios.stage-task10/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -315,7 +317,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zm1caps.rs-ios-stage-task10";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
