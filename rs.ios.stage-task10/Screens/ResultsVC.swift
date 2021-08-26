@@ -11,8 +11,10 @@ class ResultsVC: UIViewController {
     
     weak var parentVC: GameVC?
     var playerScores: [(String, Int)]!
+    var turns: [(String, Int)] = [("Tim", 20), ("Mike", 0), ("Joshua", -9), ("Ciryll", -12), ("Ann", 19), ("Tracy", 4), ("Nancy", -14), ("Craig", 8), ("Nancy", 14), ("Craig", 8)]
     
-    var tableView = UITableView(frame: .zero, style: .plain)
+    var rankingsTableView = UITableView(frame: .zero, style: .plain)
+    var turnsTableView    = UITableView(frame: .zero, style: .plain)
 
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -20,7 +22,8 @@ class ResultsVC: UIViewController {
         title = "Results"
         view.backgroundColor = .RSBackground
         configureBarButtons()
-        configureTableView()
+        configureRankingsTableView()
+        configureTurnsTableView()
         layoutUI()
     }
     
@@ -47,25 +50,42 @@ class ResultsVC: UIViewController {
     
     
     // MARK: - Configurations
-    private func configureTableView() {
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.delegate   = self
-        tableView.dataSource = self
-        tableView.register(RankingsCell.self, forCellReuseIdentifier: RankingsCell.reuseID)
-        tableView.tableFooterView = UIView()
-        tableView.backgroundColor = .RSBackground
-        tableView.separatorStyle = .none
-        tableView.isScrollEnabled = false
-        tableView.allowsSelection = false
+    private func configureRankingsTableView() {
+        rankingsTableView.translatesAutoresizingMaskIntoConstraints = false
+        rankingsTableView.delegate   = self
+        rankingsTableView.dataSource = self
+        rankingsTableView.register(RankingsCell.self, forCellReuseIdentifier: RankingsCell.reuseID)
+        rankingsTableView.tableFooterView = UIView()
+        rankingsTableView.backgroundColor = .RSBackground
+        rankingsTableView.separatorStyle = .none
+        rankingsTableView.isScrollEnabled = false
+        rankingsTableView.allowsSelection = false
+    }
+    
+    private func configureTurnsTableView() {
+        turnsTableView.translatesAutoresizingMaskIntoConstraints = false
+        turnsTableView.delegate   = self
+        turnsTableView.dataSource = self
+        turnsTableView.register(TurnCell.self, forCellReuseIdentifier: TurnCell.reuseID)
+        turnsTableView.tableFooterView = UIView()
+        turnsTableView.backgroundColor = .RSTable
+        turnsTableView.layer.cornerRadius = 15
+        turnsTableView.separatorColor = .RSSeparator
     }
     
     private func layoutUI() {
-        view.addSubview(tableView)
+        view.addSubview(rankingsTableView)
+        view.addSubview(turnsTableView)
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 18),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            tableView.heightAnchor.constraint(equalToConstant: CGFloat(tableView.numberOfRows(inSection: 0) * 50)),
+            rankingsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 18),
+            rankingsTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            rankingsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            rankingsTableView.heightAnchor.constraint(equalToConstant: CGFloat(rankingsTableView.numberOfRows(inSection: 0) * 50)),
+            
+            turnsTableView.topAnchor.constraint(equalTo: rankingsTableView.bottomAnchor, constant: 25),
+            turnsTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            turnsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            turnsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
     }
 
@@ -74,15 +94,27 @@ class ResultsVC: UIViewController {
 
 extension ResultsVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        playerScores.count < 3 ? playerScores.count : 3
+        if tableView == rankingsTableView {
+            return playerScores.count < 3 ? playerScores.count : 3
+        } else {
+            return turns.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: RankingsCell.reuseID, for: indexPath) as! RankingsCell
-        let playerName = playerScores[indexPath.row].0
-        let score      = playerScores[indexPath.row].1
-        cell.set(rank: indexPath.row + 1, for: playerName, with: score)
-        return cell
+        if tableView == rankingsTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: RankingsCell.reuseID, for: indexPath) as! RankingsCell
+            let playerName = playerScores[indexPath.row].0
+            let score      = playerScores[indexPath.row].1
+            cell.set(rank: indexPath.row + 1, for: playerName, with: score)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TurnCell.reuseID, for: indexPath) as! TurnCell
+            let playerName = turns[indexPath.row].0
+            let score      = turns[indexPath.row].1
+            cell.set(name: playerName, score: score)
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
