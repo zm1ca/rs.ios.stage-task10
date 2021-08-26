@@ -57,6 +57,7 @@ class GameVC: UIViewController {
         for name in playerNames {
             playerScores.append((name, 0))
         }
+        collectionView.reloadData()
     }
     
     
@@ -78,8 +79,9 @@ class GameVC: UIViewController {
     }
     
     @objc private func resultsButtonTapped() {
-        let resultsVC      = ResultsVC()
-        resultsVC.parentVC = self
+        let resultsVC          = ResultsVC()
+        resultsVC.parentVC     = self
+        resultsVC.playerScores = playerScores
         let navVC = UINavigationController(rootViewController: resultsVC)
         present(navVC, animated: true)
     }
