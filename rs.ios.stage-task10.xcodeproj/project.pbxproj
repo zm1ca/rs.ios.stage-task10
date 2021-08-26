@@ -27,6 +27,8 @@
 		401B11AB26D67C1E00C9B5E1 /* Nunito-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 401B119C26D67C1E00C9B5E1 /* Nunito-Italic.ttf */; };
 		401B11AC26D67C1E00C9B5E1 /* Nunito-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 401B119D26D67C1E00C9B5E1 /* Nunito-LightItalic.ttf */; };
 		401B11AF26D67D9100C9B5E1 /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401B11AE26D67D9100C9B5E1 /* UIColor+AppColors.swift */; };
+		401F302B26D7651900DFD389 /* AddPlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401F302A26D7651900DFD389 /* AddPlayerVC.swift */; };
+		4088159E26D78A6800DD0CBC /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4088159D26D78A6800DD0CBC /* GameVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,8 @@
 		401B119C26D67C1E00C9B5E1 /* Nunito-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Italic.ttf"; sourceTree = "<group>"; };
 		401B119D26D67C1E00C9B5E1 /* Nunito-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-LightItalic.ttf"; sourceTree = "<group>"; };
 		401B11AE26D67D9100C9B5E1 /* UIColor+AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+AppColors.swift"; sourceTree = "<group>"; };
+		401F302A26D7651900DFD389 /* AddPlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlayerVC.swift; sourceTree = "<group>"; };
+		4088159D26D78A6800DD0CBC /* GameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,8 @@
 			isa = PBXGroup;
 			children = (
 				401B117B26D66B3300C9B5E1 /* NewGameVC.swift */,
+				401F302A26D7651900DFD389 /* AddPlayerVC.swift */,
+				4088159D26D78A6800DD0CBC /* GameVC.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -236,6 +242,8 @@
 				401B117C26D66B3300C9B5E1 /* NewGameVC.swift in Sources */,
 				401B117826D66B3300C9B5E1 /* AppDelegate.swift in Sources */,
 				401B11AF26D67D9100C9B5E1 /* UIColor+AppColors.swift in Sources */,
+				4088159E26D78A6800DD0CBC /* GameVC.swift in Sources */,
+				401F302B26D7651900DFD389 /* AddPlayerVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

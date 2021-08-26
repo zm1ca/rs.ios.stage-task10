@@ -9,6 +9,8 @@ import UIKit
 
 class NewGameVC: UIViewController {
     
+    weak var parentVC: GameVC?
+    private var tableViewHeightConstraint: NSLayoutConstraint!
     private var playerNames = ["Me", "You"]
     private var tableView   = UITableView(frame: .zero, style: .plain)
     
@@ -31,9 +33,23 @@ class NewGameVC: UIViewController {
             ]
         )
         btn.setAttributedTitle(attributedTitle, for: .normal)
+        btn.addTarget(self, action: #selector(startGameButtonTapped), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
+    
+    @objc private func startGameButtonTapped() {
+        guard let parentVC = parentVC else {
+            let gameVC = GameVC()
+            gameVC.configure(with: self.playerNames)
+            navigationController?.pushViewController(gameVC, animated: true)
+            return
+        }
+        
+        dismiss(animated: true) {
+            parentVC.configure(with: self.playerNames)
+        }
+    }
 
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -46,6 +62,11 @@ class NewGameVC: UIViewController {
         layoutUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tableViewHeightConstraint.constant = CGFloat((playerNames.count + 1) * 54 + 45)
+        super.viewWillAppear(animated)
+    }
+    
     
     // MARK: Configuration
     private func configureTableView() {
@@ -56,6 +77,7 @@ class NewGameVC: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.backgroundColor = .RSTable
         tableView.layer.cornerRadius = 15
+        tableView.separatorColor = .RSSeparator
         tableView.setEditing(true, animated: false)
     }
     
@@ -66,19 +88,33 @@ class NewGameVC: UIViewController {
             target: self,
             action: #selector(handleCancel)
         )
-        
         self.navigationItem.leftBarButtonItem = cancelButton
-        self.navigationItem.leftBarButtonItem?.isEnabled = false
-        self.navigationItem.leftBarButtonItem?.tintColor = .clear
+        
+        if parentVC == nil {
+            self.navigationItem.leftBarButtonItem?.isEnabled = false
+            self.navigationItem.leftBarButtonItem?.tintColor = .clear
+        }
     }
     
     @objc private func handleCancel() {
-        print("Cancel")
+        dismiss(animated: true)
     }
     
     private func layoutUI() {
         view.addSubview(tableView)
         view.addSubview(startButton)
+        
+        tableViewHeightConstraint = NSLayoutConstraint(
+            item: tableView,
+            attribute: .height,
+            relatedBy: .equal,
+            toItem: nil,
+            attribute: .notAnAttribute,
+            multiplier: 1,
+            constant: CGFloat((playerNames.count + 1) * 54 + 45)
+        )
+        tableViewHeightConstraint.priority = .defaultHigh
+        
         NSLayoutConstraint.activate([
             startButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -65),
             startButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -88,8 +124,7 @@ class NewGameVC: UIViewController {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 25),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
-            //tableView.heightAnchor.constraint(equalToConstant: 0),
+            tableViewHeightConstraint,
         ])
     }
 
@@ -102,39 +137,69 @@ extension NewGameVC: UITableViewDelegate, UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlayerCell", for: indexPath)
+        cell.backgroundColor = .RSTable
+        
         if indexPath.row == playerNames.count {
-            cell.textLabel?.text = "Add player"
+            cell.textLabel?.textColor = .RSGreen
+            cell.textLabel?.font      = UIFont(name: "Nunito-SemiBold", size: 16)
+            cell.textLabel?.text      = "Add player"
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: cell.bounds.size.width * 2)
             return cell
         } else {
-            cell.textLabel?.text = playerNames[indexPath.row]
+            cell.textLabel?.textColor = .white
+            cell.textLabel?.font      = UIFont(name: "Nunito-ExtraBold", size: 20)
+            cell.textLabel?.text      = playerNames[indexPath.row]
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        if indexPath.row == playerNames.count {
-            return .insert
-        } else {
-            return .delete
-        }
+        indexPath.row == playerNames.count ? .insert : .delete
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 45))
         
         let label = UILabel()
-        label.frame     = CGRect.init(x: 16, y: 5, width: headerView.frame.width - 26, height: headerView.frame.height - 10)
+        label.frame     = CGRect.init(x: 16, y: 5, width: headerView.frame.width - 26, height: headerView.frame.height)
         label.text      = "Players"
         label.font      = UIFont(name: "Nunito-SemiBold", size: 16) //letter l is rounded wtf
         label.textColor = .RSLabel
         
         headerView.addSubview(label)
-        
         return headerView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        50
+        45
+    }
+    
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            playerNames.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableViewHeightConstraint.constant = CGFloat((playerNames.count + 1) * 54 + 45)
+            view.setNeedsLayout()
+        case .insert:
+            let addPlayerVC = AddPlayerVC()
+            addPlayerVC.delegate = self
+            navigationController?.pushViewController(addPlayerVC, animated: true)
+        default: break
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        54
+    }
+    
+}
+
+extension NewGameVC: PlayerAddable {
+    func addPlayer(named name: String) {
+        playerNames.append(name)
+        tableView.reloadData()
     }
     
 }

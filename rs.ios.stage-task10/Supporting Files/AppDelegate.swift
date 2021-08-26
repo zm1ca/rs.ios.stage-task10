@@ -20,16 +20,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func configureAppearance() {
         UIApplication.shared.statusBarStyle = .lightContent //fix
-        UIBarButtonItem.appearance().setTitleTextAttributes([
-            NSAttributedString.Key.font: UIFont(name: "Nunito-ExtraBold", size: 17)!
-        ], for: .normal)
-        UIBarButtonItem.appearance().setTitleTextAttributes([
-            NSAttributedString.Key.font: UIFont(name: "Nunito-ExtraBold", size: 17)!
-        ], for: .highlighted) //fix: not very proud of it :/
+        
+        let states: [UIControl.State] = [.normal, .disabled, .highlighted]
+        for buttonState in states {
+            UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Nunito-ExtraBold", size: 17)! ],
+                                                                for: buttonState)
+        }
+        
         UINavigationBar.appearance().prefersLargeTitles = true
         UINavigationBar.appearance().barTintColor       = .RSBackground
         UINavigationBar.appearance().tintColor          = .RSGreen
-        UINavigationBar.appearance().isTranslucent      = false
+        UINavigationBar.appearance().isTranslucent      = true
         UINavigationBar.appearance().shadowImage        = UIImage()
         UINavigationBar.appearance().largeTitleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
@@ -38,11 +39,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func setupWindow() {
-        self.window = UIWindow(frame: UIScreen.main.bounds)
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.tintColor = .white
         let navVC = UINavigationController(rootViewController: NewGameVC())
         navVC.navigationItem.largeTitleDisplayMode = .always
-        self.window?.rootViewController = navVC
-        self.window?.makeKeyAndVisible()
+        window?.rootViewController = navVC
+        window?.makeKeyAndVisible()
     }
 }
 
