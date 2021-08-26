@@ -29,6 +29,7 @@
 		401B11AF26D67D9100C9B5E1 /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401B11AE26D67D9100C9B5E1 /* UIColor+AppColors.swift */; };
 		401F302B26D7651900DFD389 /* AddPlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401F302A26D7651900DFD389 /* AddPlayerVC.swift */; };
 		4088159E26D78A6800DD0CBC /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4088159D26D78A6800DD0CBC /* GameVC.swift */; };
+		408815A026D7956B00DD0CBC /* ResultsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4088159F26D7956B00DD0CBC /* ResultsVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		401B11AE26D67D9100C9B5E1 /* UIColor+AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+AppColors.swift"; sourceTree = "<group>"; };
 		401F302A26D7651900DFD389 /* AddPlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlayerVC.swift; sourceTree = "<group>"; };
 		4088159D26D78A6800DD0CBC /* GameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameVC.swift; sourceTree = "<group>"; };
+		4088159F26D7956B00DD0CBC /* ResultsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				401B117B26D66B3300C9B5E1 /* NewGameVC.swift */,
 				401F302A26D7651900DFD389 /* AddPlayerVC.swift */,
 				4088159D26D78A6800DD0CBC /* GameVC.swift */,
+				4088159F26D7956B00DD0CBC /* ResultsVC.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				401B117C26D66B3300C9B5E1 /* NewGameVC.swift in Sources */,
+				408815A026D7956B00DD0CBC /* ResultsVC.swift in Sources */,
 				401B117826D66B3300C9B5E1 /* AppDelegate.swift in Sources */,
 				401B11AF26D67D9100C9B5E1 /* UIColor+AppColors.swift in Sources */,
 				4088159E26D78A6800DD0CBC /* GameVC.swift in Sources */,

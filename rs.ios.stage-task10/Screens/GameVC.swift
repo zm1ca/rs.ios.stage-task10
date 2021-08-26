@@ -21,20 +21,22 @@ class GameVC: UIViewController {
         self.navigationItem.setHidesBackButton(true, animated: false)
         self.navigationItem.leftBarButtonItem = backButton
         
-        let addButton = UIBarButtonItem(title: "Results", style: .plain, target: self, action: #selector(resultsButtonTapped))
-        self.navigationItem.rightBarButtonItem = addButton
+        let resultsButton = UIBarButtonItem(title: "Results", style: .plain, target: self, action: #selector(resultsButtonTapped))
+        self.navigationItem.rightBarButtonItem = resultsButton
     }
     
     @objc private func newGameButtonTapped() {
         let newGameVC      = NewGameVC()
         newGameVC.parentVC = self
         let navVC = UINavigationController(rootViewController: newGameVC)
-        
         present(navVC, animated: true)
     }
     
     @objc private func resultsButtonTapped() {
-        print("results")
+        let resultsVC      = ResultsVC()
+        resultsVC.parentVC = self
+        let navVC = UINavigationController(rootViewController: resultsVC)
+        present(navVC, animated: true)
     }
     
     func configure(with playerNames: [String]) {
