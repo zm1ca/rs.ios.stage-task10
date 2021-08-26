@@ -31,7 +31,13 @@ class AddPlayerVC: UIViewController {
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
+    
+    @objc private func updateAddButtonState() {
+        self.navigationItem.rightBarButtonItem?.isEnabled = (playerNameTextField.text?.count ?? 0 > 0)
+    }
+    
 
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Add player"
@@ -41,6 +47,8 @@ class AddPlayerVC: UIViewController {
         playerNameTextField.becomeFirstResponder()
     }
     
+    
+    // MARK: - Configurations for Bar Buttons
     private func configureBarButtons() {
         let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(popCurrentViewController))
         self.navigationItem.setHidesBackButton(true, animated: false)
@@ -59,11 +67,9 @@ class AddPlayerVC: UIViewController {
         delegate.addPlayer(named: playerNameTextField.text!)
         popCurrentViewController(true)
     }
+
     
-    @objc private func updateAddButtonState() {
-        self.navigationItem.rightBarButtonItem?.isEnabled = (playerNameTextField.text?.count ?? 0 > 0)
-    }
-    
+    //MARK: - Configurations
     private func layoutUI() {
         view.addSubview(playerNameTextField)
         NSLayoutConstraint.activate([

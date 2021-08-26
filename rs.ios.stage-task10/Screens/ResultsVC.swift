@@ -11,6 +11,7 @@ class ResultsVC: UIViewController {
     
     weak var parentVC: GameVC?
 
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Results"
@@ -18,6 +19,7 @@ class ResultsVC: UIViewController {
         configureBarButtons()
     }
     
+    // MARK: - Configurations for Bar Buttons
     private func configureBarButtons() {
         let backButton = UIBarButtonItem(title: "New Game", style: .plain, target: self, action: #selector(newGameButtonTapped))
         self.navigationItem.setHidesBackButton(true, animated: false)
