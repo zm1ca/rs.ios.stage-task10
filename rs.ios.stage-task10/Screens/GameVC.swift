@@ -10,6 +10,52 @@ import UIKit
 class GameVC: UIViewController {
     
     var playerScores = [(String, Int)]()
+    var timerIsOn = true
+    
+    let diceButton: UIButton = {
+        let btn = UIButton()
+        //btn.backgroundColor = .systemPink
+        btn.setImage(UIImage(named: "dice_4"), for: .normal)
+        btn.layer.cornerRadius = 5
+        btn.addTarget(self, action: #selector(diceButtonTapped), for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
+    @objc private func diceButtonTapped() {
+        print("Dice!")
+    }
+    
+    let playPauseButton: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "play"), for: .normal)
+        btn.addTarget(self, action: #selector(playPauseButtonTapped), for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }() //button is too small. consiger tap gestire recognizer on time label
+    
+    @objc private func playPauseButtonTapped() {
+        timerIsOn.toggle()
+        if timerIsOn {
+            playPauseButton.setImage(UIImage(named: "pause"), for: .normal)
+            timeLabel.textColor = .white
+        } else {
+            playPauseButton.setImage(UIImage(named: "play"), for: .normal)
+            timeLabel.textColor = .RSTable
+        }
+    }
+    
+    let undoButton: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "undo"), for: .normal)
+        btn.addTarget(self, action: #selector(undoButtonTapped), for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
+    @objc private func undoButtonTapped() {
+        print("undo")
+    }
     
     let timeLabel: UILabel = {
         let lbl = UILabel()
@@ -89,16 +135,34 @@ class GameVC: UIViewController {
     
     // MARK: - Configurations
     private func layoutUI() {
+        navigationController?.navigationBar.addSubview(diceButton)
         view.addSubview(timeLabel)
         view.addSubview(collectionView)
+        view.addSubview(playPauseButton)
+        view.addSubview(undoButton) //add in one line via EXTENSION
         NSLayoutConstraint.activate([
+            diceButton.heightAnchor.constraint(equalToConstant: 30),
+            diceButton.widthAnchor.constraint(equalToConstant: 30),
+            diceButton.trailingAnchor.constraint(equalTo: navigationController!.navigationBar.trailingAnchor, constant: -20),
+            diceButton.centerYAnchor.constraint(equalTo: navigationController!.navigationBar.bottomAnchor, constant: -26),
+            
             timeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 29),
             timeLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 40),
-            collectionView.heightAnchor.constraint(equalToConstant: 300)
+            collectionView.heightAnchor.constraint(equalToConstant: 300),
+            
+            playPauseButton.heightAnchor.constraint(equalToConstant: 20),
+            playPauseButton.widthAnchor.constraint(equalToConstant: 20),
+            playPauseButton.centerYAnchor.constraint(equalTo: timeLabel.centerYAnchor),
+            playPauseButton.leadingAnchor.constraint(equalTo: timeLabel.trailingAnchor, constant: 20),
+            
+            undoButton.heightAnchor.constraint(equalToConstant: 20),
+            undoButton.widthAnchor.constraint(equalToConstant: 15),
+            undoButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
+            undoButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32),
         ])
     }
 
