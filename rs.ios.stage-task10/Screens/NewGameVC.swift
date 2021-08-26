@@ -20,7 +20,7 @@ class NewGameVC: UIViewController {
         btn.layer.cornerRadius = 65 / 2
         btn.layer.masksToBounds = false
         
-        var shadow = NSShadow()
+        let shadow = NSShadow()
         shadow.shadowColor = UIColor.RSShadow
         shadow.shadowOffset = CGSize(width: 0, height: 2)
         

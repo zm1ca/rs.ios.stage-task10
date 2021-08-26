@@ -53,6 +53,8 @@ class GameVC: UIViewController {
         return btn
     }()
     
+    let buttons = [-10, -5, -1, +5, +10].map { IncrementButton(value: $0, fontSize: 25) }
+    
     @objc private func undoButtonTapped() {
         print("undo")
     }
@@ -140,6 +142,14 @@ class GameVC: UIViewController {
         view.addSubview(collectionView)
         view.addSubview(playPauseButton)
         view.addSubview(undoButton) //add in one line via EXTENSION
+        
+        let stackView = UIStackView(arrangedSubviews: buttons)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis         = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing      = 15
+        view.addSubview(stackView)
+        
         NSLayoutConstraint.activate([
             diceButton.heightAnchor.constraint(equalToConstant: 30),
             diceButton.widthAnchor.constraint(equalToConstant: 30),
@@ -163,7 +173,16 @@ class GameVC: UIViewController {
             undoButton.widthAnchor.constraint(equalToConstant: 15),
             undoButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
             undoButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32),
+            
+            stackView.bottomAnchor.constraint(equalTo: undoButton.topAnchor, constant: -22),
+            stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
         ])
+        
+        for button in buttons {
+            button.heightAnchor.constraint(equalTo: button.widthAnchor).isActive = true
+            button.layer.cornerRadius = (UIScreen.main.bounds.width - 100) / 10 //crutch
+        }
     }
 
 }
