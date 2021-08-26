@@ -53,7 +53,8 @@ class GameVC: UIViewController {
         return btn
     }()
     
-    let buttons = [-10, -5, -1, +5, +10].map { IncrementButton(value: $0, fontSize: 25) }
+    let incrementButtons = [-10, -5, -1, +5, +10].map { IncrementButton(value: $0, fontSize: 25) }
+    let plusOneButton    = IncrementButton(value: 1, fontSize: 40)
     
     @objc private func undoButtonTapped() {
         print("undo")
@@ -142,8 +143,9 @@ class GameVC: UIViewController {
         view.addSubview(collectionView)
         view.addSubview(playPauseButton)
         view.addSubview(undoButton) //add in one line via EXTENSION
+        view.addSubview(plusOneButton)
         
-        let stackView = UIStackView(arrangedSubviews: buttons)
+        let stackView = UIStackView(arrangedSubviews: incrementButtons)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis         = .horizontal
         stackView.distribution = .fillEqually
@@ -155,14 +157,6 @@ class GameVC: UIViewController {
             diceButton.widthAnchor.constraint(equalToConstant: 30),
             diceButton.trailingAnchor.constraint(equalTo: navigationController!.navigationBar.trailingAnchor, constant: -20),
             diceButton.centerYAnchor.constraint(equalTo: navigationController!.navigationBar.bottomAnchor, constant: -26),
-            
-            timeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 29),
-            timeLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            
-            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            collectionView.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 40),
-            collectionView.heightAnchor.constraint(equalToConstant: 300),
             
             playPauseButton.heightAnchor.constraint(equalToConstant: 20),
             playPauseButton.widthAnchor.constraint(equalToConstant: 20),
@@ -177,12 +171,27 @@ class GameVC: UIViewController {
             stackView.bottomAnchor.constraint(equalTo: undoButton.topAnchor, constant: -22),
             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            
+            plusOneButton.heightAnchor.constraint(equalToConstant: 90),
+            plusOneButton.widthAnchor.constraint(equalToConstant: 90),
+            plusOneButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            plusOneButton.bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: -20),
+            
+            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: plusOneButton.topAnchor, constant: -28),
+            collectionView.heightAnchor.constraint(equalToConstant: 300),
+            
+            timeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12), //fix: place between safe area and top of collection view
+            timeLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
         ])
         
-        for button in buttons {
+        for button in incrementButtons {
             button.heightAnchor.constraint(equalTo: button.widthAnchor).isActive = true
             button.layer.cornerRadius = (UIScreen.main.bounds.width - 100) / 10 //crutch
         }
+        plusOneButton.layer.cornerRadius = 45
+        
     }
 
 }
