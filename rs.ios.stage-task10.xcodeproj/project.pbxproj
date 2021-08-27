@@ -40,6 +40,7 @@
 		40A578E826D8D807002E4CB7 /* ResultsVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E726D8D807002E4CB7 /* ResultsVC+TableView.swift */; };
 		40A578EA26D8DFD1002E4CB7 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E926D8DFD1002E4CB7 /* UIView+Ext.swift */; };
 		40A578EC26D8F48E002E4CB7 /* DiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578EB26D8F48E002E4CB7 /* DiceView.swift */; };
+		40A578EE26D92A61002E4CB7 /* GameVC+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578ED26D92A61002E4CB7 /* GameVC+CollectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +79,7 @@
 		40A578E726D8D807002E4CB7 /* ResultsVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResultsVC+TableView.swift"; sourceTree = "<group>"; };
 		40A578E926D8DFD1002E4CB7 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		40A578EB26D8F48E002E4CB7 /* DiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DiceView.swift; path = "rs.ios.stage-task10/Custom/DiceView.swift"; sourceTree = SOURCE_ROOT; };
+		40A578ED26D92A61002E4CB7 /* GameVC+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameVC+CollectionView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,12 +135,10 @@
 		401B118C26D6733500C9B5E1 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				401B117B26D66B3300C9B5E1 /* NewGameVC.swift */,
-				408815A126D79BE900DD0CBC /* NewGameVC+TableView.swift */,
-				401F302A26D7651900DFD389 /* AddPlayerVC.swift */,
-				4088159D26D78A6800DD0CBC /* GameVC.swift */,
-				4088159F26D7956B00DD0CBC /* ResultsVC.swift */,
-				40A578E726D8D807002E4CB7 /* ResultsVC+TableView.swift */,
+				40A578F126D92A8A002E4CB7 /* Add Player */,
+				40A578EF26D92A6D002E4CB7 /* New Game */,
+				40A578F026D92A7F002E4CB7 /* Game  */,
+				40A578F226D92A93002E4CB7 /* Results */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -194,6 +194,41 @@
 				4046BD3826D7D9CE008692DA /* IncrementButton.swift */,
 			);
 			path = Custom;
+			sourceTree = "<group>";
+		};
+		40A578EF26D92A6D002E4CB7 /* New Game */ = {
+			isa = PBXGroup;
+			children = (
+				401B117B26D66B3300C9B5E1 /* NewGameVC.swift */,
+				408815A126D79BE900DD0CBC /* NewGameVC+TableView.swift */,
+			);
+			path = "New Game";
+			sourceTree = "<group>";
+		};
+		40A578F026D92A7F002E4CB7 /* Game  */ = {
+			isa = PBXGroup;
+			children = (
+				4088159D26D78A6800DD0CBC /* GameVC.swift */,
+				40A578ED26D92A61002E4CB7 /* GameVC+CollectionView.swift */,
+			);
+			path = "Game ";
+			sourceTree = "<group>";
+		};
+		40A578F126D92A8A002E4CB7 /* Add Player */ = {
+			isa = PBXGroup;
+			children = (
+				401F302A26D7651900DFD389 /* AddPlayerVC.swift */,
+			);
+			path = "Add Player";
+			sourceTree = "<group>";
+		};
+		40A578F226D92A93002E4CB7 /* Results */ = {
+			isa = PBXGroup;
+			children = (
+				4088159F26D7956B00DD0CBC /* ResultsVC.swift */,
+				40A578E726D8D807002E4CB7 /* ResultsVC+TableView.swift */,
+			);
+			path = Results;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -286,6 +321,7 @@
 				408815A526D7AEBA00DD0CBC /* PlayerScoreCell.swift in Sources */,
 				40A578E826D8D807002E4CB7 /* ResultsVC+TableView.swift in Sources */,
 				408815A026D7956B00DD0CBC /* ResultsVC.swift in Sources */,
+				40A578EE26D92A61002E4CB7 /* GameVC+CollectionView.swift in Sources */,
 				401B117826D66B3300C9B5E1 /* AppDelegate.swift in Sources */,
 				401B11AF26D67D9100C9B5E1 /* UIColor+AppColors.swift in Sources */,
 				4046BD3926D7D9CE008692DA /* IncrementButton.swift in Sources */,

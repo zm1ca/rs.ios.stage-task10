@@ -12,6 +12,7 @@ class GameVC: UIViewController {
     var currentPosition = 0
     
     var playerScores = [(String, Int)]()
+    var turns        = [(String, Int)]()
     var timerIsOn = true
     
     private let generator = UINotificationFeedbackGenerator()
@@ -117,6 +118,7 @@ class GameVC: UIViewController {
     
     //MARK: - Public
     func configure(with playerNames: [String]) {
+        turns.removeAll()
         playerScores.removeAll()
         playerNames.forEach { playerScores.append(($0, 0)) }
         collectionView.reloadData()
@@ -180,24 +182,39 @@ class GameVC: UIViewController {
     @objc private func resultsButtonTapped() {
         let resultsVC          = ResultsVC()
         resultsVC.parentVC     = self
-        resultsVC.playerScores = playerScores
+        resultsVC.playerScores = playerScores.sorted(by: { player1, player2 in
+            if player1.1 > player2.1 {
+                return true
+            } else {
+                if player1.0 < player2.0 {
+                    return true
+                }
+            }
+            return false
+        })
+
+        resultsVC.turns        = turns
         let navVC = UINavigationController(rootViewController: resultsVC)
         navVC.isNavigationBarHidden = true
         present(navVC, animated: true)
     }
     
-    @objc private func nextButtonTapped() {
+    @objc func nextButtonTapped() {
         currentPosition += 1
         collectionView.setContentOffset(CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0), animated: true)
     }
     
-    @objc private func previousButtonTapped() {
+    @objc func previousButtonTapped() {
         currentPosition -= 1
         collectionView.setContentOffset(CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0), animated: true)
     }
     
     @objc private func incrementButtonTapped(sender: IncrementButton) {
-        print(sender.value!)
+        let upd = (playerScores[currentPosition].0, playerScores[currentPosition].1 + sender.value!)
+        playerScores.remove(at: currentPosition)
+        playerScores.insert(upd, at: currentPosition)
+        collectionView.reloadItems(at: [IndexPath(row: currentPosition, section: 0)])
+        turns.append((playerScores[currentPosition].0, sender.value!))
     }
     
     
@@ -262,43 +279,4 @@ class GameVC: UIViewController {
         return sv
     }
 
-}
-
-// MARK: - Collection View Delegate and Data Source
-extension GameVC: UICollectionViewDataSource, UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlayerScoreCell.reuseID, for: indexPath) as! PlayerScoreCell
-        cell.set(with: playerScores[indexPath.row].0, and: playerScores[indexPath.row].1)
-        
-        let previousSwipe = UISwipeGestureRecognizer(target: self, action: #selector(previousButtonTapped))
-        let nextSwipe     = UISwipeGestureRecognizer(target: self, action: #selector(nextButtonTapped))
-        
-        previousSwipe.direction = .right
-        nextSwipe.direction     = .left
-        
-        cell.addGestureRecognizer(previousSwipe)
-        cell.addGestureRecognizer(nextSwipe)
-        return cell
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        playerScores.count
-    }
-    
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        if currentPosition > playerScores.count - 1 {
-            currentPosition = 0
-            collectionView.setContentOffset(CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0), animated: true)
-        }
-        
-        if currentPosition < 0 {
-            currentPosition = playerScores.count - 1
-            collectionView.setContentOffset(CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0), animated: true)
-        }
-    }
 }
