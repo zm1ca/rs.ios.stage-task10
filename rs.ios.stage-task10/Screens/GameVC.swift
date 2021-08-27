@@ -12,6 +12,9 @@ class GameVC: UIViewController {
     var playerScores = [(String, Int)]()
     var timerIsOn = true
     
+    private let generator = UINotificationFeedbackGenerator()
+    let diceView = DiceView()
+    
     let headerView = HeaderView(title: "Game",
                                 leftBarButton: BarButton(title: "New Game"),
                                 rightBarButton: BarButton(title: "Results"))
@@ -79,8 +82,12 @@ class GameVC: UIViewController {
         collectionView.dataSource = self
         
         configureBarButtons()
-        configureButtonsAppearance()
         layoutUI()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        configureButtonsAppearance()
     }
     
     
@@ -101,15 +108,18 @@ class GameVC: UIViewController {
     private func configureButtonsAppearance() {
         for button in incrementButtons {
             button.heightAnchor.constraint(equalTo: button.widthAnchor).isActive = true
-            button.layer.cornerRadius = (UIScreen.main.bounds.width - 100) / 10 //crutch
+            button.layer.cornerRadius = button.bounds.width / 2
         }
-        plusOneButton.layer.cornerRadius = 45
+        plusOneButton.layer.cornerRadius = plusOneButton.bounds.width / 2
     }
     
     
     // MARK: - Action Methods
     @objc private func diceButtonTapped() {
-        print("Dice!")
+        diceView.isHidden = false
+        diceView.diceImageView.image = UIImage(named: "dice_\(Int.random(in: 1...6))")
+        diceView.shakeDice()
+        generator.notificationOccurred(.success)
     }
     
     @objc private func playPauseButtonTapped() {
@@ -151,7 +161,8 @@ class GameVC: UIViewController {
         headerView.addSubviewAndConstraintByDefault(at: view)
         headerView.addSubviews(diceButton)
         
-        view.addSubviews(timeLabel, collectionView, playPauseButton, undoButton, plusOneButton, stackView)
+        view.addSubviews(timeLabel, collectionView, playPauseButton, undoButton, plusOneButton, stackView, diceView)
+        diceView.pinToEdges(of: view)
         NSLayoutConstraint.activate([
             diceButton.heightAnchor.constraint(equalToConstant: 30),
             diceButton.widthAnchor.constraint(equalToConstant: 30),
@@ -191,7 +202,6 @@ class GameVC: UIViewController {
         let sv = UIStackView(arrangedSubviews: incrementButtons)
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.axis         = .horizontal
-        sv.distribution = .fillEqually
         sv.spacing      = 15
         return sv
     }

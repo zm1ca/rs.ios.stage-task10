@@ -39,6 +39,7 @@
 		40A578E626D8D6A4002E4CB7 /* BarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E526D8D6A4002E4CB7 /* BarButton.swift */; };
 		40A578E826D8D807002E4CB7 /* ResultsVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E726D8D807002E4CB7 /* ResultsVC+TableView.swift */; };
 		40A578EA26D8DFD1002E4CB7 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E926D8DFD1002E4CB7 /* UIView+Ext.swift */; };
+		40A578EC26D8F48E002E4CB7 /* DiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578EB26D8F48E002E4CB7 /* DiceView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +77,7 @@
 		40A578E526D8D6A4002E4CB7 /* BarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarButton.swift; sourceTree = "<group>"; };
 		40A578E726D8D807002E4CB7 /* ResultsVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResultsVC+TableView.swift"; sourceTree = "<group>"; };
 		40A578E926D8DFD1002E4CB7 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		40A578EB26D8F48E002E4CB7 /* DiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DiceView.swift; path = "rs.ios.stage-task10/Custom/DiceView.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +185,7 @@
 		408815A326D7AE3F00DD0CBC /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				40A578EB26D8F48E002E4CB7 /* DiceView.swift */,
 				40A578E326D8CDFE002E4CB7 /* HeaderView.swift */,
 				40A578E526D8D6A4002E4CB7 /* BarButton.swift */,
 				4046BD3626D7C355008692DA /* TurnCell.swift */,
@@ -286,6 +289,7 @@
 				401B117826D66B3300C9B5E1 /* AppDelegate.swift in Sources */,
 				401B11AF26D67D9100C9B5E1 /* UIColor+AppColors.swift in Sources */,
 				4046BD3926D7D9CE008692DA /* IncrementButton.swift in Sources */,
+				40A578EC26D8F48E002E4CB7 /* DiceView.swift in Sources */,
 				40A578E426D8CDFE002E4CB7 /* HeaderView.swift in Sources */,
 				40A578E626D8D6A4002E4CB7 /* BarButton.swift in Sources */,
 				408815A226D79BE900DD0CBC /* NewGameVC+TableView.swift in Sources */,
