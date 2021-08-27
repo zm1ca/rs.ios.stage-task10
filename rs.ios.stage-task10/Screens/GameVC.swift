@@ -100,6 +100,7 @@ class GameVC: UIViewController {
         collectionView.dataSource = self
         
         configureBarButtons()
+        configureTargetsForIncrementButtons()
         layoutUI()
     }
     
@@ -129,6 +130,14 @@ class GameVC: UIViewController {
             button.layer.cornerRadius = button.bounds.width / 2
         }
         plusOneButton.layer.cornerRadius = plusOneButton.bounds.width / 2
+    }
+    
+    private func configureTargetsForIncrementButtons() {
+        var buttons = incrementButtons
+        buttons.append(plusOneButton)
+        buttons.forEach {
+            $0.addTarget(self, action: #selector(incrementButtonTapped), for: .touchUpInside)
+        }
     }
     
     
@@ -178,6 +187,10 @@ class GameVC: UIViewController {
     
     @objc private func previousButtonTapped() {
         print("Previous")
+    }
+    
+    @objc private func incrementButtonTapped(sender: IncrementButton) {
+        print(sender.value!)
     }
     
     

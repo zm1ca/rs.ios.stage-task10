@@ -9,13 +9,16 @@ import UIKit
 
 class IncrementButton: UIButton {
     
+    var value: Int!
+    
     convenience init(value: Int, fontSize: CGFloat) {
         self.init(frame: .zero)
         let shadow = NSShadow()
         shadow.shadowColor = UIColor.RSShadow
         shadow.shadowOffset = CGSize(width: 0, height: 2)
         
-        let title = (value <= 0) ? "\(value)" : "+\(value)"
+        self.value = value
+        let title  = (value <= 0) ? "\(value)" : "+\(value)"
         let attributedTitle = NSAttributedString(
             string: title,
             attributes: [
