@@ -14,7 +14,6 @@ class GameVC: UIViewController {
     
     let diceButton: UIButton = {
         let btn = UIButton()
-        //btn.backgroundColor = .systemPink
         btn.setImage(UIImage(named: "dice_4"), for: .normal)
         btn.layer.cornerRadius = 5
         btn.addTarget(self, action: #selector(diceButtonTapped), for: .touchUpInside)

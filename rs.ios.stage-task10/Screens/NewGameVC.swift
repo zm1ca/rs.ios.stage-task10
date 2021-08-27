@@ -54,6 +54,7 @@ class NewGameVC: UIViewController {
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(UIView())
         title = "Game Counter"
         view.backgroundColor = UIColor.RSBackground
         
