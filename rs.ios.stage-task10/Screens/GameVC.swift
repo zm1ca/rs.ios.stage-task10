@@ -47,6 +47,24 @@ class GameVC: UIViewController {
     let incrementButtons = [-10, -5, -1, +5, +10].map { IncrementButton(value: $0, fontSize: 25) }
     let plusOneButton    = IncrementButton(value: 1, fontSize: 40)
     
+    let nextButton: UIButton = {
+        let btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setImage(UIImage(named: "next"), for: .normal)
+        btn.backgroundColor = .clear
+        btn.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+        return btn
+    }()
+    
+    let previousButton: UIButton = {
+        let btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setImage(UIImage(named: "previous"), for: .normal)
+        btn.backgroundColor = .clear
+        btn.addTarget(self, action: #selector(previousButtonTapped), for: .touchUpInside)
+        return btn
+    }()
+    
     let timeLabel: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont(name: "Nunito-ExtraBold", size: 28)
@@ -154,6 +172,14 @@ class GameVC: UIViewController {
         present(navVC, animated: true)
     }
     
+    @objc private func nextButtonTapped() {
+        print("Next")
+    }
+    
+    @objc private func previousButtonTapped() {
+        print("Previous")
+    }
+    
     
     // MARK: - Layout
     private func layoutUI() {
@@ -161,7 +187,7 @@ class GameVC: UIViewController {
         headerView.addSubviewAndConstraintByDefault(at: view)
         headerView.addSubviews(diceButton)
         
-        view.addSubviews(timeLabel, collectionView, playPauseButton, undoButton, plusOneButton, stackView, diceView)
+        view.addSubviews(timeLabel, collectionView, playPauseButton, undoButton, plusOneButton, stackView, diceView, nextButton, previousButton)
         diceView.pinToEdges(of: view)
         NSLayoutConstraint.activate([
             diceButton.heightAnchor.constraint(equalToConstant: 30),
@@ -187,6 +213,16 @@ class GameVC: UIViewController {
             plusOneButton.widthAnchor.constraint(equalToConstant: 90),
             plusOneButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             plusOneButton.bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: -20),
+            
+            nextButton.heightAnchor.constraint(equalToConstant: 30),
+            nextButton.widthAnchor.constraint(equalTo: nextButton.heightAnchor),
+            nextButton.centerYAnchor.constraint(equalTo: plusOneButton.centerYAnchor),
+            nextButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50),
+            
+            previousButton.heightAnchor.constraint(equalToConstant: 30),
+            previousButton.widthAnchor.constraint(equalTo: previousButton.heightAnchor),
+            previousButton.centerYAnchor.constraint(equalTo: plusOneButton.centerYAnchor),
+            previousButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 50),
             
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
