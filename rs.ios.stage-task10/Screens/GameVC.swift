@@ -12,9 +12,9 @@ class GameVC: UIViewController {
     var playerScores = [(String, Int)]()
     var timerIsOn = true
     
-    let headerView = HeaderView(title: "Game")
-    let newGameButton = BarButton(title: "New Game")
-    let resultsButton  = BarButton(title: "Results")
+    let headerView = HeaderView(title: "Game",
+                                leftBarButton: BarButton(title: "New Game"),
+                                rightBarButton: BarButton(title: "Results"))
     
     let diceButton: UIButton = {
         let btn = UIButton()
@@ -25,10 +25,6 @@ class GameVC: UIViewController {
         return btn
     }()
     
-    @objc private func diceButtonTapped() {
-        print("Dice!")
-    }
-    
     let playPauseButton: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(named: "play"), for: .normal)
@@ -36,17 +32,6 @@ class GameVC: UIViewController {
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
-    
-    @objc private func playPauseButtonTapped() {
-        timerIsOn.toggle()
-        if timerIsOn {
-            playPauseButton.setImage(UIImage(named: "pause"), for: .normal)
-            timeLabel.textColor = .white
-        } else {
-            playPauseButton.setImage(UIImage(named: "play"), for: .normal)
-            timeLabel.textColor = .RSTable
-        }
-    }
     
     let undoButton: UIButton = {
         let btn = UIButton()
@@ -58,10 +43,6 @@ class GameVC: UIViewController {
     
     let incrementButtons = [-10, -5, -1, +5, +10].map { IncrementButton(value: $0, fontSize: 25) }
     let plusOneButton    = IncrementButton(value: 1, fontSize: 40)
-    
-    @objc private func undoButtonTapped() {
-        print("undo")
-    }
     
     let timeLabel: UILabel = {
         let lbl = UILabel()
@@ -91,7 +72,6 @@ class GameVC: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         title = "Game"
         view.backgroundColor = .RSBackground
         
@@ -99,6 +79,7 @@ class GameVC: UIViewController {
         collectionView.dataSource = self
         
         configureBarButtons()
+        configureButtonsAppearance()
         layoutUI()
     }
     
@@ -106,17 +87,44 @@ class GameVC: UIViewController {
     //MARK: - Public
     func configure(with playerNames: [String]) {
         playerScores.removeAll()
-        for name in playerNames {
-            playerScores.append((name, 0))
-        }
+        playerNames.forEach { playerScores.append(($0, 0)) }
         collectionView.reloadData()
     }
     
     
-    // MARK: - Configurations for Bar Buttons
+    // MARK: - Configurations for Buttons
     private func configureBarButtons() {
-        newGameButton.addTarget(self, action: #selector(newGameButtonTapped), for: .touchUpInside)
-        resultsButton.addTarget(self, action: #selector(resultsButtonTapped), for: .touchUpInside)
+        headerView.leftBarButton?.addTarget(self, action: #selector(newGameButtonTapped), for: .touchUpInside)
+        headerView.rightBarButton?.addTarget(self, action: #selector(resultsButtonTapped), for: .touchUpInside)
+    }
+    
+    private func configureButtonsAppearance() {
+        for button in incrementButtons {
+            button.heightAnchor.constraint(equalTo: button.widthAnchor).isActive = true
+            button.layer.cornerRadius = (UIScreen.main.bounds.width - 100) / 10 //crutch
+        }
+        plusOneButton.layer.cornerRadius = 45
+    }
+    
+    
+    // MARK: - Action Methods
+    @objc private func diceButtonTapped() {
+        print("Dice!")
+    }
+    
+    @objc private func playPauseButtonTapped() {
+        timerIsOn.toggle()
+        if timerIsOn {
+            playPauseButton.setImage(UIImage(named: "pause"), for: .normal)
+            timeLabel.textColor = .white
+        } else {
+            playPauseButton.setImage(UIImage(named: "play"), for: .normal)
+            timeLabel.textColor = .RSTable
+        }
+    }
+    
+    @objc private func undoButtonTapped() {
+        print("undo")
     }
     
     @objc private func newGameButtonTapped() {
@@ -137,41 +145,18 @@ class GameVC: UIViewController {
     }
     
     
-    // MARK: - Configurations
+    // MARK: - Layout
     private func layoutUI() {
-        view.addSubview(headerView)
-        headerView.addSubview(newGameButton)
-        headerView.addSubview(resultsButton)
-        headerView.addSubview(diceButton)
-        view.addSubview(timeLabel)
-        view.addSubview(collectionView)
-        view.addSubview(playPauseButton)
-        view.addSubview(undoButton) //add in one line via EXTENSION
-        view.addSubview(plusOneButton)
+        let stackView = incrementButtonsStackView()
+        headerView.addSubviewAndConstraintByDefault(at: view)
+        headerView.addSubviews(diceButton)
         
-        let stackView = UIStackView(arrangedSubviews: incrementButtons)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis         = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing      = 15
-        view.addSubview(stackView)
-        
+        view.addSubviews(timeLabel, collectionView, playPauseButton, undoButton, plusOneButton, stackView)
         NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            headerView.heightAnchor.constraint(equalToConstant: 90),
-            
             diceButton.heightAnchor.constraint(equalToConstant: 30),
             diceButton.widthAnchor.constraint(equalToConstant: 30),
             diceButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
             diceButton.centerYAnchor.constraint(equalTo: headerView.titleLabel.centerYAnchor),
-            
-            newGameButton.bottomAnchor.constraint(equalTo: headerView.titleLabel.topAnchor, constant: -12),
-            newGameButton.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
-            
-            resultsButton.bottomAnchor.constraint(equalTo: headerView.titleLabel.topAnchor, constant: -12),
-            resultsButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
             
             playPauseButton.heightAnchor.constraint(equalToConstant: 20),
             playPauseButton.widthAnchor.constraint(equalToConstant: 20),
@@ -200,13 +185,15 @@ class GameVC: UIViewController {
             timeLabel.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 12), //fix: place between safe area and top of collection view
             timeLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
         ])
-        
-        for button in incrementButtons {
-            button.heightAnchor.constraint(equalTo: button.widthAnchor).isActive = true
-            button.layer.cornerRadius = (UIScreen.main.bounds.width - 100) / 10 //crutch
-        }
-        plusOneButton.layer.cornerRadius = 45
-        
+    }
+    
+    private func incrementButtonsStackView() -> UIStackView {
+        let sv = UIStackView(arrangedSubviews: incrementButtons)
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        sv.axis         = .horizontal
+        sv.distribution = .fillEqually
+        sv.spacing      = 15
+        return sv
     }
 
 }

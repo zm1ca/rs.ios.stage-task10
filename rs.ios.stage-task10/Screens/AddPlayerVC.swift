@@ -15,9 +15,9 @@ class AddPlayerVC: UIViewController {
     
     var delegate: PlayerAddable!
     
-    let headerView = HeaderView(title: "Add Player")
-    let backButton = BarButton(title: "Back")
-    let addButton  = BarButton(title: "Add")
+    let headerView = HeaderView(title: "Add Player",
+                                leftBarButton: BarButton(title: "Back"),
+                                rightBarButton: BarButton(title: "Add"))
     
     let playerNameTextField: UITextField = {
         let tf = UITextField()
@@ -38,11 +38,11 @@ class AddPlayerVC: UIViewController {
     
     @objc private func updateAddButtonState() {
         if (playerNameTextField.text?.count ?? 0 > 0) {
-            addButton.isEnabled = true
-            addButton.alpha = 1
+            headerView.rightBarButton?.isEnabled = true
+            headerView.rightBarButton?.alpha = 1
         } else {
-            addButton.isEnabled = false
-            addButton.alpha = 0.3
+            headerView.rightBarButton?.isEnabled = false
+            headerView.rightBarButton?.alpha = 0.3
         }
     }
     
@@ -60,10 +60,10 @@ class AddPlayerVC: UIViewController {
     
     // MARK: - Configurations for Bar Buttons
     private func configureBarButtons() {
-        addButton.addTarget(self, action: #selector(addPlayer), for: .touchUpInside)
-        addButton.isEnabled = false
-        addButton.alpha     = 0.3
-        backButton.addTarget(self, action: #selector(popCurrentViewController), for: .touchUpInside)
+        headerView.rightBarButton?.addTarget(self, action: #selector(addPlayer), for: .touchUpInside)
+        headerView.rightBarButton?.isEnabled = false
+        headerView.rightBarButton?.alpha     = 0.3
+        headerView.leftBarButton?.addTarget(self, action: #selector(popCurrentViewController), for: .touchUpInside)
     }
     
     @objc private func popCurrentViewController(_ animated: Bool) {
@@ -76,24 +76,11 @@ class AddPlayerVC: UIViewController {
     }
 
     
-    //MARK: - Configurations
+    //MARK: - Layout
     private func layoutUI() {
-        view.addSubview(headerView)
-        headerView.addSubview(backButton)
-        headerView.addSubview(addButton)
-        view.addSubview(playerNameTextField)
+        headerView.addSubviewAndConstraintByDefault(at: view)
+        view.addSubviews(playerNameTextField)
         NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            headerView.heightAnchor.constraint(equalToConstant: 90),
-            
-            backButton.bottomAnchor.constraint(equalTo: headerView.titleLabel.topAnchor, constant: -12),
-            backButton.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
-            
-            addButton.bottomAnchor.constraint(equalTo: headerView.titleLabel.topAnchor, constant: -12),
-            addButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
-            
             playerNameTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             playerNameTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             playerNameTextField.heightAnchor.constraint(equalToConstant: 60),

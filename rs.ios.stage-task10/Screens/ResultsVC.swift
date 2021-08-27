@@ -11,11 +11,11 @@ class ResultsVC: UIViewController {
     
     weak var parentVC: GameVC?
     var playerScores: [(String, Int)]!
-    var turns: [(String, Int)] = [("Tim", 20), ("Mike", 0), ("Joshua", -9), ("Ciryll", -12), ("Ann", 19), ("Tracy", 4), ("Nancy", -14), ("Craig", 8), ("Nancy", 14), ("Craig", 8)]
+    var turns: [(String, Int)] = [("Me", 20), ("You", 0), ("Me", -9), ("Me", -12), ("You", 19), ("You", 4), ("You", -14), ("You", 8), ("Me", 14), ("Me", 8)]
     
-    let headerView = HeaderView(title: "Results")
-    let newGameButton = BarButton(title: "New Game")
-    let resumeButton  = BarButton(title: "Resume")
+    let headerView = HeaderView(title: "Results",
+                                leftBarButton: BarButton(title: "New Game"),
+                                rightBarButton: BarButton(title: "Resume"))
     
     var rankingsTableView = UITableView(frame: .zero, style: .plain)
     var turnsTableView    = UITableView(frame: .zero, style: .plain)
@@ -34,8 +34,8 @@ class ResultsVC: UIViewController {
     
     // MARK: - Configurations for Bar Buttons
     private func configureBarButtons() {
-        newGameButton.addTarget(self, action: #selector(newGameButtonTapped), for: .touchUpInside)
-        resumeButton.addTarget(self, action: #selector(resumeButtonTapped), for: .touchUpInside)
+        headerView.leftBarButton?.addTarget(self, action: #selector(newGameButtonTapped), for: .touchUpInside)
+        headerView.rightBarButton?.addTarget(self, action: #selector(resumeButtonTapped), for: .touchUpInside)
     }
     
     @objc private func newGameButtonTapped() {
@@ -76,23 +76,9 @@ class ResultsVC: UIViewController {
     
     // MARK: - Layout
     private func layoutUI() {
-        view.addSubview(headerView)
-        headerView.addSubview(newGameButton)
-        headerView.addSubview(resumeButton)
-        view.addSubview(rankingsTableView)
-        view.addSubview(turnsTableView)
+        headerView.addSubviewAndConstraintByDefault(at: view)
+        view.addSubviews(rankingsTableView, turnsTableView)
         NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            headerView.heightAnchor.constraint(equalToConstant: 90),
-
-            newGameButton.bottomAnchor.constraint(equalTo: headerView.titleLabel.topAnchor, constant: -12),
-            newGameButton.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
-            
-            resumeButton.bottomAnchor.constraint(equalTo: headerView.titleLabel.topAnchor, constant: -12),
-            resumeButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
-            
             rankingsTableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 18),
             rankingsTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             rankingsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),

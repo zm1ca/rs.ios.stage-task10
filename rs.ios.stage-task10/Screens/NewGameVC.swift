@@ -13,10 +13,10 @@ class NewGameVC: UIViewController {
     var playerNames = ["Me", "You"]
     var tableViewHeightConstraint: NSLayoutConstraint!
     
-    let headerView = HeaderView(title: "Game Counter")
+    let headerView = HeaderView(title: "Game Counter",
+                                leftBarButton: BarButton(title: "Cancel"),
+                                rightBarButton: nil)
     let tableView  = UITableView(frame: .zero, style: .plain)
-    
-    let cancelButton = BarButton(title: "Cancel")
     
     let startButton: UIButton = {
         let btn = UIButton()
@@ -87,8 +87,8 @@ class NewGameVC: UIViewController {
     }
     
     private func configureCancelButton() {
-        cancelButton.isHidden = (parentVC == nil)
-        cancelButton.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+        headerView.leftBarButton?.isHidden = (parentVC == nil)
+        headerView.leftBarButton?.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
     }
     
     @objc private func handleCancel() {
@@ -98,10 +98,8 @@ class NewGameVC: UIViewController {
     
     // MARK: - Layout
     private func layoutUI() {
-        view.addSubview(headerView)
-        headerView.addSubview(cancelButton)
-        view.addSubview(tableView)
-        view.addSubview(startButton)
+        headerView.addSubviewAndConstraintByDefault(at: view)
+        view.addSubviews(tableView, startButton)
         
         tableViewHeightConstraint = NSLayoutConstraint(
             item: tableView,
@@ -115,14 +113,6 @@ class NewGameVC: UIViewController {
         tableViewHeightConstraint.priority = .defaultHigh
         
         NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            headerView.heightAnchor.constraint(equalToConstant: 90),
-            
-            cancelButton.bottomAnchor.constraint(equalTo: headerView.titleLabel.topAnchor, constant: -12),
-            cancelButton.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
-            
             startButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -65),
             startButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             startButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
