@@ -13,6 +13,10 @@ class ResultsVC: UIViewController {
     var playerScores: [(String, Int)]!
     var turns: [(String, Int)] = [("Tim", 20), ("Mike", 0), ("Joshua", -9), ("Ciryll", -12), ("Ann", 19), ("Tracy", 4), ("Nancy", -14), ("Craig", 8), ("Nancy", 14), ("Craig", 8)]
     
+    let headerView = HeaderView(title: "Results")
+    let newGameButton = BarButton(title: "New Game")
+    let resumeButton  = BarButton(title: "Resume")
+    
     var rankingsTableView = UITableView(frame: .zero, style: .plain)
     var turnsTableView    = UITableView(frame: .zero, style: .plain)
 
@@ -30,12 +34,8 @@ class ResultsVC: UIViewController {
     
     // MARK: - Configurations for Bar Buttons
     private func configureBarButtons() {
-        let backButton = UIBarButtonItem(title: "New Game", style: .plain, target: self, action: #selector(newGameButtonTapped))
-        self.navigationItem.setHidesBackButton(true, animated: false)
-        self.navigationItem.leftBarButtonItem = backButton
-        
-        let resumeButton = UIBarButtonItem(title: "Resume", style: .plain, target: self, action: #selector(resumeButtonTapped))
-        self.navigationItem.rightBarButtonItem = resumeButton
+        newGameButton.addTarget(self, action: #selector(newGameButtonTapped), for: .touchUpInside)
+        resumeButton.addTarget(self, action: #selector(resumeButtonTapped), for: .touchUpInside)
     }
     
     @objc private func newGameButtonTapped() {
@@ -73,11 +73,27 @@ class ResultsVC: UIViewController {
         turnsTableView.separatorColor = .RSSeparator
     }
     
+    
+    // MARK: - Layout
     private func layoutUI() {
+        view.addSubview(headerView)
+        headerView.addSubview(newGameButton)
+        headerView.addSubview(resumeButton)
         view.addSubview(rankingsTableView)
         view.addSubview(turnsTableView)
         NSLayoutConstraint.activate([
-            rankingsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 18),
+            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            headerView.heightAnchor.constraint(equalToConstant: 90),
+
+            newGameButton.bottomAnchor.constraint(equalTo: headerView.titleLabel.topAnchor, constant: -12),
+            newGameButton.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
+            
+            resumeButton.bottomAnchor.constraint(equalTo: headerView.titleLabel.topAnchor, constant: -12),
+            resumeButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
+            
+            rankingsTableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 18),
             rankingsTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             rankingsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             rankingsTableView.heightAnchor.constraint(equalToConstant: CGFloat(rankingsTableView.numberOfRows(inSection: 0) * 50)),
@@ -89,38 +105,6 @@ class ResultsVC: UIViewController {
         ])
     }
 
-}
-
-
-extension ResultsVC: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == rankingsTableView {
-            return playerScores.count < 3 ? playerScores.count : 3
-        } else {
-            return turns.count
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == rankingsTableView {
-            let cell = tableView.dequeueReusableCell(withIdentifier: RankingsCell.reuseID, for: indexPath) as! RankingsCell
-            let playerName = playerScores[indexPath.row].0
-            let score      = playerScores[indexPath.row].1
-            cell.set(rank: indexPath.row + 1, for: playerName, with: score)
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TurnCell.reuseID, for: indexPath) as! TurnCell
-            let playerName = turns[indexPath.row].0
-            let score      = turns[indexPath.row].1
-            cell.set(name: playerName, score: score)
-            return cell
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        50
-    }
-    
 }
 
 

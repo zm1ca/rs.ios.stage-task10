@@ -12,6 +12,10 @@ class GameVC: UIViewController {
     var playerScores = [(String, Int)]()
     var timerIsOn = true
     
+    let headerView = HeaderView(title: "Game")
+    let newGameButton = BarButton(title: "New Game")
+    let resultsButton  = BarButton(title: "Results")
+    
     let diceButton: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(named: "dice_4"), for: .normal)
@@ -31,7 +35,7 @@ class GameVC: UIViewController {
         btn.addTarget(self, action: #selector(playPauseButtonTapped), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
-    }() //button is too small. consiger tap gestire recognizer on time label
+    }()
     
     @objc private func playPauseButtonTapped() {
         timerIsOn.toggle()
@@ -111,18 +115,15 @@ class GameVC: UIViewController {
     
     // MARK: - Configurations for Bar Buttons
     private func configureBarButtons() {
-        let backButton = UIBarButtonItem(title: "New Game", style: .plain, target: self, action: #selector(newGameButtonTapped))
-        self.navigationItem.setHidesBackButton(true, animated: false)
-        self.navigationItem.leftBarButtonItem = backButton
-        
-        let resultsButton = UIBarButtonItem(title: "Results", style: .plain, target: self, action: #selector(resultsButtonTapped))
-        self.navigationItem.rightBarButtonItem = resultsButton
+        newGameButton.addTarget(self, action: #selector(newGameButtonTapped), for: .touchUpInside)
+        resultsButton.addTarget(self, action: #selector(resultsButtonTapped), for: .touchUpInside)
     }
     
     @objc private func newGameButtonTapped() {
         let newGameVC      = NewGameVC()
         newGameVC.parentVC = self
         let navVC = UINavigationController(rootViewController: newGameVC)
+        navVC.isNavigationBarHidden = true
         present(navVC, animated: true)
     }
     
@@ -131,13 +132,17 @@ class GameVC: UIViewController {
         resultsVC.parentVC     = self
         resultsVC.playerScores = playerScores
         let navVC = UINavigationController(rootViewController: resultsVC)
+        navVC.isNavigationBarHidden = true
         present(navVC, animated: true)
     }
     
     
     // MARK: - Configurations
     private func layoutUI() {
-        navigationController?.navigationBar.addSubview(diceButton)
+        view.addSubview(headerView)
+        headerView.addSubview(newGameButton)
+        headerView.addSubview(resultsButton)
+        headerView.addSubview(diceButton)
         view.addSubview(timeLabel)
         view.addSubview(collectionView)
         view.addSubview(playPauseButton)
@@ -152,10 +157,21 @@ class GameVC: UIViewController {
         view.addSubview(stackView)
         
         NSLayoutConstraint.activate([
+            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            headerView.heightAnchor.constraint(equalToConstant: 90),
+            
             diceButton.heightAnchor.constraint(equalToConstant: 30),
             diceButton.widthAnchor.constraint(equalToConstant: 30),
-            diceButton.trailingAnchor.constraint(equalTo: navigationController!.navigationBar.trailingAnchor, constant: -20),
-            diceButton.centerYAnchor.constraint(equalTo: navigationController!.navigationBar.bottomAnchor, constant: -26),
+            diceButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
+            diceButton.centerYAnchor.constraint(equalTo: headerView.titleLabel.centerYAnchor),
+            
+            newGameButton.bottomAnchor.constraint(equalTo: headerView.titleLabel.topAnchor, constant: -12),
+            newGameButton.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
+            
+            resultsButton.bottomAnchor.constraint(equalTo: headerView.titleLabel.topAnchor, constant: -12),
+            resultsButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
             
             playPauseButton.heightAnchor.constraint(equalToConstant: 20),
             playPauseButton.widthAnchor.constraint(equalToConstant: 20),
@@ -181,7 +197,7 @@ class GameVC: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: plusOneButton.topAnchor, constant: -28),
             collectionView.heightAnchor.constraint(equalToConstant: 300),
             
-            timeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12), //fix: place between safe area and top of collection view
+            timeLabel.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 12), //fix: place between safe area and top of collection view
             timeLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
         ])
         

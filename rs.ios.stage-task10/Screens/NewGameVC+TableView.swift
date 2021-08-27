@@ -40,7 +40,7 @@ extension NewGameVC: UITableViewDelegate, UITableViewDataSource  {
         let label = UILabel()
         label.frame     = CGRect.init(x: 16, y: 5, width: headerView.frame.width - 26, height: headerView.frame.height)
         label.text      = "Players"
-        label.font      = UIFont(name: "Nunito-SemiBold", size: 16) //letter l is rounded wtf
+        label.font      = UIFont(name: "Nunito-SemiBold", size: 16)
         label.textColor = .RSLabel
         
         headerView.addSubview(label)

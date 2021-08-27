@@ -21,28 +21,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func configureAppearance() {
         UIApplication.shared.statusBarStyle = .lightContent //fix
         
-        let states: [UIControl.State] = [.normal, .disabled, .highlighted]
-        for buttonState in states {
-            UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Nunito-ExtraBold", size: 17)! ],
-                                                                for: buttonState)
-        }
         
-        UINavigationBar.appearance().prefersLargeTitles = true
-        UINavigationBar.appearance().barTintColor       = .RSBackground
-        UINavigationBar.appearance().tintColor          = .RSGreen
-        UINavigationBar.appearance().isTranslucent      = true
-        UINavigationBar.appearance().shadowImage        = UIImage()
-        UINavigationBar.appearance().largeTitleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont(name: "Nunito-ExtraBold", size: 36)!
-        ]
     }
     
     private func setupWindow() {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.tintColor = .white
-        let navVC = UINavigationController(rootViewController: NewGameVC())
-        navVC.navigationItem.largeTitleDisplayMode = .always
+        
+        let navVC = UINavigationController(rootViewController: NewGameVC()) //!
+        navVC.isNavigationBarHidden = true
+        
         window?.rootViewController = navVC
         window?.makeKeyAndVisible()
     }
