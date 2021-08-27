@@ -9,6 +9,8 @@ import UIKit
 
 class GameVC: UIViewController {
     
+    var currentPosition = 0
+    
     var playerScores = [(String, Int)]()
     var timerIsOn = true
     
@@ -86,6 +88,7 @@ class GameVC: UIViewController {
         cv.backgroundColor = .RSBackground
         cv.showsHorizontalScrollIndicator = false
         cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.isScrollEnabled = false
         return cv
     }()
 
@@ -182,11 +185,13 @@ class GameVC: UIViewController {
     }
     
     @objc private func nextButtonTapped() {
-        print("Next")
+        currentPosition += 1
+        collectionView.setContentOffset(CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0), animated: true)
     }
     
     @objc private func previousButtonTapped() {
-        print("Previous")
+        currentPosition -= 1
+        collectionView.setContentOffset(CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0), animated: true)
     }
     
     @objc private func incrementButtonTapped(sender: IncrementButton) {
@@ -200,7 +205,7 @@ class GameVC: UIViewController {
         headerView.addSubviewAndConstraintByDefault(at: view)
         headerView.addSubviews(diceButton)
         
-        view.addSubviews(timeLabel, collectionView, playPauseButton, undoButton, plusOneButton, stackView, diceView, nextButton, previousButton)
+        view.addSubviews(timeLabel, collectionView, playPauseButton, undoButton, plusOneButton, stackView, nextButton, previousButton, diceView)
         diceView.pinToEdges(of: view)
         NSLayoutConstraint.activate([
             diceButton.heightAnchor.constraint(equalToConstant: 30),
@@ -263,6 +268,15 @@ extension GameVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlayerScoreCell.reuseID, for: indexPath) as! PlayerScoreCell
         cell.set(with: playerScores[indexPath.row].0, and: playerScores[indexPath.row].1)
+        
+        let previousSwipe = UISwipeGestureRecognizer(target: self, action: #selector(previousButtonTapped))
+        let nextSwipe     = UISwipeGestureRecognizer(target: self, action: #selector(nextButtonTapped))
+        
+        previousSwipe.direction = .right
+        nextSwipe.direction     = .left
+        
+        cell.addGestureRecognizer(previousSwipe)
+        cell.addGestureRecognizer(nextSwipe)
         return cell
     }
     
@@ -272,5 +286,17 @@ extension GameVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         playerScores.count
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if currentPosition > playerScores.count - 1 {
+            currentPosition = 0
+            collectionView.setContentOffset(CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0), animated: true)
+        }
+        
+        if currentPosition < 0 {
+            currentPosition = playerScores.count - 1
+            collectionView.setContentOffset(CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0), animated: true)
+        }
     }
 }
