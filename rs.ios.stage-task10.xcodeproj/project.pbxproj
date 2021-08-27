@@ -41,6 +41,7 @@
 		40A578EA26D8DFD1002E4CB7 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E926D8DFD1002E4CB7 /* UIView+Ext.swift */; };
 		40A578EC26D8F48E002E4CB7 /* DiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578EB26D8F48E002E4CB7 /* DiceView.swift */; };
 		40A578EE26D92A61002E4CB7 /* GameVC+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578ED26D92A61002E4CB7 /* GameVC+CollectionView.swift */; };
+		40A578F526D9347A002E4CB7 /* GameVC+ScrollingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578F426D9347A002E4CB7 /* GameVC+ScrollingHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		40A578E926D8DFD1002E4CB7 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		40A578EB26D8F48E002E4CB7 /* DiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DiceView.swift; path = "rs.ios.stage-task10/Custom/DiceView.swift"; sourceTree = SOURCE_ROOT; };
 		40A578ED26D92A61002E4CB7 /* GameVC+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameVC+CollectionView.swift"; sourceTree = "<group>"; };
+		40A578F426D9347A002E4CB7 /* GameVC+ScrollingHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameVC+ScrollingHelpers.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +212,7 @@
 			children = (
 				4088159D26D78A6800DD0CBC /* GameVC.swift */,
 				40A578ED26D92A61002E4CB7 /* GameVC+CollectionView.swift */,
+				40A578F426D9347A002E4CB7 /* GameVC+ScrollingHelpers.swift */,
 			);
 			path = "Game ";
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 				401B117826D66B3300C9B5E1 /* AppDelegate.swift in Sources */,
 				401B11AF26D67D9100C9B5E1 /* UIColor+AppColors.swift in Sources */,
 				4046BD3926D7D9CE008692DA /* IncrementButton.swift in Sources */,
+				40A578F526D9347A002E4CB7 /* GameVC+ScrollingHelpers.swift in Sources */,
 				40A578EC26D8F48E002E4CB7 /* DiceView.swift in Sources */,
 				40A578E426D8CDFE002E4CB7 /* HeaderView.swift in Sources */,
 				40A578E626D8D6A4002E4CB7 /* BarButton.swift in Sources */,

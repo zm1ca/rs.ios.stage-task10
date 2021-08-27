@@ -13,8 +13,8 @@ extension GameVC: UICollectionViewDataSource, UICollectionViewDelegate {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlayerScoreCell.reuseID, for: indexPath) as! PlayerScoreCell
         cell.set(with: playerScores[indexPath.row].0, and: playerScores[indexPath.row].1)
         
-        let previousSwipe = UISwipeGestureRecognizer(target: self, action: #selector(previousButtonTapped))
-        let nextSwipe     = UISwipeGestureRecognizer(target: self, action: #selector(nextButtonTapped))
+        let previousSwipe = UISwipeGestureRecognizer(target: self, action: #selector(scrollToPreviousPlayer))
+        let nextSwipe     = UISwipeGestureRecognizer(target: self, action: #selector(scrollToNextPlayer))
         
         previousSwipe.direction = .right
         nextSwipe.direction     = .left
@@ -33,14 +33,8 @@ extension GameVC: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        if currentPosition > playerScores.count - 1 {
-            currentPosition = 0
-            collectionView.setContentOffset(CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0), animated: true)
-        }
-        
-        if currentPosition < 0 {
-            currentPosition = playerScores.count - 1
-            collectionView.setContentOffset(CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0), animated: true)
-        }
+        _ = reachedLeftBorder()
+        _ = reachedRightBorder()
+        updateArrowButtons()
     }
 }

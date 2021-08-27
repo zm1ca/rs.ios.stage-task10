@@ -56,7 +56,7 @@ class GameVC: UIViewController {
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setImage(UIImage(named: "next"), for: .normal)
         btn.backgroundColor = .clear
-        btn.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(scrollToNextPlayer), for: .touchUpInside)
         btn.adjustsImageWhenHighlighted = false
         return btn
     }()
@@ -66,7 +66,7 @@ class GameVC: UIViewController {
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setImage(UIImage(named: "previous"), for: .normal)
         btn.backgroundColor = .clear
-        btn.addTarget(self, action: #selector(previousButtonTapped), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(scrollToPreviousPlayer), for: .touchUpInside)
         return btn
     }()
     
@@ -108,6 +108,7 @@ class GameVC: UIViewController {
         configureBarButtons()
         configureTargetsForIncrementButtons()
         layoutUI()
+        updateArrowButtons()
     }
     
     override func viewDidLayoutSubviews() {
@@ -197,16 +198,6 @@ class GameVC: UIViewController {
         let navVC = UINavigationController(rootViewController: resultsVC)
         navVC.isNavigationBarHidden = true
         present(navVC, animated: true)
-    }
-    
-    @objc func nextButtonTapped() {
-        currentPosition += 1
-        collectionView.setContentOffset(CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0), animated: true)
-    }
-    
-    @objc func previousButtonTapped() {
-        currentPosition -= 1
-        collectionView.setContentOffset(CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0), animated: true)
     }
     
     @objc private func incrementButtonTapped(sender: IncrementButton) {
