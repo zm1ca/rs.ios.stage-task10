@@ -43,6 +43,7 @@ class GameVC: UIViewController {
         btn.setImage(UIImage(named: "undo"), for: .normal)
         btn.addTarget(self, action: #selector(undoButtonTapped), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.adjustsImageWhenHighlighted = false
         return btn
     }()
     
@@ -55,6 +56,7 @@ class GameVC: UIViewController {
         btn.setImage(UIImage(named: "next"), for: .normal)
         btn.backgroundColor = .clear
         btn.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+        btn.adjustsImageWhenHighlighted = false
         return btn
     }()
     
