@@ -26,4 +26,12 @@ extension ResultsVC: UICollectionViewDelegate, UICollectionViewDataSource {
         cell.set(with: rankings)
         return cell
     }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if (velocity.x > 0) {
+            pageControl.currentPage += 1
+        } else {
+            pageControl.currentPage -= 1
+        }
+    }
 }

@@ -11,7 +11,7 @@ class ResultsVC: UIViewController {
     
     weak var parentVC: GameVC?
     var playerScores: [(String, Int)]!
-    var turns: [(String, Int)]!
+    var turns:        [(String, Int)]!
     
     let headerView = HeaderView(title: "Results",
                                 leftBarButton: BarButton(title: "New Game"),
@@ -31,7 +31,7 @@ class ResultsVC: UIViewController {
         cv.showsHorizontalScrollIndicator = false
         cv.backgroundColor = .RSBackground
         cv.isScrollEnabled = true
-        
+        cv.isPagingEnabled = true
         return cv
     }()
     

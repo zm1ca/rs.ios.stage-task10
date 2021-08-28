@@ -11,7 +11,7 @@ class GameVC: UIViewController {
     
     var currentPosition = 0
     
-    var playerScores = [(String, Int)]()
+    var playerScores = [(name: String, score: Int)]()
     var turns        = [(String, Int)]()
     var timerIsOn = true
     
@@ -187,17 +187,8 @@ class GameVC: UIViewController {
     @objc private func resultsButtonTapped() {
         let resultsVC          = ResultsVC()
         resultsVC.parentVC     = self
-        resultsVC.playerScores = playerScores.sorted(by: { player1, player2 in
-            if player1.1 > player2.1 {
-                return true
-            } else {
-                if player1.0 < player2.0 {
-                    return true
-                }
-                return false
-            }
-        })
-
+        resultsVC.playerScores = playerScores.sorted { $0.score == $1.score ? ($0.name < $1.name) : ($0.score > $1.score) }
+        
         resultsVC.turns        = turns
         let navVC = UINavigationController(rootViewController: resultsVC)
         navVC.isNavigationBarHidden = true
@@ -205,11 +196,11 @@ class GameVC: UIViewController {
     }
     
     @objc private func incrementButtonTapped(sender: IncrementButton) {
-        let upd = (playerScores[currentPosition].0, playerScores[currentPosition].1 + sender.value!)
+        let upd = (playerScores[currentPosition].name, playerScores[currentPosition].score + sender.value!)
         playerScores.remove(at: currentPosition)
         playerScores.insert(upd, at: currentPosition)
         collectionView.reloadItems(at: [IndexPath(row: currentPosition, section: 0)])
-        turns.append((playerScores[currentPosition].0, sender.value!))
+        turns.append((playerScores[currentPosition].name, sender.value!))
     }
     
     
