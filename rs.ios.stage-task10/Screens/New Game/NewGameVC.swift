@@ -119,6 +119,8 @@ extension NewGameVC: PlayerAddable {
     func addPlayer(named name: String) {
         playerNames.append(name)
         tableView.reloadData()
+        startButton.isEnabled = true
+        startButton.alpha     = 1
     }
 }
 

@@ -49,6 +49,7 @@ extension NewGameVC: UITableViewDelegate, UITableViewDataSource  {
         cell.textLabel?.text      = "Add player"
         
         cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: cell.bounds.size.width * 2)
+        cell.accessoryView  = nil
     }
     
     private func applyDefaultCellConfigurations(to cell: UITableViewCell, at indexPath: IndexPath) {
@@ -91,6 +92,11 @@ extension NewGameVC: UITableViewDelegate, UITableViewDataSource  {
             tableView.deleteRows(at: [indexPath], with: .middle)
             tableViewHeightConstraint.constant = CGFloat((playerNames.count + 1) * 54 + 45)
             view.setNeedsLayout()
+            
+            if playerNames.isEmpty {
+                startButton.isEnabled = false
+                startButton.alpha     = 0.5
+            }
         }
     }
     
