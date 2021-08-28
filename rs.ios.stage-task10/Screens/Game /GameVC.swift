@@ -72,9 +72,9 @@ class GameVC: UIViewController {
     
     let timeLabel: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont(name: "Nunito-ExtraBold", size: 28)
         lbl.textColor = .white
-        lbl.text = "00:00"
+        lbl.text      = "00:00"
+        lbl.font      = UIFont(name: "Nunito-ExtraBold", size: 28)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()

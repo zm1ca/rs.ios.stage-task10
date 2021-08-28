@@ -19,6 +19,7 @@ extension NewGameVC: UITableViewDelegate, UITableViewDataSource  {
         tableView.layer.cornerRadius = 15
         tableView.separatorColor     = .RSSeparator
         tableView.allowsSelection    = false
+        tableView.estimatedRowHeight = 54
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -82,7 +83,7 @@ extension NewGameVC: UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        54
+        UITableView.automaticDimension
     }
     
     @objc private func deletePlayerIconTapped(sender: UIGestureRecognizer) {

@@ -68,7 +68,8 @@ class NewGameVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tableViewHeightConstraint.constant = CGFloat((playerNames.count + 1) * 54 + 45)
+        let tableViewContentHeight = CGFloat((playerNames.count + 1) * 54 + 45)
+        tableViewHeightConstraint.constant = min(tableViewContentHeight, UIScreen.main.bounds.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom - 285)
         super.viewWillAppear(animated)
     }
     
@@ -96,7 +97,7 @@ class NewGameVC: UIViewController {
             toItem: nil,
             attribute: .notAnAttribute,
             multiplier: 1,
-            constant: CGFloat((playerNames.count + 1) * 54 + 45)
+            constant: 0
         )
         tableViewHeightConstraint.priority = .defaultHigh
         
@@ -109,7 +110,7 @@ class NewGameVC: UIViewController {
             tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 25),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            tableViewHeightConstraint,
+            tableViewHeightConstraint
         ])
     }
 
