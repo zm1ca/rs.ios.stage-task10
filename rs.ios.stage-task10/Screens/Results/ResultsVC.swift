@@ -51,26 +51,27 @@ class ResultsVC: UIViewController {
     
     // MARK: - Configurations
     private func configureRankingsTableView() {
-        rankingsTableView.translatesAutoresizingMaskIntoConstraints = false
-        rankingsTableView.delegate   = self
-        rankingsTableView.dataSource = self
         rankingsTableView.register(RankingsCell.self, forCellReuseIdentifier: RankingsCell.reuseID)
+        rankingsTableView.translatesAutoresizingMaskIntoConstraints = false
+        rankingsTableView.delegate        = self
+        rankingsTableView.dataSource      = self
         rankingsTableView.tableFooterView = UIView()
         rankingsTableView.backgroundColor = .RSBackground
-        rankingsTableView.separatorStyle = .none
+        rankingsTableView.separatorStyle  = .none
         rankingsTableView.isScrollEnabled = false
         rankingsTableView.allowsSelection = false
     }
     
     private func configureTurnsTableView() {
-        turnsTableView.translatesAutoresizingMaskIntoConstraints = false
-        turnsTableView.delegate   = self
-        turnsTableView.dataSource = self
         turnsTableView.register(TurnCell.self, forCellReuseIdentifier: TurnCell.reuseID)
-        turnsTableView.tableFooterView = UIView()
-        turnsTableView.backgroundColor = .RSTable
+        turnsTableView.translatesAutoresizingMaskIntoConstraints = false
+        turnsTableView.delegate           = self
+        turnsTableView.dataSource         = self
+        turnsTableView.tableFooterView    = UIView()
+        turnsTableView.backgroundColor    = .RSTable
         turnsTableView.layer.cornerRadius = 15
-        turnsTableView.separatorColor = .RSSeparator
+        turnsTableView.separatorColor     = .RSSeparator
+        turnsTableView.allowsSelection    = false
     }
     
     

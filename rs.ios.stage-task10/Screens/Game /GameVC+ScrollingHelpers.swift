@@ -23,11 +23,13 @@ extension GameVC {
     }
     
     private func scrollToCurrentPosition(if condition: Bool) {
-        if condition {
-            let newOffset = CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0)
-            collectionView.setContentOffset(newOffset, animated: true)
-        }
+        if condition { scrollToCurrentPosition() }
         updateArrowButtons()
+    }
+    
+    func scrollToCurrentPosition() {
+        let newOffset = CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0)
+        collectionView.setContentOffset(newOffset, animated: true)
     }
     
     

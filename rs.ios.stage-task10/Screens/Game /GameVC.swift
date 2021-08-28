@@ -169,7 +169,11 @@ class GameVC: UIViewController {
     }
     
     @objc private func undoButtonTapped() {
-        print("undo")
+        guard let turnToRevert = turns.popLast() else { return }
+        currentPosition = playerScores.map { $0.0 }.firstIndex(of: turnToRevert.0) ?? 0
+        playerScores[currentPosition].1 -= turnToRevert.1
+        collectionView.reloadItems(at: [IndexPath(row: currentPosition, section: 0)])
+        scrollToCurrentPosition()
     }
     
     @objc private func newGameButtonTapped() {
@@ -190,8 +194,8 @@ class GameVC: UIViewController {
                 if player1.0 < player2.0 {
                     return true
                 }
+                return false
             }
-            return false
         })
 
         resultsVC.turns        = turns
