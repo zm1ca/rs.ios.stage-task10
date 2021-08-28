@@ -74,18 +74,6 @@ class NewGameVC: UIViewController {
     
     
     // MARK: Configurations
-    private func configureTableView() {
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.delegate   = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "PlayerCell")
-        tableView.tableFooterView = UIView()
-        tableView.backgroundColor = .RSTable
-        tableView.layer.cornerRadius = 15
-        tableView.separatorColor = .RSSeparator
-        tableView.setEditing(true, animated: false)
-    }
-    
     private func configureCancelButton() {
         headerView.leftBarButton?.isHidden = (parentVC == nil)
         headerView.leftBarButton?.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)

@@ -8,6 +8,19 @@
 import UIKit
 
 extension NewGameVC: UITableViewDelegate, UITableViewDataSource  {
+    
+    func configureTableView() {
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "PlayerCell")
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate           = self
+        tableView.dataSource         = self
+        tableView.tableFooterView    = UIView()
+        tableView.backgroundColor    = .RSTable
+        tableView.layer.cornerRadius = 15
+        tableView.separatorColor     = .RSSeparator
+        tableView.allowsSelection    = false
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         playerNames.count + 1
     }
@@ -15,23 +28,39 @@ extension NewGameVC: UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlayerCell", for: indexPath)
         cell.backgroundColor = .RSTable
+        cell.imageView?.isUserInteractionEnabled = true
         
         if indexPath.row == playerNames.count {
-            cell.textLabel?.textColor = .RSGreen
-            cell.textLabel?.font      = UIFont(name: "Nunito-SemiBold", size: 16)
-            cell.textLabel?.text      = "Add player"
-            cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: cell.bounds.size.width * 2)
-            return cell
+            applyLastCellConfigurations(to: cell)
         } else {
-            cell.textLabel?.textColor = .white
-            cell.textLabel?.font      = UIFont(name: "Nunito-ExtraBold", size: 20)
-            cell.textLabel?.text      = playerNames[indexPath.row]
-            return cell
+            applyDefaultCellConfigurations(to: cell, at: indexPath)
         }
+        
+        return cell
     }
     
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        indexPath.row == playerNames.count ? .insert : .delete
+    private func applyLastCellConfigurations(to cell: UITableViewCell) {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(addPlayerIconTapped))
+        cell.imageView?.addGestureRecognizer(tap)
+        cell.imageView?.image     = UIImage(named: "add")
+        
+        cell.textLabel?.textColor = .RSGreen
+        cell.textLabel?.font      = UIFont(name: "Nunito-SemiBold", size: 16)
+        cell.textLabel?.text      = "Add player"
+        
+        cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: cell.bounds.size.width * 2)
+    }
+    
+    private func applyDefaultCellConfigurations(to cell: UITableViewCell, at indexPath: IndexPath) {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(deletePlayerIconTapped))
+        cell.imageView?.addGestureRecognizer(tap)
+        cell.imageView?.image     = UIImage(named: "delete")
+        
+        cell.textLabel?.textColor = .white
+        cell.textLabel?.font      = UIFont(name: "Nunito-ExtraBold", size: 20)
+        cell.textLabel?.text      = playerNames[indexPath.row]
+        
+        cell.accessoryView = UIImageView(image: UIImage(named: "sort"))
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -51,24 +80,24 @@ extension NewGameVC: UITableViewDelegate, UITableViewDataSource  {
         45
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        54
+    }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        switch editingStyle {
-        case .delete:
+    @objc private func deletePlayerIconTapped(sender: UIGestureRecognizer) {
+        if let cell = sender.view?.superview?.superview as? UITableViewCell {
+            let indexPath = tableView.indexPath(for: cell)!
             playerNames.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.deleteRows(at: [indexPath], with: .middle)
             tableViewHeightConstraint.constant = CGFloat((playerNames.count + 1) * 54 + 45)
             view.setNeedsLayout()
-        case .insert:
-            let addPlayerVC = AddPlayerVC()
-            addPlayerVC.delegate = self
-            navigationController?.pushViewController(addPlayerVC, animated: true)
-        default: break
         }
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        54
+    @objc private func addPlayerIconTapped() {
+        let addPlayerVC = AddPlayerVC()
+        addPlayerVC.delegate = self
+        navigationController?.pushViewController(addPlayerVC, animated: true)
     }
     
 }
