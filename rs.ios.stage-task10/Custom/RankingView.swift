@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RankingsCell: UITableViewCell {
+class RankingView: UIView {
     
     private var rankLabel: UILabel = {
         let lbl  = UILabel()
@@ -33,12 +33,9 @@ class RankingsCell: UITableViewCell {
         return lbl
     }()
     
-    static let reuseID = "RankingsCell"
-    
-    
     // MARK: - Initialization
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         backgroundColor = .RSBackground
         addSubview(rankLabel)
         addSubview(nameLabel)
@@ -57,8 +54,6 @@ class RankingsCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    // MARK: - Configuration
     func set(rank: Int, for name: String, with score: Int) {
         rankLabel.text = "#\(rank)"
         nameLabel.text = name

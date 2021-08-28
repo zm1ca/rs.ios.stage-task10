@@ -16,17 +16,38 @@ class ResultsVC: UIViewController {
     let headerView = HeaderView(title: "Results",
                                 leftBarButton: BarButton(title: "New Game"),
                                 rightBarButton: BarButton(title: "Resume"))
+
+    var turnsTableView = UITableView(frame: .zero, style: .plain)
+    let collectionView: UICollectionView = {
+        let flowLayout                = UICollectionViewFlowLayout()
+        flowLayout.sectionInset       = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        flowLayout.itemSize           = CGSize(width: UIScreen.main.bounds.width - 40, height: 150)
+        flowLayout.minimumLineSpacing = 40
+        flowLayout.scrollDirection    = .horizontal
+        
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        cv.register(RankingsCollectionCell.self, forCellWithReuseIdentifier: RankingsCollectionCell.reuseID)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.showsHorizontalScrollIndicator = false
+        cv.backgroundColor = .RSBackground
+        cv.isScrollEnabled = true
+        
+        return cv
+    }()
     
-    var rankingsTableView = UITableView(frame: .zero, style: .plain)
-    var turnsTableView    = UITableView(frame: .zero, style: .plain)
+    let pageControl = UIPageControl()
 
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Results"
-        view.backgroundColor = .RSBackground
+        view.backgroundColor      = .RSBackground
+        pageControl.numberOfPages = (playerScores.count + 2) / 3
+        pageControl.currentPage   = 0
+        pageControl.isHidden      = (pageControl.numberOfPages < 2)
+        collectionView.delegate   = self
+        collectionView.dataSource = self
         configureBarButtons()
-        configureRankingsTableView()
         configureTurnsTableView()
         layoutUI()
     }
@@ -50,18 +71,6 @@ class ResultsVC: UIViewController {
     
     
     // MARK: - Configurations
-    private func configureRankingsTableView() {
-        rankingsTableView.register(RankingsCell.self, forCellReuseIdentifier: RankingsCell.reuseID)
-        rankingsTableView.translatesAutoresizingMaskIntoConstraints = false
-        rankingsTableView.delegate        = self
-        rankingsTableView.dataSource      = self
-        rankingsTableView.tableFooterView = UIView()
-        rankingsTableView.backgroundColor = .RSBackground
-        rankingsTableView.separatorStyle  = .none
-        rankingsTableView.isScrollEnabled = false
-        rankingsTableView.allowsSelection = false
-    }
-    
     private func configureTurnsTableView() {
         turnsTableView.register(TurnCell.self, forCellReuseIdentifier: TurnCell.reuseID)
         turnsTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -78,14 +87,18 @@ class ResultsVC: UIViewController {
     // MARK: - Layout
     private func layoutUI() {
         headerView.addSubviewAndConstraintByDefault(at: view)
-        view.addSubviews(rankingsTableView, turnsTableView)
+        view.addSubviews(collectionView, turnsTableView, pageControl)
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            rankingsTableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 18),
-            rankingsTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            rankingsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            rankingsTableView.heightAnchor.constraint(equalToConstant: CGFloat(rankingsTableView.numberOfRows(inSection: 0) * 50)),
+            collectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 18),
+            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            collectionView.heightAnchor.constraint(equalToConstant: 150),
             
-            turnsTableView.topAnchor.constraint(equalTo: rankingsTableView.bottomAnchor, constant: 25),
+            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            pageControl.topAnchor.constraint(equalTo: collectionView.bottomAnchor),
+    
+            turnsTableView.topAnchor.constraint(equalTo: pageControl.bottomAnchor),
             turnsTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             turnsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             turnsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
