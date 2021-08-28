@@ -13,15 +13,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        configureAppearance()
+        configureStatusBar()
         setupWindow()
         return true
     }
 
-    private func configureAppearance() {
-        UIApplication.shared.statusBarStyle = .lightContent //fix
-        
-        
+    private func configureStatusBar() {
+        if let statusBar = UIApplication.shared.value(forKey: "statusBar") as? UIView {
+            statusBar.backgroundColor = .RSBackground
+            statusBar.setValue(UIColor.white, forKey: "foregroundColor")
+        }
     }
     
     private func setupWindow() {
