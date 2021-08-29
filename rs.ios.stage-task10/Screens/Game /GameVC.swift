@@ -32,6 +32,7 @@ class GameVC: UIViewController {
     let prevButton    = RSButton(imageName: "previous")
     let scoreButtons  = [-10, -5, -1, +5, +10].map { IncrementButton(value: $0, fontSize: 25) }
     let plusOneButton = IncrementButton(value: 1, fontSize: 40)
+    let scoreBubble    = ScoreBubble()
     
     let navStackView: UIStackView = {
         let sv = UIStackView()
@@ -68,8 +69,9 @@ class GameVC: UIViewController {
         title = "Game"
         view.backgroundColor = .RSBackground
         
-        collectionView.delegate = self
+        collectionView.delegate   = self
         collectionView.dataSource = self
+        scoreBubble.delegate      = self
         
         configureButtonTargets()
         configureTargetsForIncrementButtons()
@@ -187,11 +189,7 @@ class GameVC: UIViewController {
     }
     
     @objc private func incrementButtonTapped(sender: IncrementButton) {
-        let upd = (playerScores[currentPosition].name, playerScores[currentPosition].score + sender.value!)
-        playerScores.remove(at: currentPosition)
-        playerScores.insert(upd, at: currentPosition)
-        collectionView.reloadItems(at: [IndexPath(row: currentPosition, section: 0)])
-        turns.append((playerScores[currentPosition].name, currentPosition, sender.value!))
+        scoreBubble.addValue(sender.value!)
     }
     
     private func centralizeNavScrollView() {
@@ -205,7 +203,7 @@ class GameVC: UIViewController {
         let buttonsStackView = incrementButtonsStackView()
         headerView.placeByDefault(at: view)
         headerView.addSubviews(diceButton)
-        view.addSubviews(scrollView, timerView, collectionView, undoButton, navStackView, plusOneButton, buttonsStackView, nextButton, prevButton)
+        view.addSubviews(scrollView, timerView, collectionView, undoButton, navStackView, plusOneButton, buttonsStackView, nextButton, prevButton, scoreBubble)
         configureNavStackView()
         
         NSLayoutConstraint.activate([
@@ -252,6 +250,10 @@ class GameVC: UIViewController {
             timerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             timerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             timerView.heightAnchor.constraint(equalToConstant: 25),
+            
+            scoreBubble.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -(UIConstants.sideInset + 16)),
+            scoreBubble.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
+            scoreBubble.widthAnchor.constraint(equalToConstant: UIConstants.playerCellWidth * 0.3)
         ])
     }
     

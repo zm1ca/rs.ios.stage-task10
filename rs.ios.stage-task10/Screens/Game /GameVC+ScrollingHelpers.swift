@@ -11,12 +11,16 @@ extension GameVC {
     
     //MARK: - Scrolling
     @objc func scrollToNextPlayer(sender: Any) {
+        applyValueFromScoreBubble()
+        
         currentPosition += 1
         let condition = (sender is UIButton) ? !reachedRightBorder() : true
         scrollToCurrentPosition(if: condition)
     }
     
     @objc func scrollToPrevPlayer(sender: Any) {
+        applyValueFromScoreBubble()
+        
         currentPosition -= 1
         let condition = (sender is UIButton) ? !reachedLeftBorder() : true
         scrollToCurrentPosition(if: condition)
@@ -32,6 +36,13 @@ extension GameVC {
             x: CGFloat(currentPosition) * UIConstants.singleCellOffset,
             y: 0)
         collectionView.setContentOffset(newOffset, animated: true)
+    }
+    
+    private func applyValueFromScoreBubble() {
+        if scoreBubble.isPresented {
+            let bubbleLastValue = scoreBubble.reset()
+            updateCurrentPlayerCell(with: bubbleLastValue)
+        }
     }
     
     

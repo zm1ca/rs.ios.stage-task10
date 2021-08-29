@@ -32,7 +32,6 @@ class PlayerScoreCell: UICollectionViewCell {
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .RSTable
         configure()
         layoutUI()
     }
@@ -49,8 +48,8 @@ class PlayerScoreCell: UICollectionViewCell {
     }
     
     private func configure() {
-        layer.cornerRadius = 15
-        backgroundColor    = .RSTable
+        layer.cornerRadius  = 15
+        backgroundColor     = .RSTable
     }
     
     private func layoutUI() {
