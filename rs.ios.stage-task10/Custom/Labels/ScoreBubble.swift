@@ -21,20 +21,20 @@ class ScoreBubble: UILabel {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        heightAnchor.constraint(equalTo: widthAnchor).isActive = true
-        layer.cornerRadius = layer.frame.height / 2
+        layer.cornerRadius = layer.bounds.height / 2
         clipsToBounds = true
-        minimumScaleFactor = 0.7
-        adjustsFontSizeToFitWidth = true
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        heightAnchor.constraint(equalTo: widthAnchor).isActive = true
         alpha           = 0
         backgroundColor = .RSBackground
-        font            = UIFont(name: "Nunito-ExtraBold", size: 25)
-        textColor       = .RSSelectedWhite
+        font            = UIFont(name: "Nunito-ExtraBold", size: 30)
+        textColor       = .white
         textAlignment   = .center
+        minimumScaleFactor = 0.7
+        adjustsFontSizeToFitWidth = true
         translatesAutoresizingMaskIntoConstraints = false
     }
     
@@ -44,9 +44,15 @@ class ScoreBubble: UILabel {
     
     func addValue(_ increment: Int) {
         isPresented = true
-        UIView.animate(withDuration: 0.3) {
-            self.alpha = 0.9
-        }
+        
+        UIView.animate(withDuration: 0.1, animations: {
+            self.alpha = 0.95
+            self.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.25) {
+                self.transform = CGAffineTransform.identity
+            }
+        })
         
         timer.invalidate()
                 
