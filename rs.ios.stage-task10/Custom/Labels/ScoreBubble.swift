@@ -24,6 +24,8 @@ class ScoreBubble: UILabel {
         heightAnchor.constraint(equalTo: widthAnchor).isActive = true
         layer.cornerRadius = layer.frame.height / 2
         clipsToBounds = true
+        minimumScaleFactor = 0.7
+        adjustsFontSizeToFitWidth = true
     }
 
     override init(frame: CGRect) {
@@ -43,7 +45,7 @@ class ScoreBubble: UILabel {
     func addValue(_ increment: Int) {
         isPresented = true
         UIView.animate(withDuration: 0.3) {
-            self.alpha = 0.85
+            self.alpha = 0.9
         }
         
         timer.invalidate()

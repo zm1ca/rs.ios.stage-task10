@@ -32,6 +32,7 @@ extension GameVC {
     }
     
     func scrollToCurrentPosition() {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         let newOffset = CGPoint(
             x: CGFloat(currentPosition) * UIConstants.singleCellOffset,
             y: 0)

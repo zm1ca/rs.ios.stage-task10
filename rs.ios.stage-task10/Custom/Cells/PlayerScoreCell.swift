@@ -11,17 +11,22 @@ class PlayerScoreCell: UICollectionViewCell {
     
     let playerNameLabel: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont(name: "Nunito-ExtraBold", size: 28)
-        lbl.textColor = .RSGolden
-        lbl.textAlignment = .center
+        lbl.font               = UIFont(name: "Nunito-ExtraBold", size: 28)
+        lbl.textColor          = .RSGolden
+        lbl.textAlignment      = .center
+        lbl.minimumScaleFactor = 0.7
+        lbl.adjustsFontSizeToFitWidth = true
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
     
     let scoreLabel: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont(name: "Nunito-ExtraBold", size: 100)
-        lbl.textColor = .RSNearWhite
+        lbl.font               = UIFont(name: "Nunito-ExtraBold", size: 100)
+        lbl.textColor          = .RSNearWhite
+        lbl.textAlignment      = .center
+        lbl.minimumScaleFactor = 0.7
+        lbl.adjustsFontSizeToFitWidth = true
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -60,7 +65,8 @@ class PlayerScoreCell: UICollectionViewCell {
             playerNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
             scoreLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 20),
-            scoreLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            scoreLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            scoreLabel.trailingAnchor .constraint(equalTo: trailingAnchor, constant: -8),
         ])
     }
 }

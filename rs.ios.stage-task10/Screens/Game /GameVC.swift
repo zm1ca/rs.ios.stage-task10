@@ -18,7 +18,6 @@ class GameVC: UIViewController {
     }
     var playerScores    = [(name: String, score: Int)]()
     var turns           = [(name: String, position: Int, score: Int)]()
-    let generator       = UINotificationFeedbackGenerator()
     
     
     //MARK: Views
@@ -32,7 +31,7 @@ class GameVC: UIViewController {
     let prevButton    = RSButton(imageName: "previous")
     let scoreButtons  = [-10, -5, -1, +5, +10].map { IncrementButton(value: $0, fontSize: 25) }
     let plusOneButton = IncrementButton(value: 1, fontSize: 40)
-    let scoreBubble    = ScoreBubble()
+    let scoreBubble   = ScoreBubble()
     
     let navStackView: UIStackView = {
         let sv = UIStackView()
@@ -146,7 +145,7 @@ class GameVC: UIViewController {
         diceView.pinToEdges(of: view)
         diceView.diceImageView.image = UIImage(named: "dice_\(Int.random(in: 1...6))")
         diceView.shakeDice()
-        generator.notificationOccurred(.success)
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
     }
     
     @objc private func undoButtonTapped() {
