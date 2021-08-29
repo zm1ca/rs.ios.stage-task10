@@ -22,7 +22,6 @@ class GameVC: UIViewController {
                                 rightBarButton: BarButton(title: "Results"))
     let timerView     = TimerView()
     let diceButton    = RSButton(imageNamed: "dice_4")
-    let diceView      = DiceView()
     let undoButton    = RSButton(imageNamed: "undo")
     let nextButton    = RSButton(imageNamed: "next")
     let prevButton    = RSButton(imageNamed: "previous")
@@ -109,7 +108,9 @@ class GameVC: UIViewController {
     
     // MARK: - Action Methods
     @objc private func diceButtonTapped() {
-        diceView.isHidden = false
+        let diceView = DiceView()
+        view.addSubview(diceView)
+        diceView.pinToEdges(of: view)
         diceView.diceImageView.image = UIImage(named: "dice_\(Int.random(in: 1...6))")
         diceView.shakeDice()
         generator.notificationOccurred(.success)
@@ -156,8 +157,7 @@ class GameVC: UIViewController {
         let stackView = incrementButtonsStackView()
         headerView.placeByDefault(at: view)
         headerView.addSubviews(diceButton)
-        view.addSubviews(timerView, collectionView, undoButton, plusOneButton, stackView, nextButton, prevButton, diceView)
-        diceView.pinToEdges(of: view)
+        view.addSubviews(timerView, collectionView, undoButton, plusOneButton, stackView, nextButton, prevButton)
         
         NSLayoutConstraint.activate([
             diceButton.heightAnchor.constraint(equalToConstant: 30),

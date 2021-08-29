@@ -10,7 +10,8 @@ import UIKit
 class DiceView: UIView {
     
     let diceImageView = UIImageView()
-
+    
+    //MARK: Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -20,22 +21,29 @@ class DiceView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    //MARK: API
+    func shakeDice() {
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+        animation.duration = 0.3
+        animation.values   = [-15.0, 15.0, -7.5, 7.5, -2.5, 2.5, 0]
+        diceImageView.layer.add(animation, forKey: "shake")
+    }
+    
+    
+    //MARK: Configurations
     private func configure() {
-        isHidden = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(hideView))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(removeFromSuperview))
         addGestureRecognizer(tap)
-        configureBlurEffect()
+        blurBackground()
         layoutUI()
     }
     
-    @objc private func hideView() {
-        isHidden = true
-    }
-    
-    private func configureBlurEffect() {
-        let blurEffect = UIBlurEffect(style: .dark)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.alpha = 0.9
+    private func blurBackground() {
+        let blurEffect       = UIBlurEffect(style: .dark)
+        let blurEffectView   = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.alpha = 0.93
         blurEffectView.frame = bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(blurEffectView)
@@ -50,13 +58,5 @@ class DiceView: UIView {
             diceImageView.widthAnchor.constraint(equalToConstant: 120),
             diceImageView.heightAnchor.constraint(equalTo: diceImageView.widthAnchor),
         ])
-    }
-    
-    func shakeDice() {
-        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
-        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
-        animation.duration = 0.3
-        animation.values = [-15.0, 15.0, -7.5, 7.5, -2.5, 2.5, 0]
-        diceImageView.layer.add(animation, forKey: "shake")
     }
 }
