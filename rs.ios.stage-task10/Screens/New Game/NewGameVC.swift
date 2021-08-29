@@ -37,7 +37,8 @@ class NewGameVC: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         let tableViewContentHeight = CGFloat((playerNames.count + 2) * 54)
-        tableViewHeightConstraint.constant = min(tableViewContentHeight, UIScreen.main.bounds.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom - 335)
+        let modalCompensation: CGFloat = (parentVC == nil) ? 54 : 0
+        tableViewHeightConstraint.constant = min(tableViewContentHeight, UIScreen.main.bounds.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom - 334 + modalCompensation)
     }
     
     

@@ -216,11 +216,7 @@ class GameVC: UIViewController {
         headerView.placeByDefault(at: view)
         headerView.addSubviews(diceButton)
         view.addSubviews(scrollView, timerView, collectionView, undoButton, navStackView, plusOneButton, buttonsStackView, nextButton, prevButton)
-        
-        scrollView.addSubview(navStackView)
-        navStackView.pinToEdges(of: scrollView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsHorizontalScrollIndicator = false
+        configureNavStackView()
         
         NSLayoutConstraint.activate([
             diceButton.heightAnchor.constraint(equalToConstant: 30),
@@ -267,6 +263,14 @@ class GameVC: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: plusOneButton.topAnchor, constant: -28),
             collectionView.heightAnchor.constraint(equalToConstant: 300),
         ])
+    }
+    
+    private func configureNavStackView() {
+        scrollView.addSubview(navStackView)
+        navStackView.pinToEdges(of: scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.isScrollEnabled = false
     }
     
     private func incrementButtonsStackView() -> UIStackView {

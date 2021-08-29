@@ -87,7 +87,6 @@ extension NewGameVC: UITableViewDelegate, UITableViewDataSource  {
             let indexPath = tableView.indexPath(for: cell)!
             playerNames.remove(at: indexPath.row - 1)
             tableView.deleteRows(at: [indexPath], with: .middle)
-            tableViewHeightConstraint.constant = CGFloat((playerNames.count + 2) * 54)
             view.setNeedsLayout()
             
             if playerNames.isEmpty {
