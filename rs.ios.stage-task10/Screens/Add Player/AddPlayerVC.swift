@@ -15,6 +15,8 @@ class AddPlayerVC: UIViewController {
     
     var delegate: PlayerAddable!
     
+    
+    //MARK: - Views
     let headerView = HeaderView(title: "Add Player",
                                 leftBarButton: BarButton(title: "Back"),
                                 rightBarButton: BarButton(title: "Add"))

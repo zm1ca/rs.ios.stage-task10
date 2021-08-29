@@ -10,6 +10,7 @@ import UIKit
 extension NewGameVC: PlayerAddable {
     func addPlayer(named name: String) {
         playerNames.append(name)
+        view.setNeedsLayout()
         tableView.reloadData()
         startButton.isEnabled = true
         startButton.alpha     = 1
