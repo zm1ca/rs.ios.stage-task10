@@ -41,9 +41,8 @@ class DiceView: UIView {
     }
     
     private func blurBackground() {
-        let blurEffect       = UIBlurEffect(style: .dark)
+        let blurEffect       = UIBlurEffect(style: .regular)
         let blurEffectView   = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.alpha = 0.93
         blurEffectView.frame = bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(blurEffectView)
