@@ -42,6 +42,7 @@
 		408E0CF626DB7CB200EC46A6 /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0CF526DB7CB200EC46A6 /* HeaderCell.swift */; };
 		408E0CFB26DB8E7F00EC46A6 /* DiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0CFA26DB8E7F00EC46A6 /* DiceView.swift */; };
 		408E0CFD26DB918600EC46A6 /* StartGameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0CFC26DB918600EC46A6 /* StartGameButton.swift */; };
+		408E0CFF26DB996F00EC46A6 /* NewGameVC+PlayerAddable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0CFE26DB996F00EC46A6 /* NewGameVC+PlayerAddable.swift */; };
 		40A578E426D8CDFE002E4CB7 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E326D8CDFE002E4CB7 /* HeaderView.swift */; };
 		40A578E626D8D6A4002E4CB7 /* BarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E526D8D6A4002E4CB7 /* BarButton.swift */; };
 		40A578E826D8D807002E4CB7 /* ResultsVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E726D8D807002E4CB7 /* ResultsVC+TableView.swift */; };
@@ -88,6 +89,7 @@
 		408E0CF526DB7CB200EC46A6 /* HeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
 		408E0CFA26DB8E7F00EC46A6 /* DiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceView.swift; sourceTree = "<group>"; };
 		408E0CFC26DB918600EC46A6 /* StartGameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartGameButton.swift; sourceTree = "<group>"; };
+		408E0CFE26DB996F00EC46A6 /* NewGameVC+PlayerAddable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewGameVC+PlayerAddable.swift"; sourceTree = "<group>"; };
 		40A578E326D8CDFE002E4CB7 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		40A578E526D8D6A4002E4CB7 /* BarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarButton.swift; sourceTree = "<group>"; };
 		40A578E726D8D807002E4CB7 /* ResultsVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResultsVC+TableView.swift"; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 			children = (
 				401B117B26D66B3300C9B5E1 /* NewGameVC.swift */,
 				408815A126D79BE900DD0CBC /* NewGameVC+TableView.swift */,
+				408E0CFE26DB996F00EC46A6 /* NewGameVC+PlayerAddable.swift */,
 			);
 			path = "New Game";
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 				408E0CF226DB64D000EC46A6 /* TimerView.swift in Sources */,
 				4046BD3726D7C355008692DA /* TurnCell.swift in Sources */,
 				401B117C26D66B3300C9B5E1 /* NewGameVC.swift in Sources */,
+				408E0CFF26DB996F00EC46A6 /* NewGameVC+PlayerAddable.swift in Sources */,
 				40A578EA26D8DFD1002E4CB7 /* UIView+Ext.swift in Sources */,
 				408815A526D7AEBA00DD0CBC /* PlayerScoreCell.swift in Sources */,
 				40A578E826D8D807002E4CB7 /* ResultsVC+TableView.swift in Sources */,

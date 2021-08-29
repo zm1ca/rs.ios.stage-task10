@@ -10,7 +10,7 @@ import UIKit
 class NewGameVC: UIViewController {
     
     weak var parentVC: GameVC?
-    var playerNames = ["Me", "You", "Kate", "Tim", "Josua"]
+    var playerNames = ["Me", "You"]
     var tableViewHeightConstraint: NSLayoutConstraint!
     
     //MARK: Views
@@ -34,10 +34,10 @@ class NewGameVC: UIViewController {
         layoutUI()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         let tableViewContentHeight = CGFloat((playerNames.count + 2) * 54)
         tableViewHeightConstraint.constant = min(tableViewContentHeight, UIScreen.main.bounds.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom - 335)
-        super.viewWillAppear(animated)
     }
     
     
@@ -95,13 +95,3 @@ class NewGameVC: UIViewController {
     }
 
 }
-
-extension NewGameVC: PlayerAddable {
-    func addPlayer(named name: String) {
-        playerNames.append(name)
-        tableView.reloadData()
-        startButton.isEnabled = true
-        startButton.alpha     = 1
-    }
-}
-

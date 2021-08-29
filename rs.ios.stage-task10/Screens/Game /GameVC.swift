@@ -126,6 +126,7 @@ class GameVC: UIViewController {
     @objc private func newGameButtonTapped() {
         let newGameVC      = NewGameVC()
         newGameVC.parentVC = self
+        newGameVC.playerNames = playerScores.map { $0.name }
         let navVC = UINavigationController(rootViewController: newGameVC)
         navVC.isNavigationBarHidden = true
         present(navVC, animated: true)

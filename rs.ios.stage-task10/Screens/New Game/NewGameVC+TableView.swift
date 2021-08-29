@@ -85,9 +85,9 @@ extension NewGameVC: UITableViewDelegate, UITableViewDataSource  {
     @objc private func deletePlayerIconTapped(sender: UIGestureRecognizer) {
         if let cell = sender.view?.superview?.superview as? UITableViewCell {
             let indexPath = tableView.indexPath(for: cell)!
-            playerNames.remove(at: indexPath.row)
+            playerNames.remove(at: indexPath.row - 1)
             tableView.deleteRows(at: [indexPath], with: .middle)
-            tableViewHeightConstraint.constant = CGFloat((playerNames.count + 1) * 54 + 45)
+            tableViewHeightConstraint.constant = CGFloat((playerNames.count + 2) * 54)
             view.setNeedsLayout()
             
             if playerNames.isEmpty {

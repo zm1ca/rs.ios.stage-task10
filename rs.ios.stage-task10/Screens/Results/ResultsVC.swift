@@ -10,7 +10,7 @@ import UIKit
 class ResultsVC: UIViewController {
     
     weak var parentVC: GameVC!
-    var playerScores: [(String, Int)]!
+    var playerScores: [(name: String, score: Int)]!
     var turns:        [(String, Int)]!
     
     let headerView = HeaderView(title: "Results",
@@ -61,7 +61,8 @@ class ResultsVC: UIViewController {
     
     @objc private func newGameButtonTapped() {
         let newGameVC = NewGameVC()
-        newGameVC.parentVC = parentVC
+        newGameVC.parentVC    = parentVC
+        newGameVC.playerNames = playerScores.map { $0.name }
         navigationController?.pushViewController(newGameVC, animated: true)
     }
     
