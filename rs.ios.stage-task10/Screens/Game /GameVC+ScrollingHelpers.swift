@@ -28,7 +28,9 @@ extension GameVC {
     }
     
     func scrollToCurrentPosition() {
-        let newOffset = CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0)
+        let newOffset = CGPoint(
+            x: CGFloat(currentPosition) * UIConstants.singleCellOffset,
+            y: 0)
         collectionView.setContentOffset(newOffset, animated: true)
     }
     
@@ -47,7 +49,7 @@ extension GameVC {
     func reachedRightBorder() -> Bool {
         if currentPosition > playerScores.count - 1 {
             currentPosition = 0
-            collectionView.setContentOffset(CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0), animated: true)
+            scrollToCurrentPosition()
             return true
         }
         return false
@@ -56,7 +58,7 @@ extension GameVC {
     func reachedLeftBorder() -> Bool {
         if currentPosition < 0 {
             currentPosition = playerScores.count - 1
-            collectionView.setContentOffset(CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0), animated: true)
+            scrollToCurrentPosition()
             return true
         }
         return false

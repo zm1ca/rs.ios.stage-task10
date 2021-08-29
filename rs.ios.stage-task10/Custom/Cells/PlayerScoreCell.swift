@@ -54,14 +54,13 @@ class PlayerScoreCell: UICollectionViewCell {
     }
     
     private func layoutUI() {
-        addSubview(playerNameLabel)
-        addSubview(scoreLabel)
+        addSubviews(playerNameLabel, scoreLabel)
         NSLayoutConstraint.activate([
             playerNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 24),
             playerNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             playerNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
-            scoreLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -60),
+            scoreLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 20),
             scoreLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])
     }

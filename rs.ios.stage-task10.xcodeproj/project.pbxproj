@@ -44,6 +44,7 @@
 		408E0CFD26DB918600EC46A6 /* StartGameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0CFC26DB918600EC46A6 /* StartGameButton.swift */; };
 		408E0CFF26DB996F00EC46A6 /* NewGameVC+PlayerAddable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0CFE26DB996F00EC46A6 /* NewGameVC+PlayerAddable.swift */; };
 		408E0D0126DBA46200EC46A6 /* SingleLetterLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0D0026DBA46200EC46A6 /* SingleLetterLabel.swift */; };
+		408E0D0426DBD22600EC46A6 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0D0326DBD22600EC46A6 /* UIConstants.swift */; };
 		40A578E426D8CDFE002E4CB7 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E326D8CDFE002E4CB7 /* HeaderView.swift */; };
 		40A578E626D8D6A4002E4CB7 /* BarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E526D8D6A4002E4CB7 /* BarButton.swift */; };
 		40A578E826D8D807002E4CB7 /* ResultsVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E726D8D807002E4CB7 /* ResultsVC+TableView.swift */; };
@@ -92,6 +93,7 @@
 		408E0CFC26DB918600EC46A6 /* StartGameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartGameButton.swift; sourceTree = "<group>"; };
 		408E0CFE26DB996F00EC46A6 /* NewGameVC+PlayerAddable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewGameVC+PlayerAddable.swift"; sourceTree = "<group>"; };
 		408E0D0026DBA46200EC46A6 /* SingleLetterLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLetterLabel.swift; sourceTree = "<group>"; };
+		408E0D0326DBD22600EC46A6 /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		40A578E326D8CDFE002E4CB7 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		40A578E526D8D6A4002E4CB7 /* BarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarButton.swift; sourceTree = "<group>"; };
 		40A578E726D8D807002E4CB7 /* ResultsVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResultsVC+TableView.swift"; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 		401B118B26D672ED00C9B5E1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				408E0D0326DBD22600EC46A6 /* UIConstants.swift */,
 				401B117726D66B3300C9B5E1 /* AppDelegate.swift */,
 				401B118226D66B3600C9B5E1 /* LaunchScreen.storyboard */,
 				401B118526D66B3600C9B5E1 /* Info.plist */,
@@ -394,6 +397,7 @@
 				4046BD3926D7D9CE008692DA /* IncrementButton.swift in Sources */,
 				40A578F526D9347A002E4CB7 /* GameVC+ScrollingHelpers.swift in Sources */,
 				40A578E426D8CDFE002E4CB7 /* HeaderView.swift in Sources */,
+				408E0D0426DBD22600EC46A6 /* UIConstants.swift in Sources */,
 				40A578E626D8D6A4002E4CB7 /* BarButton.swift in Sources */,
 				408815A226D79BE900DD0CBC /* NewGameVC+TableView.swift in Sources */,
 				4088159E26D78A6800DD0CBC /* GameVC.swift in Sources */,

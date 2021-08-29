@@ -11,9 +11,10 @@ class GameVC: UIViewController {
     
     var currentPosition = 0 {
         didSet {
-            updateNavStackView()
+            updateNavStackViewOffset()
             timerView.reset()
             centralizeNavScrollView()
+            #warning("Scroll to current pos")
         }
     }
     var playerScores    = [(name: String, score: Int)]()
@@ -47,8 +48,8 @@ class GameVC: UIViewController {
 
     let collectionView: UICollectionView = {
         let flowLayout                = UICollectionViewFlowLayout()
-        flowLayout.sectionInset       = UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 60)
-        flowLayout.itemSize           = CGSize(width: UIScreen.main.bounds.width - 120, height: 300)
+        flowLayout.sectionInset       = UIEdgeInsets(top: 0, left: UIConstants.sideInset, bottom: 0, right: UIConstants.sideInset)
+        flowLayout.itemSize           = CGSize(width: UIConstants.playerCellWidth, height: UIConstants.playerCellHeight)
         flowLayout.minimumLineSpacing = 20
         flowLayout.scrollDirection    = .horizontal
         
@@ -99,7 +100,10 @@ class GameVC: UIViewController {
         playerScores.removeAll()
         playerNames.forEach { playerScores.append(($0, 0)) }
         collectionView.reloadData()
-        
+        populateNavScrollView()
+    }
+    
+    private func populateNavScrollView() {
         for view in navStackView.arrangedSubviews {
             view.removeFromSuperview()
         }
@@ -109,10 +113,10 @@ class GameVC: UIViewController {
             self.navStackView.addArrangedSubview(label)
             label.widthAnchor.constraint(equalToConstant: 20).isActive = true
         }
-        updateNavStackView()
+        updateNavStackViewOffset()
     }
     
-    func updateNavStackView() {
+    func updateNavStackViewOffset() {
         for index in 0..<playerScores.map({ $0.name }).count {
             let label = self.navStackView.arrangedSubviews[index] as! SingleLetterLabel
             label.textColor = (index == currentPosition) ? .RSSelectedWhite : .RSTable
@@ -224,11 +228,6 @@ class GameVC: UIViewController {
             diceButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
             diceButton.centerYAnchor.constraint(equalTo: headerView.titleLabel.centerYAnchor),
             
-            timerView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 0),
-            timerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            timerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            timerView.heightAnchor.constraint(equalToConstant: 25),
-            
             undoButton.heightAnchor.constraint(equalToConstant: 20),
             undoButton.widthAnchor.constraint(equalToConstant: 15),
             undoButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
@@ -261,7 +260,12 @@ class GameVC: UIViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: plusOneButton.topAnchor, constant: -28),
-            collectionView.heightAnchor.constraint(equalToConstant: 300),
+            collectionView.heightAnchor.constraint(equalToConstant: UIConstants.playerCellHeight),
+            
+            timerView.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -16),
+            timerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            timerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            timerView.heightAnchor.constraint(equalToConstant: 25),
         ])
     }
     
