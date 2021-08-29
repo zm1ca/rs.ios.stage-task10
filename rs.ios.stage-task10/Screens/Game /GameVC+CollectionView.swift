@@ -13,7 +13,7 @@ extension GameVC: UICollectionViewDataSource, UICollectionViewDelegate {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlayerScoreCell.reuseID, for: indexPath) as! PlayerScoreCell
         cell.set(with: playerScores[indexPath.row].0, and: playerScores[indexPath.row].1)
         
-        let previousSwipe = UISwipeGestureRecognizer(target: self, action: #selector(scrollToPreviousPlayer))
+        let previousSwipe = UISwipeGestureRecognizer(target: self, action: #selector(scrollToPrevPlayer))
         let nextSwipe     = UISwipeGestureRecognizer(target: self, action: #selector(scrollToNextPlayer))
         
         previousSwipe.direction = .right

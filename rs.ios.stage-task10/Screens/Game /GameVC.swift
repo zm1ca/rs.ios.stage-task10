@@ -10,59 +10,25 @@ import UIKit
 class GameVC: UIViewController {
     
     var currentPosition = 0
+    var playerScores    = [(name: String, score: Int)]()
+    var turns           = [(String, Int)]()
+    let generator       = UINotificationFeedbackGenerator()
     
-    var playerScores = [(name: String, score: Int)]()
-    var turns        = [(String, Int)]()
     
-    let timerView = TimerView()
-    
-    private let generator = UINotificationFeedbackGenerator()
-    let diceView = DiceView()
+    //MARK: Views
     
     let headerView = HeaderView(title: "Game",
                                 leftBarButton: BarButton(title: "New Game"),
                                 rightBarButton: BarButton(title: "Results"))
-    
-    let diceButton: UIButton = {
-        let btn = UIButton()
-        btn.setImage(UIImage(named: "dice_4"), for: .normal)
-        btn.layer.cornerRadius = 5
-        btn.addTarget(self, action: #selector(diceButtonTapped), for: .touchUpInside)
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        return btn
-    }()
-    
-    let undoButton: UIButton = {
-        let btn = UIButton()
-        btn.setImage(UIImage(named: "undo"), for: .normal)
-        btn.addTarget(self, action: #selector(undoButtonTapped), for: .touchUpInside)
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.adjustsImageWhenHighlighted = false
-        return btn
-    }()
-    
-    let incrementButtons = [-10, -5, -1, +5, +10].map { IncrementButton(value: $0, fontSize: 25) }
-    let plusOneButton    = IncrementButton(value: 1, fontSize: 40)
-    
-    let nextButton: UIButton = {
-        let btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setImage(UIImage(named: "next"), for: .normal)
-        btn.backgroundColor = .clear
-        btn.addTarget(self, action: #selector(scrollToNextPlayer), for: .touchUpInside)
-        btn.adjustsImageWhenHighlighted = false
-        return btn
-    }()
-    
-    let previousButton: UIButton = {
-        let btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setImage(UIImage(named: "previous"), for: .normal)
-        btn.backgroundColor = .clear
-        btn.addTarget(self, action: #selector(scrollToPreviousPlayer), for: .touchUpInside)
-        return btn
-    }()
-    
+    let timerView     = TimerView()
+    let diceButton    = RSButton(imageNamed: "dice_4")
+    let diceView      = DiceView()
+    let undoButton    = RSButton(imageNamed: "undo")
+    let nextButton    = RSButton(imageNamed: "next")
+    let prevButton    = RSButton(imageNamed: "previous")
+    let scoreButtons  = [-10, -5, -1, +5, +10].map { IncrementButton(value: $0, fontSize: 25) }
+    let plusOneButton = IncrementButton(value: 1, fontSize: 40)
+
     let collectionView: UICollectionView = {
         let flowLayout                = UICollectionViewFlowLayout()
         flowLayout.sectionInset       = UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 60)
@@ -89,7 +55,7 @@ class GameVC: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        configureBarButtons()
+        configureButtonTargets()
         configureTargetsForIncrementButtons()
         layoutUI()
         updateArrowButtons()
@@ -103,7 +69,7 @@ class GameVC: UIViewController {
     
     
     //MARK: - Public
-    func configure(with playerNames: [String]) {
+    func setUpNewGame(with playerNames: [String]) {
         currentPosition = 0
         scrollToCurrentPosition()
         timerView.reset()
@@ -115,13 +81,17 @@ class GameVC: UIViewController {
     
     
     // MARK: - Configurations for Buttons
-    private func configureBarButtons() {
+    private func configureButtonTargets() {
         headerView.leftBarButton?.addTarget(self, action: #selector(newGameButtonTapped), for: .touchUpInside)
         headerView.rightBarButton?.addTarget(self, action: #selector(resultsButtonTapped), for: .touchUpInside)
+        diceButton.addTarget(self, action: #selector(diceButtonTapped),   for: .touchUpInside)
+        undoButton.addTarget(self, action: #selector(undoButtonTapped),   for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(scrollToNextPlayer), for: .touchUpInside)
+        prevButton.addTarget(self, action: #selector(scrollToPrevPlayer), for: .touchUpInside)
     }
     
     private func configureButtonsAppearance() {
-        for button in incrementButtons {
+        for button in scoreButtons {
             button.heightAnchor.constraint(equalTo: button.widthAnchor).isActive = true
             button.layer.cornerRadius = button.bounds.width / 2
         }
@@ -129,7 +99,7 @@ class GameVC: UIViewController {
     }
     
     private func configureTargetsForIncrementButtons() {
-        var buttons = incrementButtons
+        var buttons = scoreButtons
         buttons.append(plusOneButton)
         buttons.forEach {
             $0.addTarget(self, action: #selector(incrementButtonTapped), for: .touchUpInside)
@@ -184,11 +154,11 @@ class GameVC: UIViewController {
     // MARK: - Layout
     private func layoutUI() {
         let stackView = incrementButtonsStackView()
-        headerView.addSubviewAndConstraintByDefault(at: view)
+        headerView.placeByDefault(at: view)
         headerView.addSubviews(diceButton)
-        
-        view.addSubviews(timerView, collectionView, undoButton, plusOneButton, stackView, nextButton, previousButton, diceView)
+        view.addSubviews(timerView, collectionView, undoButton, plusOneButton, stackView, nextButton, prevButton, diceView)
         diceView.pinToEdges(of: view)
+        
         NSLayoutConstraint.activate([
             diceButton.heightAnchor.constraint(equalToConstant: 30),
             diceButton.widthAnchor.constraint(equalToConstant: 30),
@@ -219,10 +189,10 @@ class GameVC: UIViewController {
             nextButton.centerYAnchor.constraint(equalTo: plusOneButton.centerYAnchor),
             nextButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50),
             
-            previousButton.heightAnchor.constraint(equalToConstant: 30),
-            previousButton.widthAnchor.constraint(equalTo: previousButton.heightAnchor),
-            previousButton.centerYAnchor.constraint(equalTo: plusOneButton.centerYAnchor),
-            previousButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 50),
+            prevButton.heightAnchor.constraint(equalToConstant: 30),
+            prevButton.widthAnchor.constraint(equalTo: prevButton.heightAnchor),
+            prevButton.centerYAnchor.constraint(equalTo: plusOneButton.centerYAnchor),
+            prevButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 50),
             
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -232,11 +202,10 @@ class GameVC: UIViewController {
     }
     
     private func incrementButtonsStackView() -> UIStackView {
-        let sv = UIStackView(arrangedSubviews: incrementButtons)
+        let sv = UIStackView(arrangedSubviews: scoreButtons)
         sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.axis         = .horizontal
-        sv.spacing      = 15
+        sv.axis    = .horizontal
+        sv.spacing = 15
         return sv
     }
-
 }

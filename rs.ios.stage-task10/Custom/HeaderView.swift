@@ -41,7 +41,7 @@ class HeaderView: UIView {
     
     
     //MARK: - API
-    func addSubviewAndConstraintByDefault(at superview: UIView) {
+    func placeByDefault(at superview: UIView) {
         superview.addSubview(self)
         NSLayoutConstraint.activate([
             topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor),

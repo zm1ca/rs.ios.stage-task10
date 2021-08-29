@@ -86,7 +86,7 @@ class ResultsVC: UIViewController {
     
     // MARK: - Layout
     private func layoutUI() {
-        headerView.addSubviewAndConstraintByDefault(at: view)
+        headerView.placeByDefault(at: view)
         view.addSubviews(collectionView, turnsTableView, pageControl)
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

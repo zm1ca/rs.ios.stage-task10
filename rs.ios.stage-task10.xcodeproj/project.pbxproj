@@ -38,6 +38,7 @@
 		408815A226D79BE900DD0CBC /* NewGameVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408815A126D79BE900DD0CBC /* NewGameVC+TableView.swift */; };
 		408815A526D7AEBA00DD0CBC /* PlayerScoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408815A426D7AEBA00DD0CBC /* PlayerScoreCell.swift */; };
 		408E0CF226DB64D000EC46A6 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0CF126DB64D000EC46A6 /* TimerView.swift */; };
+		408E0CF426DB6E3600EC46A6 /* RSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0CF326DB6E3600EC46A6 /* RSButton.swift */; };
 		40A578E426D8CDFE002E4CB7 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E326D8CDFE002E4CB7 /* HeaderView.swift */; };
 		40A578E626D8D6A4002E4CB7 /* BarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E526D8D6A4002E4CB7 /* BarButton.swift */; };
 		40A578E826D8D807002E4CB7 /* ResultsVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E726D8D807002E4CB7 /* ResultsVC+TableView.swift */; };
@@ -81,6 +82,7 @@
 		408815A126D79BE900DD0CBC /* NewGameVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewGameVC+TableView.swift"; sourceTree = "<group>"; };
 		408815A426D7AEBA00DD0CBC /* PlayerScoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerScoreCell.swift; sourceTree = "<group>"; };
 		408E0CF126DB64D000EC46A6 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
+		408E0CF326DB6E3600EC46A6 /* RSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSButton.swift; sourceTree = "<group>"; };
 		40A578E326D8CDFE002E4CB7 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		40A578E526D8D6A4002E4CB7 /* BarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarButton.swift; sourceTree = "<group>"; };
 		40A578E726D8D807002E4CB7 /* ResultsVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResultsVC+TableView.swift"; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				4046BD3626D7C355008692DA /* TurnCell.swift */,
 				408815A426D7AEBA00DD0CBC /* PlayerScoreCell.swift */,
 				4046BD3826D7D9CE008692DA /* IncrementButton.swift */,
+				408E0CF326DB6E3600EC46A6 /* RSButton.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				40A578E826D8D807002E4CB7 /* ResultsVC+TableView.swift in Sources */,
 				408815A026D7956B00DD0CBC /* ResultsVC.swift in Sources */,
 				4074EA0426DA5426001F5E47 /* ResultsVC+CollectionView.swift in Sources */,
+				408E0CF426DB6E3600EC46A6 /* RSButton.swift in Sources */,
 				40A578EE26D92A61002E4CB7 /* GameVC+CollectionView.swift in Sources */,
 				401B117826D66B3300C9B5E1 /* AppDelegate.swift in Sources */,
 				401B11AF26D67D9100C9B5E1 /* UIColor+AppColors.swift in Sources */,

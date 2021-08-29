@@ -45,13 +45,13 @@ class NewGameVC: UIViewController {
     @objc private func startGameButtonTapped() {
         guard let parentVC = parentVC else {
             let gameVC = GameVC()
-            gameVC.configure(with: self.playerNames)
+            gameVC.setUpNewGame(with: self.playerNames)
             navigationController?.pushViewController(gameVC, animated: true)
             return
         }
         
         dismiss(animated: true) {
-            parentVC.configure(with: self.playerNames)
+            parentVC.setUpNewGame(with: self.playerNames)
         }
     }
 
@@ -87,7 +87,7 @@ class NewGameVC: UIViewController {
     
     // MARK: - Layout
     private func layoutUI() {
-        headerView.addSubviewAndConstraintByDefault(at: view)
+        headerView.placeByDefault(at: view)
         view.addSubviews(tableView, startButton)
         
         tableViewHeightConstraint = NSLayoutConstraint(

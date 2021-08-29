@@ -78,7 +78,7 @@ class AddPlayerVC: UIViewController {
     
     //MARK: - Layout
     private func layoutUI() {
-        headerView.addSubviewAndConstraintByDefault(at: view)
+        headerView.placeByDefault(at: view)
         view.addSubviews(playerNameTextField)
         NSLayoutConstraint.activate([
             playerNameTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),

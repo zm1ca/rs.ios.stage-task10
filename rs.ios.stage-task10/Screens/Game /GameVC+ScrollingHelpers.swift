@@ -16,7 +16,7 @@ extension GameVC {
         scrollToCurrentPosition(if: condition)
     }
     
-    @objc func scrollToPreviousPlayer(sender: Any) {
+    @objc func scrollToPrevPlayer(sender: Any) {
         currentPosition -= 1
         let condition = (sender is UIButton) ? !reachedLeftBorder() : true
         scrollToCurrentPosition(if: condition)
@@ -40,7 +40,7 @@ extension GameVC {
         nextButton.setImage(UIImage(named: nextButtonImageName), for: .normal)
 
         let previousButtonImageName = (currentPosition == 0) ? "previous_last" : "previous"
-        previousButton.setImage(UIImage(named: previousButtonImageName), for: .normal)
+        prevButton.setImage(UIImage(named: previousButtonImageName), for: .normal)
     }
     
     
