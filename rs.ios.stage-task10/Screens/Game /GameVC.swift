@@ -13,7 +13,11 @@ class GameVC: UIViewController {
     
     var playerScores = [(name: String, score: Int)]()
     var turns        = [(String, Int)]()
-    var timerIsOn = true
+    
+    var timerIsOn = false
+    var timer     = Timer()
+    var startTime: TimeInterval?
+    var pauseTime: TimeInterval?
     
     private let generator = UINotificationFeedbackGenerator()
     let diceView = DiceView()
@@ -109,6 +113,7 @@ class GameVC: UIViewController {
         configureTargetsForIncrementButtons()
         layoutUI()
         updateArrowButtons()
+        resetTimer()
     }
     
     override func viewDidLayoutSubviews() {
@@ -119,6 +124,9 @@ class GameVC: UIViewController {
     
     //MARK: - Public
     func configure(with playerNames: [String]) {
+        currentPosition = 0
+        scrollToCurrentPosition()
+        resetTimer()
         turns.removeAll()
         playerScores.removeAll()
         playerNames.forEach { playerScores.append(($0, 0)) }
@@ -157,15 +165,55 @@ class GameVC: UIViewController {
         generator.notificationOccurred(.success)
     }
     
+    func resetTimer() {
+        timerIsOn = true
+        startTime = nil
+        pauseTime = nil
+        timer.invalidate()
+        startTimer()
+    }
+    
     @objc private func playPauseButtonTapped() {
         timerIsOn.toggle()
         if timerIsOn {
-            playPauseButton.setImage(UIImage(named: "pause"), for: .normal)
-            timeLabel.textColor = .white
+            startTimer()
         } else {
-            playPauseButton.setImage(UIImage(named: "play"), for: .normal)
-            timeLabel.textColor = .RSTable
+            pauseTimer()
         }
+    }
+    
+    func startTimer() {
+        playPauseButton.setImage(UIImage(named: "pause"), for: .normal)
+        timeLabel.textColor = .white
+        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateTimeLabel), userInfo: nil, repeats: true)
+        
+        if startTime != nil {
+            if let pauseTime = pauseTime {
+                self.startTime! += (Date.timeIntervalSinceReferenceDate - pauseTime)
+            }
+        } else {
+            self.startTime = Date.timeIntervalSinceReferenceDate
+        }
+    }
+    
+    func pauseTimer() {
+        playPauseButton.setImage(UIImage(named: "play"), for: .normal)
+        timeLabel.textColor = .RSTable
+        timer.invalidate()
+        pauseTime = Date.timeIntervalSinceReferenceDate
+    }
+    
+    @objc private func updateTimeLabel() {
+        guard let startTime = startTime else { return }
+        let currentTime = Date.timeIntervalSinceReferenceDate
+        let elapsedTime: TimeInterval = currentTime - startTime
+        
+        let minutes = Int(elapsedTime / 60.0) //int to drop miliseconds
+        let seconds = Int(elapsedTime - TimeInterval(minutes) * 60)
+        
+        let minutesString = String(format: "%02d", minutes)
+        let secondsString = String(format: "%02d", seconds)
+        timeLabel.text = "\(minutesString):\(secondsString)"
     }
     
     @objc private func undoButtonTapped() {

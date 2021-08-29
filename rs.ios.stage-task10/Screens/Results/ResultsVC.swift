@@ -9,7 +9,7 @@ import UIKit
 
 class ResultsVC: UIViewController {
     
-    weak var parentVC: GameVC?
+    weak var parentVC: GameVC!
     var playerScores: [(String, Int)]!
     var turns:        [(String, Int)]!
     
