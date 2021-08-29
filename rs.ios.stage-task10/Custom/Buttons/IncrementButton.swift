@@ -36,6 +36,12 @@ class IncrementButton: UIButton {
         translatesAutoresizingMaskIntoConstraints = false
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        heightAnchor.constraint(equalTo: widthAnchor).isActive = true
+        layer.cornerRadius = layer.frame.height / 2
+        clipsToBounds = true
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

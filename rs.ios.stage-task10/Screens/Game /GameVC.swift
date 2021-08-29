@@ -84,11 +84,6 @@ class GameVC: UIViewController {
         centralizeNavScrollView()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        configureButtonsAppearance()
-    }
-    
     
     //MARK: - API
     func setUpNewGame(with playerNames: [String]) {
@@ -131,14 +126,6 @@ class GameVC: UIViewController {
         undoButton.addTarget(self, action: #selector(undoButtonTapped),   for: .touchUpInside)
         nextButton.addTarget(self, action: #selector(scrollToNextPlayer), for: .touchUpInside)
         prevButton.addTarget(self, action: #selector(scrollToPrevPlayer), for: .touchUpInside)
-    }
-    
-    private func configureButtonsAppearance() {
-        for button in scoreButtons {
-            button.heightAnchor.constraint(equalTo: button.widthAnchor).isActive = true
-            button.layer.cornerRadius = button.bounds.width / 2
-        }
-        plusOneButton.layer.cornerRadius = plusOneButton.bounds.width / 2
     }
     
     private func configureTargetsForIncrementButtons() {
