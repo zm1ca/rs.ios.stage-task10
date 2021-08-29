@@ -10,7 +10,7 @@ import UIKit
 class NewGameVC: UIViewController {
     
     weak var parentVC: GameVC?
-    var playerNames = ["Me", "You"]
+    var playerNames = ["Me", "You","Me", "You","Me", "You","Me", "You","Me", "You","Me", "You","Me", "You","Me", "You","Me"]
     var tableViewHeightConstraint: NSLayoutConstraint!
     
     //MARK: Views

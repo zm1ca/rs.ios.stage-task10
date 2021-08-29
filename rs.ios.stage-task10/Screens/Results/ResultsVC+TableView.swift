@@ -45,8 +45,8 @@ extension ResultsVC: UITableViewDelegate, UITableViewDataSource {
     
     private func configuredTurnCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TurnCell.reuseID, for: indexPath) as! TurnCell
-        let playerName = turns[indexPath.row - 1].0
-        let score      = turns[indexPath.row - 1].1
+        let playerName = turns[indexPath.row - 1].name
+        let score      = turns[indexPath.row - 1].score
         cell.set(name: playerName, score: score)
         return cell
     }

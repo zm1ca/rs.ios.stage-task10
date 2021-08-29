@@ -17,6 +17,7 @@ class SingleLetterLabel: UILabel {
     override init(frame: CGRect) {
         super.init(frame: frame)
         font = UIFont(name: "Nunito-ExtraBold", size: 20)
+        textAlignment = .center
     }
     
     required init?(coder: NSCoder) {

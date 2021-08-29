@@ -23,6 +23,7 @@ class AddPlayerVC: UIViewController {
     
     let playerNameTextField: UITextField = {
         let tf = UITextField()
+        tf.tintColor = .white
         let attributes = [
             NSAttributedString.Key.foregroundColor: UIColor.RSDarkLabel,
             NSAttributedString.Key.font: UIFont(name: "Nunito-ExtraBold", size: 20)!

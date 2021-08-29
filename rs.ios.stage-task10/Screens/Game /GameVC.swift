@@ -13,10 +13,11 @@ class GameVC: UIViewController {
         didSet {
             updateNavStackView()
             timerView.reset()
+            centralizeNavScrollView()
         }
     }
     var playerScores    = [(name: String, score: Int)]()
-    var turns           = [(String, Int)]()
+    var turns           = [(name: String, position: Int, score: Int)]()
     let generator       = UINotificationFeedbackGenerator()
     
     
@@ -41,6 +42,8 @@ class GameVC: UIViewController {
         sv.distribution = .equalCentering
         return sv
     }()
+    
+    let scrollView = UIScrollView()
 
     let collectionView: UICollectionView = {
         let flowLayout                = UICollectionViewFlowLayout()
@@ -75,6 +78,12 @@ class GameVC: UIViewController {
         timerView.reset()
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        #warning("Most of calls are excessive. Consider changing placement.")
+        centralizeNavScrollView()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         configureButtonsAppearance()
@@ -96,7 +105,9 @@ class GameVC: UIViewController {
         }
         
         for name in playerScores.map({ $0.name }) {
-            self.navStackView.addArrangedSubview(SingleLetterLabel(with: name))
+            let label = SingleLetterLabel(with: name)
+            self.navStackView.addArrangedSubview(label)
+            label.widthAnchor.constraint(equalToConstant: 20).isActive = true
         }
         updateNavStackView()
     }
@@ -148,8 +159,8 @@ class GameVC: UIViewController {
     
     @objc private func undoButtonTapped() {
         guard let turnToRevert = turns.popLast() else { return }
-        currentPosition = playerScores.map { $0.0 }.firstIndex(of: turnToRevert.0) ?? 0
-        playerScores[currentPosition].1 -= turnToRevert.1
+        currentPosition = turnToRevert.position
+        playerScores[currentPosition].score -= turnToRevert.score
         collectionView.reloadItems(at: [IndexPath(row: currentPosition, section: 0)])
         scrollToCurrentPosition()
     }
@@ -190,16 +201,26 @@ class GameVC: UIViewController {
         playerScores.remove(at: currentPosition)
         playerScores.insert(upd, at: currentPosition)
         collectionView.reloadItems(at: [IndexPath(row: currentPosition, section: 0)])
-        turns.append((playerScores[currentPosition].name, sender.value!))
+        turns.append((playerScores[currentPosition].name, currentPosition, sender.value!))
+    }
+    
+    private func centralizeNavScrollView() {
+        let scrollViewCenter = (scrollView.bounds.width - 15) / 2
+        scrollView.setContentOffset(CGPoint(x: currentPosition * 25 - Int(scrollViewCenter), y: 0), animated: true)
     }
     
     
     // MARK: - Layout
     private func layoutUI() {
-        let stackView = incrementButtonsStackView()
+        let buttonsStackView = incrementButtonsStackView()
         headerView.placeByDefault(at: view)
         headerView.addSubviews(diceButton)
-        view.addSubviews(timerView, collectionView, undoButton, navStackView, plusOneButton, stackView, nextButton, prevButton)
+        view.addSubviews(scrollView, timerView, collectionView, undoButton, navStackView, plusOneButton, buttonsStackView, nextButton, prevButton)
+        
+        scrollView.addSubview(navStackView)
+        navStackView.pinToEdges(of: scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsHorizontalScrollIndicator = false
         
         NSLayoutConstraint.activate([
             diceButton.heightAnchor.constraint(equalToConstant: 30),
@@ -217,18 +238,19 @@ class GameVC: UIViewController {
             undoButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
             undoButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32),
             
-            navStackView.centerYAnchor.constraint(equalTo: undoButton.centerYAnchor),
-            navStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            navStackView.heightAnchor.constraint(equalTo: undoButton.heightAnchor),
+            scrollView.heightAnchor.constraint(equalToConstant: 30),
+            scrollView.centerYAnchor.constraint(equalTo: undoButton.centerYAnchor, constant: 3),
+            scrollView.leadingAnchor.constraint(equalTo: undoButton.trailingAnchor, constant: 16),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -74),
             
-            stackView.bottomAnchor.constraint(equalTo: undoButton.topAnchor, constant: -22),
-            stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            buttonsStackView.bottomAnchor.constraint(equalTo: undoButton.topAnchor, constant: -22),
+            buttonsStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            buttonsStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             
             plusOneButton.heightAnchor.constraint(equalToConstant: 90),
             plusOneButton.widthAnchor.constraint(equalToConstant: 90),
             plusOneButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            plusOneButton.bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: -20),
+            plusOneButton.bottomAnchor.constraint(equalTo: buttonsStackView.topAnchor, constant: -20),
             
             nextButton.heightAnchor.constraint(equalToConstant: 30),
             nextButton.widthAnchor.constraint(equalTo: nextButton.heightAnchor),

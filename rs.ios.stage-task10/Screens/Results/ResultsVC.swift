@@ -11,7 +11,7 @@ class ResultsVC: UIViewController {
     
     weak var parentVC: GameVC!
     var playerScores: [(name: String, score: Int)]!
-    var turns:        [(String, Int)]!
+    var turns:        [(name: String, position: Int, score: Int)]!
     
     let headerView = HeaderView(title: "Results",
                                 leftBarButton: BarButton(title: "New Game"),
