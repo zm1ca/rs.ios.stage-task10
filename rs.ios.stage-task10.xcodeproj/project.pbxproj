@@ -40,11 +40,11 @@
 		408E0CF226DB64D000EC46A6 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0CF126DB64D000EC46A6 /* TimerView.swift */; };
 		408E0CF426DB6E3600EC46A6 /* RSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0CF326DB6E3600EC46A6 /* RSButton.swift */; };
 		408E0CF626DB7CB200EC46A6 /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0CF526DB7CB200EC46A6 /* HeaderCell.swift */; };
+		408E0CFB26DB8E7F00EC46A6 /* DiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0CFA26DB8E7F00EC46A6 /* DiceView.swift */; };
 		40A578E426D8CDFE002E4CB7 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E326D8CDFE002E4CB7 /* HeaderView.swift */; };
 		40A578E626D8D6A4002E4CB7 /* BarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E526D8D6A4002E4CB7 /* BarButton.swift */; };
 		40A578E826D8D807002E4CB7 /* ResultsVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E726D8D807002E4CB7 /* ResultsVC+TableView.swift */; };
 		40A578EA26D8DFD1002E4CB7 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E926D8DFD1002E4CB7 /* UIView+Ext.swift */; };
-		40A578EC26D8F48E002E4CB7 /* DiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578EB26D8F48E002E4CB7 /* DiceView.swift */; };
 		40A578EE26D92A61002E4CB7 /* GameVC+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578ED26D92A61002E4CB7 /* GameVC+CollectionView.swift */; };
 		40A578F526D9347A002E4CB7 /* GameVC+ScrollingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578F426D9347A002E4CB7 /* GameVC+ScrollingHelpers.swift */; };
 /* End PBXBuildFile section */
@@ -85,11 +85,11 @@
 		408E0CF126DB64D000EC46A6 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		408E0CF326DB6E3600EC46A6 /* RSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSButton.swift; sourceTree = "<group>"; };
 		408E0CF526DB7CB200EC46A6 /* HeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
+		408E0CFA26DB8E7F00EC46A6 /* DiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceView.swift; sourceTree = "<group>"; };
 		40A578E326D8CDFE002E4CB7 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		40A578E526D8D6A4002E4CB7 /* BarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarButton.swift; sourceTree = "<group>"; };
 		40A578E726D8D807002E4CB7 /* ResultsVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResultsVC+TableView.swift"; sourceTree = "<group>"; };
 		40A578E926D8DFD1002E4CB7 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
-		40A578EB26D8F48E002E4CB7 /* DiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DiceView.swift; path = "rs.ios.stage-task10/Custom/DiceView.swift"; sourceTree = SOURCE_ROOT; };
 		40A578ED26D92A61002E4CB7 /* GameVC+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameVC+CollectionView.swift"; sourceTree = "<group>"; };
 		40A578F426D9347A002E4CB7 /* GameVC+ScrollingHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameVC+ScrollingHelpers.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -197,19 +197,43 @@
 		408815A326D7AE3F00DD0CBC /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				408E0CF726DB8E0200EC46A6 /* Cells */,
+				408E0CF826DB8E4D00EC46A6 /* Buttons */,
+				408E0CF926DB8E5B00EC46A6 /* Views */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		408E0CF726DB8E0200EC46A6 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				408815A426D7AEBA00DD0CBC /* PlayerScoreCell.swift */,
 				408E0CF526DB7CB200EC46A6 /* HeaderCell.swift */,
 				4046BD3626D7C355008692DA /* TurnCell.swift */,
-				408E0CF126DB64D000EC46A6 /* TimerView.swift */,
 				4074EA0126DA516A001F5E47 /* RankingsCollectionCell.swift */,
 				4046BD3426D7BDFF008692DA /* RankingView.swift */,
-				40A578EB26D8F48E002E4CB7 /* DiceView.swift */,
-				40A578E326D8CDFE002E4CB7 /* HeaderView.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		408E0CF826DB8E4D00EC46A6 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
 				40A578E526D8D6A4002E4CB7 /* BarButton.swift */,
-				408815A426D7AEBA00DD0CBC /* PlayerScoreCell.swift */,
 				4046BD3826D7D9CE008692DA /* IncrementButton.swift */,
 				408E0CF326DB6E3600EC46A6 /* RSButton.swift */,
 			);
-			path = Custom;
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		408E0CF926DB8E5B00EC46A6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				40A578E326D8CDFE002E4CB7 /* HeaderView.swift */,
+				408E0CF126DB64D000EC46A6 /* TimerView.swift */,
+				408E0CFA26DB8E7F00EC46A6 /* DiceView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		40A578EF26D92A6D002E4CB7 /* New Game */ = {
@@ -345,10 +369,10 @@
 				408E0CF426DB6E3600EC46A6 /* RSButton.swift in Sources */,
 				40A578EE26D92A61002E4CB7 /* GameVC+CollectionView.swift in Sources */,
 				401B117826D66B3300C9B5E1 /* AppDelegate.swift in Sources */,
+				408E0CFB26DB8E7F00EC46A6 /* DiceView.swift in Sources */,
 				401B11AF26D67D9100C9B5E1 /* UIColor+AppColors.swift in Sources */,
 				4046BD3926D7D9CE008692DA /* IncrementButton.swift in Sources */,
 				40A578F526D9347A002E4CB7 /* GameVC+ScrollingHelpers.swift in Sources */,
-				40A578EC26D8F48E002E4CB7 /* DiceView.swift in Sources */,
 				40A578E426D8CDFE002E4CB7 /* HeaderView.swift in Sources */,
 				40A578E626D8D6A4002E4CB7 /* BarButton.swift in Sources */,
 				408815A226D79BE900DD0CBC /* NewGameVC+TableView.swift in Sources */,
