@@ -132,6 +132,8 @@ class GameVC: UIViewController {
     }
     
     @objc private func resultsButtonTapped() {
+        guard turns.count != 0 else { presentAlert(); return }
+        
         let resultsVC          = ResultsVC()
         resultsVC.parentVC     = self
         resultsVC.playerScores = playerScores.sorted { $0.score == $1.score ? ($0.name < $1.name) : ($0.score > $1.score) }
@@ -140,6 +142,15 @@ class GameVC: UIViewController {
         let navVC = UINavigationController(rootViewController: resultsVC)
         navVC.isNavigationBarHidden = true
         present(navVC, animated: true)
+    }
+    
+    private func presentAlert() {
+        let alertVC = UIAlertController(title: "Nothing to present! 🙄", message: "Results will be computed after at least one turn registered.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Fair enough 👌", style: .cancel) {_ in
+            self.dismiss(animated: true)
+        }
+        alertVC.addAction(okAction)
+        present(alertVC, animated: true)
     }
     
     @objc private func incrementButtonTapped(sender: IncrementButton) {
