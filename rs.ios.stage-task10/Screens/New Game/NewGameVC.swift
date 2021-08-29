@@ -13,47 +13,13 @@ class NewGameVC: UIViewController {
     var playerNames = ["Me", "You", "Kate", "Tim", "Josua"]
     var tableViewHeightConstraint: NSLayoutConstraint!
     
+    //MARK: Views
     let headerView = HeaderView(title: "Game Counter",
                                 leftBarButton: BarButton(title: "Cancel"),
                                 rightBarButton: nil)
     let tableView  = UITableView(frame: .zero, style: .plain)
+    let startButton = StartGameButton()
     
-    let startButton: UIButton = {
-        let btn = UIButton()
-        btn.backgroundColor = .RSGreen
-        btn.layer.cornerRadius = 65 / 2
-        btn.layer.masksToBounds = false
-        
-        let shadow = NSShadow()
-        shadow.shadowColor = UIColor.RSShadow
-        shadow.shadowOffset = CGSize(width: 0, height: 2)
-        
-        let attributedTitle = NSAttributedString(
-            string: "Start Game",
-            attributes: [
-                NSAttributedString.Key.font: UIFont(name: "Nunito-ExtraBold", size: 24)!,
-                NSAttributedString.Key.foregroundColor: UIColor.white,
-                NSAttributedString.Key.shadow: shadow
-            ]
-        )
-        btn.setAttributedTitle(attributedTitle, for: .normal)
-        btn.addTarget(self, action: #selector(startGameButtonTapped), for: .touchUpInside)
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        return btn
-    }()
-    
-    @objc private func startGameButtonTapped() {
-        guard let parentVC = parentVC else {
-            let gameVC = GameVC()
-            gameVC.setUpNewGame(with: self.playerNames)
-            navigationController?.pushViewController(gameVC, animated: true)
-            return
-        }
-        
-        dismiss(animated: true) {
-            parentVC.setUpNewGame(with: self.playerNames)
-        }
-    }
 
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -61,6 +27,7 @@ class NewGameVC: UIViewController {
         view.addSubview(UIView())
         title = "Game Counter"
         view.backgroundColor = UIColor.RSBackground
+        startButton.addTarget(self, action: #selector(startGameButtonTapped), for: .touchUpInside)
         
         configureTableView()
         configureCancelButton()
@@ -82,6 +49,19 @@ class NewGameVC: UIViewController {
     
     @objc private func handleCancel() {
         dismiss(animated: true)
+    }
+    
+    @objc private func startGameButtonTapped() {
+        guard let parentVC = parentVC else {
+            let gameVC = GameVC()
+            gameVC.setUpNewGame(with: self.playerNames)
+            navigationController?.pushViewController(gameVC, animated: true)
+            return
+        }
+        
+        dismiss(animated: true) {
+            parentVC.setUpNewGame(with: self.playerNames)
+        }
     }
     
     

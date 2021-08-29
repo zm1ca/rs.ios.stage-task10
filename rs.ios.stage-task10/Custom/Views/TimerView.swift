@@ -9,12 +9,12 @@ import UIKit
 
 class TimerView: UIView {
     
-    var timer = Timer()
-    var startTime: TimeInterval?
-    var pauseTime: TimeInterval?
+    private var timer = Timer()
+    private var startTime: TimeInterval?
+    private var pauseTime: TimeInterval?
     
     //MARK: Views
-    let timeLabel: UILabel = {
+    private let timeLabel: UILabel = {
         let lbl = UILabel()
         lbl.textColor = .white
         lbl.text      = "00:00"
@@ -23,7 +23,7 @@ class TimerView: UIView {
         return lbl
     }()
     
-    let playPauseButton: UIButton = {
+    private let playPauseButton: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(named: "play"), for: .normal)
         btn.addTarget(self, action: #selector(playPauseButtonTapped), for: .touchUpInside)

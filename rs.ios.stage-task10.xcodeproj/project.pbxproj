@@ -41,6 +41,7 @@
 		408E0CF426DB6E3600EC46A6 /* RSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0CF326DB6E3600EC46A6 /* RSButton.swift */; };
 		408E0CF626DB7CB200EC46A6 /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0CF526DB7CB200EC46A6 /* HeaderCell.swift */; };
 		408E0CFB26DB8E7F00EC46A6 /* DiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0CFA26DB8E7F00EC46A6 /* DiceView.swift */; };
+		408E0CFD26DB918600EC46A6 /* StartGameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408E0CFC26DB918600EC46A6 /* StartGameButton.swift */; };
 		40A578E426D8CDFE002E4CB7 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E326D8CDFE002E4CB7 /* HeaderView.swift */; };
 		40A578E626D8D6A4002E4CB7 /* BarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E526D8D6A4002E4CB7 /* BarButton.swift */; };
 		40A578E826D8D807002E4CB7 /* ResultsVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A578E726D8D807002E4CB7 /* ResultsVC+TableView.swift */; };
@@ -86,6 +87,7 @@
 		408E0CF326DB6E3600EC46A6 /* RSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSButton.swift; sourceTree = "<group>"; };
 		408E0CF526DB7CB200EC46A6 /* HeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
 		408E0CFA26DB8E7F00EC46A6 /* DiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceView.swift; sourceTree = "<group>"; };
+		408E0CFC26DB918600EC46A6 /* StartGameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartGameButton.swift; sourceTree = "<group>"; };
 		40A578E326D8CDFE002E4CB7 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		40A578E526D8D6A4002E4CB7 /* BarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarButton.swift; sourceTree = "<group>"; };
 		40A578E726D8D807002E4CB7 /* ResultsVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResultsVC+TableView.swift"; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				40A578E326D8CDFE002E4CB7 /* HeaderView.swift */,
 				408E0CF126DB64D000EC46A6 /* TimerView.swift */,
 				408E0CFA26DB8E7F00EC46A6 /* DiceView.swift */,
+				408E0CFC26DB918600EC46A6 /* StartGameButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 				408E0CF426DB6E3600EC46A6 /* RSButton.swift in Sources */,
 				40A578EE26D92A61002E4CB7 /* GameVC+CollectionView.swift in Sources */,
 				401B117826D66B3300C9B5E1 /* AppDelegate.swift in Sources */,
+				408E0CFD26DB918600EC46A6 /* StartGameButton.swift in Sources */,
 				408E0CFB26DB8E7F00EC46A6 /* DiceView.swift in Sources */,
 				401B11AF26D67D9100C9B5E1 /* UIColor+AppColors.swift in Sources */,
 				4046BD3926D7D9CE008692DA /* IncrementButton.swift in Sources */,
