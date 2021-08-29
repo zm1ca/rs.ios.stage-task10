@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func setupWindow() {
         window = UIWindow(frame: UIScreen.main.bounds)
-        //window?.tintColor = .RSBackground
         
         let navVC = UINavigationController(rootViewController: NewGameVC()) //!
         navVC.isNavigationBarHidden = true

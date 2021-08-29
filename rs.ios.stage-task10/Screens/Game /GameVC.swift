@@ -14,7 +14,6 @@ class GameVC: UIViewController {
             updateNavStackViewOffset()
             timerView.reset()
             centralizeNavScrollView()
-            #warning("Scroll to current pos")
         }
     }
     var playerScores    = [(name: String, score: Int)]()
