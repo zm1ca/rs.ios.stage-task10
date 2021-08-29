@@ -157,8 +157,7 @@ class GameVC: UIViewController {
     }
     
     @objc private func newGameButtonTapped() {
-        let newGameVC      = NewGameVC()
-        newGameVC.parentVC = self
+        let newGameVC = NewGameVC()
         newGameVC.playerNames = playerScores.map { $0.name }
         let navVC = UINavigationController(rootViewController: newGameVC)
         navVC.isNavigationBarHidden = true
@@ -169,8 +168,7 @@ class GameVC: UIViewController {
         guard turns.count != 0 else { presentAlert(); return }
         
         let resultsVC          = ResultsVC()
-        resultsVC.parentVC     = self
-        resultsVC.playerScores = playerScores.sorted { $0.score == $1.score ? ($0.name < $1.name) : ($0.score > $1.score) }
+        resultsVC.playerScores = playerScores
         
         resultsVC.turns        = turns
         let navVC = UINavigationController(rootViewController: resultsVC)

@@ -9,7 +9,14 @@ import UIKit
 
 class NewGameVC: UIViewController {
     
-    weak var parentVC: GameVC?
+    var presentingGameVC: GameVC? {
+        (presentingViewController as? UINavigationController)?.viewControllers.first as? GameVC
+    }
+    
+    var isPresentedModally: Bool {
+        presentingGameVC != nil
+    }
+    
     var playerNames = ["Me", "You"]
     var tableViewHeightConstraint: NSLayoutConstraint!
     
@@ -37,14 +44,14 @@ class NewGameVC: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         let tableViewContentHeight = CGFloat((playerNames.count + 2) * 54)
-        let modalCompensation: CGFloat = (parentVC == nil) ? 54 : 0
+        let modalCompensation: CGFloat = isPresentedModally ? 0 : 54
         tableViewHeightConstraint.constant = min(tableViewContentHeight, UIScreen.main.bounds.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom - 334 + modalCompensation)
     }
     
     
     // MARK: Configurations
     private func configureCancelButton() {
-        headerView.leftBarButton?.isHidden = (parentVC == nil)
+        headerView.leftBarButton?.isHidden = !isPresentedModally
         headerView.leftBarButton?.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
     }
     
@@ -53,7 +60,7 @@ class NewGameVC: UIViewController {
     }
     
     @objc private func startGameButtonTapped() {
-        guard let parentVC = parentVC else {
+        guard let gameVC = presentingGameVC else {
             let gameVC = GameVC()
             gameVC.setUpNewGame(with: self.playerNames)
             navigationController?.setViewControllers([gameVC], animated: true)
@@ -61,7 +68,7 @@ class NewGameVC: UIViewController {
         }
         
         dismiss(animated: true) {
-            parentVC.setUpNewGame(with: self.playerNames)
+            gameVC.setUpNewGame(with: self.playerNames)
         }
     }
     

@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupWindow() {
         window = UIWindow(frame: UIScreen.main.bounds)
         
-        let navVC = UINavigationController(rootViewController: NewGameVC()) //!
+        let navVC = UINavigationController(rootViewController: NewGameVC())
         navVC.isNavigationBarHidden = true
         
         window?.rootViewController = navVC

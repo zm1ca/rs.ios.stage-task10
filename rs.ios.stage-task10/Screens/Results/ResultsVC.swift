@@ -9,9 +9,15 @@ import UIKit
 
 class ResultsVC: UIViewController {
     
-    weak var parentVC: GameVC!
-    var playerScores: [(name: String, score: Int)]!
+    var presentingGameVC: GameVC? {
+        (presentingViewController as? UINavigationController)?.viewControllers.first as? GameVC
+    }
+    
     var turns:        [(name: String, position: Int, score: Int)]!
+    var playerScores: [(name: String, score: Int)]!
+    lazy var sortedPlayerScores = playerScores.sorted {
+        $0.score == $1.score ? ($0.name < $1.name) : ($0.score > $1.score)
+    }
     
     let headerView = HeaderView(title: "Results",
                                 leftBarButton: BarButton(title: "New Game"),
@@ -41,6 +47,7 @@ class ResultsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Results"
+        
         view.backgroundColor      = .RSBackground
         pageControl.numberOfPages = (playerScores.count + 2) / 3
         pageControl.currentPage   = 0
@@ -61,7 +68,6 @@ class ResultsVC: UIViewController {
     
     @objc private func newGameButtonTapped() {
         let newGameVC = NewGameVC()
-        newGameVC.parentVC    = parentVC
         newGameVC.playerNames = playerScores.map { $0.name }
         navigationController?.pushViewController(newGameVC, animated: true)
     }
