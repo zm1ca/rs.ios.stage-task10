@@ -9,7 +9,12 @@ import UIKit
 
 class GameVC: UIViewController {
     
-    var currentPosition = 0
+    var currentPosition = 0 {
+        didSet {
+            updateNavStackView()
+            timerView.reset()
+        }
+    }
     var playerScores    = [(name: String, score: Int)]()
     var turns           = [(String, Int)]()
     let generator       = UINotificationFeedbackGenerator()
@@ -26,6 +31,16 @@ class GameVC: UIViewController {
     let prevButton    = RSButton(imageName: "previous")
     let scoreButtons  = [-10, -5, -1, +5, +10].map { IncrementButton(value: $0, fontSize: 25) }
     let plusOneButton = IncrementButton(value: 1, fontSize: 40)
+    
+    let navStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        sv.axis      = .horizontal
+        sv.spacing   = 5
+        sv.alignment = .center
+        sv.distribution = .equalCentering
+        return sv
+    }()
 
     let collectionView: UICollectionView = {
         let flowLayout                = UICollectionViewFlowLayout()
@@ -75,6 +90,22 @@ class GameVC: UIViewController {
         playerScores.removeAll()
         playerNames.forEach { playerScores.append(($0, 0)) }
         collectionView.reloadData()
+        
+        for view in navStackView.arrangedSubviews {
+            view.removeFromSuperview()
+        }
+        
+        for name in playerScores.map({ $0.name }) {
+            self.navStackView.addArrangedSubview(SingleLetterLabel(with: name))
+        }
+        updateNavStackView()
+    }
+    
+    func updateNavStackView() {
+        for index in 0..<playerScores.map({ $0.name }).count {
+            let label = self.navStackView.arrangedSubviews[index] as! SingleLetterLabel
+            label.textColor = (index == currentPosition) ? .RSSelectedWhite : .RSTable
+        }
     }
     
     
@@ -168,7 +199,7 @@ class GameVC: UIViewController {
         let stackView = incrementButtonsStackView()
         headerView.placeByDefault(at: view)
         headerView.addSubviews(diceButton)
-        view.addSubviews(timerView, collectionView, undoButton, plusOneButton, stackView, nextButton, prevButton)
+        view.addSubviews(timerView, collectionView, undoButton, navStackView, plusOneButton, stackView, nextButton, prevButton)
         
         NSLayoutConstraint.activate([
             diceButton.heightAnchor.constraint(equalToConstant: 30),
@@ -185,6 +216,10 @@ class GameVC: UIViewController {
             undoButton.widthAnchor.constraint(equalToConstant: 15),
             undoButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
             undoButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32),
+            
+            navStackView.centerYAnchor.constraint(equalTo: undoButton.centerYAnchor),
+            navStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            navStackView.heightAnchor.constraint(equalTo: undoButton.heightAnchor),
             
             stackView.bottomAnchor.constraint(equalTo: undoButton.topAnchor, constant: -22),
             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),

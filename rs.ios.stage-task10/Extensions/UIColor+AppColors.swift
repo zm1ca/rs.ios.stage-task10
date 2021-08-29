@@ -17,5 +17,6 @@ extension UIColor {
     static let RSSeparator  = UIColor(red: 85/255,   green: 85/255,  blue: 85/255,  alpha: 1)
     static let RSGolden     = UIColor(red: 235/255,  green: 174/255, blue: 104/255, alpha: 1)
     static let RSNearWhite  = UIColor(red: 255/255,  green: 253/255, blue: 253/255, alpha: 1)
+    static let RSSelectedWhite  = UIColor(red: 222/255,  green: 222/255, blue: 222/255, alpha: 1)
     static let RSLabel      = UIColor(red: 235/255,  green: 235/255, blue: 245/255, alpha: 0.6)
 }

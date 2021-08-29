@@ -30,7 +30,6 @@ extension GameVC {
     func scrollToCurrentPosition() {
         let newOffset = CGPoint(x: CGFloat(currentPosition) * (UIScreen.main.bounds.width - 100), y: 0)
         collectionView.setContentOffset(newOffset, animated: true)
-        timerView.reset()
     }
     
     
