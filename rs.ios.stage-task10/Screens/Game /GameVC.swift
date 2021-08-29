@@ -140,6 +140,7 @@ class GameVC: UIViewController {
     
     // MARK: - Action Methods
     @objc private func diceButtonTapped() {
+        applyValueFromScoreBubble()
         let diceView = DiceView()
         view.addSubview(diceView)
         diceView.pinToEdges(of: view)
@@ -149,6 +150,11 @@ class GameVC: UIViewController {
     }
     
     @objc private func undoButtonTapped() {
+        guard !scoreBubble.isPresented else {
+            _ = scoreBubble.reset()
+            return
+        }
+
         guard let turnToRevert = turns.popLast() else { return }
         currentPosition = turnToRevert.position
         playerScores[currentPosition].score -= turnToRevert.score
@@ -157,6 +163,7 @@ class GameVC: UIViewController {
     }
     
     @objc private func newGameButtonTapped() {
+        applyValueFromScoreBubble()
         let newGameVC = NewGameVC()
         newGameVC.playerNames = playerScores.map { $0.name }
         let navVC = UINavigationController(rootViewController: newGameVC)
@@ -165,6 +172,7 @@ class GameVC: UIViewController {
     }
     
     @objc private func resultsButtonTapped() {
+        applyValueFromScoreBubble()
         guard turns.count != 0 else { presentAlert(); return }
         
         let resultsVC          = ResultsVC()
@@ -209,8 +217,8 @@ class GameVC: UIViewController {
             diceButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
             diceButton.centerYAnchor.constraint(equalTo: headerView.titleLabel.centerYAnchor),
             
-            undoButton.heightAnchor.constraint(equalToConstant: 20),
-            undoButton.widthAnchor.constraint(equalToConstant: 15),
+            undoButton.heightAnchor.constraint(equalToConstant: 30),
+            undoButton.widthAnchor.constraint(equalToConstant: 30),
             undoButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
             undoButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32),
             
