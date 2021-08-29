@@ -81,7 +81,6 @@ class GameVC: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        #warning("Most of calls are excessive. Consider changing placement.")
         centralizeNavScrollView()
     }
     
@@ -199,7 +198,7 @@ class GameVC: UIViewController {
     
     private func centralizeNavScrollView() {
         let scrollViewCenter = (scrollView.bounds.width - 15) / 2
-        scrollView.setContentOffset(CGPoint(x: currentPosition * 25 - Int(scrollViewCenter), y: 0), animated: true)
+        scrollView.setContentOffset(CGPoint(x: currentPosition * 25 - Int(scrollViewCenter) + 7, y: 0), animated: true)
     }
     
     
