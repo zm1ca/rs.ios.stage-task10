@@ -68,8 +68,8 @@ class NewGameVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let tableViewContentHeight = CGFloat((playerNames.count + 1) * 54 + 45)
-        tableViewHeightConstraint.constant = min(tableViewContentHeight, UIScreen.main.bounds.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom - 285)
+        let tableViewContentHeight = CGFloat((playerNames.count + 2) * 54)
+        tableViewHeightConstraint.constant = min(tableViewContentHeight, UIScreen.main.bounds.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom - 335)
         super.viewWillAppear(animated)
     }
     

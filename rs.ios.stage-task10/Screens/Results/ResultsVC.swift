@@ -17,7 +17,7 @@ class ResultsVC: UIViewController {
                                 leftBarButton: BarButton(title: "New Game"),
                                 rightBarButton: BarButton(title: "Resume"))
 
-    var turnsTableView = UITableView(frame: .zero, style: .plain)
+    var tableView = UITableView(frame: .zero, style: .plain)
     let collectionView: UICollectionView = {
         let flowLayout                = UICollectionViewFlowLayout()
         flowLayout.sectionInset       = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
@@ -70,24 +70,10 @@ class ResultsVC: UIViewController {
     }
     
     
-    // MARK: - Configurations
-    private func configureTurnsTableView() {
-        turnsTableView.register(TurnCell.self, forCellReuseIdentifier: TurnCell.reuseID)
-        turnsTableView.translatesAutoresizingMaskIntoConstraints = false
-        turnsTableView.delegate           = self
-        turnsTableView.dataSource         = self
-        turnsTableView.tableFooterView    = UIView()
-        turnsTableView.backgroundColor    = .RSTable
-        turnsTableView.layer.cornerRadius = 15
-        turnsTableView.separatorColor     = .RSSeparator
-        turnsTableView.allowsSelection    = false
-    }
-    
-    
     // MARK: - Layout
     private func layoutUI() {
         headerView.placeByDefault(at: view)
-        view.addSubviews(collectionView, turnsTableView, pageControl)
+        view.addSubviews(collectionView, tableView, pageControl)
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 18),
@@ -98,10 +84,10 @@ class ResultsVC: UIViewController {
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             pageControl.topAnchor.constraint(equalTo: collectionView.bottomAnchor),
     
-            turnsTableView.topAnchor.constraint(equalTo: pageControl.bottomAnchor),
-            turnsTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            turnsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            turnsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
+            tableView.topAnchor.constraint(equalTo: pageControl.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
     }
 

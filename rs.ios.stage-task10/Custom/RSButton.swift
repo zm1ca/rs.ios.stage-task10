@@ -9,7 +9,7 @@ import UIKit
 
 class RSButton: UIButton {
     
-    convenience init(imageNamed imageName: String) {
+    convenience init(imageName: String) {
         self.init(frame: .zero)
         setImage(UIImage(named: imageName), for: .normal)
     }

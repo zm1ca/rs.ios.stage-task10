@@ -16,15 +16,14 @@ class GameVC: UIViewController {
     
     
     //MARK: Views
-    
     let headerView = HeaderView(title: "Game",
                                 leftBarButton: BarButton(title: "New Game"),
                                 rightBarButton: BarButton(title: "Results"))
     let timerView     = TimerView()
-    let diceButton    = RSButton(imageNamed: "dice_4")
-    let undoButton    = RSButton(imageNamed: "undo")
-    let nextButton    = RSButton(imageNamed: "next")
-    let prevButton    = RSButton(imageNamed: "previous")
+    let diceButton    = RSButton(imageName: "dice_4")
+    let undoButton    = RSButton(imageName: "undo")
+    let nextButton    = RSButton(imageName: "next")
+    let prevButton    = RSButton(imageName: "previous")
     let scoreButtons  = [-10, -5, -1, +5, +10].map { IncrementButton(value: $0, fontSize: 25) }
     let plusOneButton = IncrementButton(value: 1, fontSize: 40)
 
@@ -67,7 +66,7 @@ class GameVC: UIViewController {
     }
     
     
-    //MARK: - Public
+    //MARK: - API
     func setUpNewGame(with playerNames: [String]) {
         currentPosition = 0
         scrollToCurrentPosition()

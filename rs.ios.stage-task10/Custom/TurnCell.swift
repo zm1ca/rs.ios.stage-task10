@@ -54,8 +54,5 @@ class TurnCell: UITableViewCell {
         } else {
             scoreLabel.text = "\(score)"
         }
-        
     }
-    
-
 }
