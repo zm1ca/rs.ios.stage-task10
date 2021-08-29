@@ -56,7 +56,7 @@ class NewGameVC: UIViewController {
         guard let parentVC = parentVC else {
             let gameVC = GameVC()
             gameVC.setUpNewGame(with: self.playerNames)
-            navigationController?.pushViewController(gameVC, animated: true)
+            navigationController?.setViewControllers([gameVC], animated: true)
             return
         }
         
