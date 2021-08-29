@@ -14,10 +14,7 @@ class GameVC: UIViewController {
     var playerScores = [(name: String, score: Int)]()
     var turns        = [(String, Int)]()
     
-    var timerIsOn = false
-    var timer     = Timer()
-    var startTime: TimeInterval?
-    var pauseTime: TimeInterval?
+    let timerView = TimerView()
     
     private let generator = UINotificationFeedbackGenerator()
     let diceView = DiceView()
@@ -31,14 +28,6 @@ class GameVC: UIViewController {
         btn.setImage(UIImage(named: "dice_4"), for: .normal)
         btn.layer.cornerRadius = 5
         btn.addTarget(self, action: #selector(diceButtonTapped), for: .touchUpInside)
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        return btn
-    }()
-    
-    let playPauseButton: UIButton = {
-        let btn = UIButton()
-        btn.setImage(UIImage(named: "play"), for: .normal)
-        btn.addTarget(self, action: #selector(playPauseButtonTapped), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
@@ -74,15 +63,6 @@ class GameVC: UIViewController {
         return btn
     }()
     
-    let timeLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.textColor = .white
-        lbl.text      = "00:00"
-        lbl.font      = UIFont(name: "Nunito-ExtraBold", size: 28)
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
-    }()
-    
     let collectionView: UICollectionView = {
         let flowLayout                = UICollectionViewFlowLayout()
         flowLayout.sectionInset       = UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 60)
@@ -113,7 +93,7 @@ class GameVC: UIViewController {
         configureTargetsForIncrementButtons()
         layoutUI()
         updateArrowButtons()
-        resetTimer()
+        timerView.reset()
     }
     
     override func viewDidLayoutSubviews() {
@@ -126,7 +106,7 @@ class GameVC: UIViewController {
     func configure(with playerNames: [String]) {
         currentPosition = 0
         scrollToCurrentPosition()
-        resetTimer()
+        timerView.reset()
         turns.removeAll()
         playerScores.removeAll()
         playerNames.forEach { playerScores.append(($0, 0)) }
@@ -163,57 +143,6 @@ class GameVC: UIViewController {
         diceView.diceImageView.image = UIImage(named: "dice_\(Int.random(in: 1...6))")
         diceView.shakeDice()
         generator.notificationOccurred(.success)
-    }
-    
-    func resetTimer() {
-        timerIsOn = true
-        startTime = nil
-        pauseTime = nil
-        timer.invalidate()
-        startTimer()
-    }
-    
-    @objc private func playPauseButtonTapped() {
-        timerIsOn.toggle()
-        if timerIsOn {
-            startTimer()
-        } else {
-            pauseTimer()
-        }
-    }
-    
-    func startTimer() {
-        playPauseButton.setImage(UIImage(named: "pause"), for: .normal)
-        timeLabel.textColor = .white
-        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateTimeLabel), userInfo: nil, repeats: true)
-        
-        if startTime != nil {
-            if let pauseTime = pauseTime {
-                self.startTime! += (Date.timeIntervalSinceReferenceDate - pauseTime)
-            }
-        } else {
-            self.startTime = Date.timeIntervalSinceReferenceDate
-        }
-    }
-    
-    func pauseTimer() {
-        playPauseButton.setImage(UIImage(named: "play"), for: .normal)
-        timeLabel.textColor = .RSTable
-        timer.invalidate()
-        pauseTime = Date.timeIntervalSinceReferenceDate
-    }
-    
-    @objc private func updateTimeLabel() {
-        guard let startTime = startTime else { return }
-        let currentTime = Date.timeIntervalSinceReferenceDate
-        let elapsedTime: TimeInterval = currentTime - startTime
-        
-        let minutes = Int(elapsedTime / 60.0) //int to drop miliseconds
-        let seconds = Int(elapsedTime - TimeInterval(minutes) * 60)
-        
-        let minutesString = String(format: "%02d", minutes)
-        let secondsString = String(format: "%02d", seconds)
-        timeLabel.text = "\(minutesString):\(secondsString)"
     }
     
     @objc private func undoButtonTapped() {
@@ -258,7 +187,7 @@ class GameVC: UIViewController {
         headerView.addSubviewAndConstraintByDefault(at: view)
         headerView.addSubviews(diceButton)
         
-        view.addSubviews(timeLabel, collectionView, playPauseButton, undoButton, plusOneButton, stackView, nextButton, previousButton, diceView)
+        view.addSubviews(timerView, collectionView, undoButton, plusOneButton, stackView, nextButton, previousButton, diceView)
         diceView.pinToEdges(of: view)
         NSLayoutConstraint.activate([
             diceButton.heightAnchor.constraint(equalToConstant: 30),
@@ -266,10 +195,10 @@ class GameVC: UIViewController {
             diceButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
             diceButton.centerYAnchor.constraint(equalTo: headerView.titleLabel.centerYAnchor),
             
-            playPauseButton.heightAnchor.constraint(equalToConstant: 20),
-            playPauseButton.widthAnchor.constraint(equalToConstant: 20),
-            playPauseButton.centerYAnchor.constraint(equalTo: timeLabel.centerYAnchor),
-            playPauseButton.leadingAnchor.constraint(equalTo: timeLabel.trailingAnchor, constant: 20),
+            timerView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 0),
+            timerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            timerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            timerView.heightAnchor.constraint(equalToConstant: 25),
             
             undoButton.heightAnchor.constraint(equalToConstant: 20),
             undoButton.widthAnchor.constraint(equalToConstant: 15),
@@ -299,9 +228,6 @@ class GameVC: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: plusOneButton.topAnchor, constant: -28),
             collectionView.heightAnchor.constraint(equalToConstant: 300),
-            
-            timeLabel.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 12), //fix: place between safe area and top of collection view
-            timeLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
         ])
     }
     
