@@ -22,6 +22,7 @@ extension GameVC: ScoreBubbleDelegate {
     }
     
     func updateCurrentPlayerCell(with value: Int) {
+        guard value != 0 else { return }
         playerScores[currentPosition].score += value
         collectionView.reloadItems(at: [IndexPath(row: currentPosition, section: 0)])
         turns.append(Turn(name: playerScores[currentPosition].name, position: currentPosition, score: value))
