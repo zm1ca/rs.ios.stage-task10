@@ -12,6 +12,7 @@ struct UIConstants {
     static let screenHeight:     CGFloat = UIScreen.main.bounds.height
     static let playerCellHeight: CGFloat = screenHeight * 0.35
     static let playerCellWidth:  CGFloat = playerCellHeight * 0.83
+    static let pageWidth:        CGFloat = UIConstants.playerCellWidth + 20
     static let sideInset:        CGFloat = (screenWidth - playerCellWidth) / 2
     static let singleCellOffset: CGFloat = playerCellWidth + 20
 }

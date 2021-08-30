@@ -33,6 +33,7 @@
 		4046BD3926D7D9CE008692DA /* IncrementButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4046BD3826D7D9CE008692DA /* IncrementButton.swift */; };
 		4074EA0226DA516A001F5E47 /* RankingsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4074EA0126DA516A001F5E47 /* RankingsCollectionCell.swift */; };
 		4074EA0426DA5426001F5E47 /* ResultsVC+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4074EA0326DA5426001F5E47 /* ResultsVC+CollectionView.swift */; };
+		4086EBFD26DCD22300CBEE48 /* MinibarScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4086EBFC26DCD22300CBEE48 /* MinibarScrollView.swift */; };
 		4088159E26D78A6800DD0CBC /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4088159D26D78A6800DD0CBC /* GameVC.swift */; };
 		408815A026D7956B00DD0CBC /* ResultsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4088159F26D7956B00DD0CBC /* ResultsVC.swift */; };
 		408815A226D79BE900DD0CBC /* NewGameVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408815A126D79BE900DD0CBC /* NewGameVC+TableView.swift */; };
@@ -84,6 +85,7 @@
 		4046BD3826D7D9CE008692DA /* IncrementButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncrementButton.swift; sourceTree = "<group>"; };
 		4074EA0126DA516A001F5E47 /* RankingsCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingsCollectionCell.swift; sourceTree = "<group>"; };
 		4074EA0326DA5426001F5E47 /* ResultsVC+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResultsVC+CollectionView.swift"; sourceTree = "<group>"; };
+		4086EBFC26DCD22300CBEE48 /* MinibarScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinibarScrollView.swift; sourceTree = "<group>"; };
 		4088159D26D78A6800DD0CBC /* GameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameVC.swift; sourceTree = "<group>"; };
 		4088159F26D7956B00DD0CBC /* ResultsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsVC.swift; sourceTree = "<group>"; };
 		408815A126D79BE900DD0CBC /* NewGameVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewGameVC+TableView.swift"; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 		408E0CF926DB8E5B00EC46A6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4086EBFC26DCD22300CBEE48 /* MinibarScrollView.swift */,
 				40A578E326D8CDFE002E4CB7 /* HeaderView.swift */,
 				408E0CF126DB64D000EC46A6 /* TimerView.swift */,
 				408E0CFA26DB8E7F00EC46A6 /* DiceView.swift */,
@@ -274,9 +277,9 @@
 			isa = PBXGroup;
 			children = (
 				4088159D26D78A6800DD0CBC /* GameVC.swift */,
-				40C642AD26DC02C600FF9824 /* GameVC+ScoreBubbleDelegate.swift */,
 				40A578ED26D92A61002E4CB7 /* GameVC+CollectionView.swift */,
 				40A578F426D9347A002E4CB7 /* GameVC+ScrollingHelpers.swift */,
+				40C642AD26DC02C600FF9824 /* GameVC+ScoreBubbleDelegate.swift */,
 			);
 			path = "Game ";
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				40A578E626D8D6A4002E4CB7 /* BarButton.swift in Sources */,
 				408815A226D79BE900DD0CBC /* NewGameVC+TableView.swift in Sources */,
 				4088159E26D78A6800DD0CBC /* GameVC.swift in Sources */,
+				4086EBFD26DCD22300CBEE48 /* MinibarScrollView.swift in Sources */,
 				4046BD3526D7BDFF008692DA /* RankingView.swift in Sources */,
 				4074EA0226DA516A001F5E47 /* RankingsCollectionCell.swift in Sources */,
 				401F302B26D7651900DFD389 /* AddPlayerVC.swift in Sources */,

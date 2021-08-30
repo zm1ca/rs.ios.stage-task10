@@ -42,6 +42,7 @@ class ScoreBubble: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: API
     func addValue(_ increment: Int) {
         isPresented = true
         
@@ -63,7 +64,7 @@ class ScoreBubble: UILabel {
             text = "\(value)"
         }
 
-        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(applyScoreAndReset), userInfo: nil, repeats: false)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(applyScoreAndReset), userInfo: nil, repeats: false)
     }
     
     @objc private func applyScoreAndReset() {

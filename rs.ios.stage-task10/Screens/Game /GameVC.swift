@@ -10,14 +10,15 @@ import UIKit
 class GameVC: UIViewController {
     
     var currentPosition = 0 {
-        didSet {
-            updateNavStackViewOffset()
-            timerView.reset()
-            centralizeNavScrollView()
-        }
+        willSet { applyValueFromScoreBubble() }
+        didSet  { updateUI() }
     }
-    var playerScores    = [(name: String, score: Int)]()
-    var turns           = [(name: String, position: Int, score: Int)]()
+    var playerScores = [(name: String, score: Int)]()
+    var turns        = [(name: String, position: Int, score: Int)]()
+    
+    var playerNames: [String] {
+        playerScores.map({ $0.name })
+    }
     
     
     //MARK: Views
@@ -32,18 +33,7 @@ class GameVC: UIViewController {
     let scoreButtons  = [-10, -5, -1, +5, +10].map { IncrementButton(value: $0, fontSize: 25) }
     let plusOneButton = IncrementButton(value: 1, fontSize: 40)
     let scoreBubble   = ScoreBubble()
-    
-    let navStackView: UIStackView = {
-        let sv = UIStackView()
-        sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.axis      = .horizontal
-        sv.spacing   = 5
-        sv.alignment = .center
-        sv.distribution = .equalCentering
-        return sv
-    }()
-    
-    let scrollView = UIScrollView()
+    let minibar       = MinibarScrollView()
 
     let collectionView: UICollectionView = {
         let flowLayout                = UICollectionViewFlowLayout()
@@ -57,7 +47,7 @@ class GameVC: UIViewController {
         cv.backgroundColor = .RSBackground
         cv.showsHorizontalScrollIndicator = false
         cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.isScrollEnabled = false
+        cv.isPagingEnabled = false
         return cv
     }()
 
@@ -75,57 +65,34 @@ class GameVC: UIViewController {
         configureButtonTargets()
         configureTargetsForIncrementButtons()
         layoutUI()
-        updateArrowButtons()
-        timerView.reset()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        centralizeNavScrollView()
+        minibar.focus(at: currentPosition)
     }
     
     
     //MARK: - API
     func setUpNewGame(with playerNames: [String]) {
         currentPosition = 0
-        scrollToCurrentPosition()
         timerView.reset()
         turns.removeAll()
         playerScores.removeAll()
         playerNames.forEach { playerScores.append(($0, 0)) }
         collectionView.reloadData()
-        populateNavScrollView()
-    }
-    
-    private func populateNavScrollView() {
-        for view in navStackView.arrangedSubviews {
-            view.removeFromSuperview()
-        }
-        
-        for name in playerScores.map({ $0.name }) {
-            let label = SingleLetterLabel(with: name)
-            self.navStackView.addArrangedSubview(label)
-            label.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        }
-        updateNavStackViewOffset()
-    }
-    
-    func updateNavStackViewOffset() {
-        for index in 0..<playerScores.map({ $0.name }).count {
-            let label = self.navStackView.arrangedSubviews[index] as! SingleLetterLabel
-            label.textColor = (index == currentPosition) ? .RSSelectedWhite : .RSTable
-        }
+        minibar.resetNavScrollView(with: playerNames)
     }
     
     
-    // MARK: - Configurations for Buttons
+    // MARK: Buttons Configuration
     private func configureButtonTargets() {
         headerView.leftBarButton?.addTarget(self, action: #selector(newGameButtonTapped), for: .touchUpInside)
         headerView.rightBarButton?.addTarget(self, action: #selector(resultsButtonTapped), for: .touchUpInside)
-        diceButton.addTarget(self, action: #selector(diceButtonTapped),   for: .touchUpInside)
-        undoButton.addTarget(self, action: #selector(undoButtonTapped),   for: .touchUpInside)
-        nextButton.addTarget(self, action: #selector(scrollToNextPlayer), for: .touchUpInside)
-        prevButton.addTarget(self, action: #selector(scrollToPrevPlayer), for: .touchUpInside)
+        diceButton.addTarget(self, action: #selector(diceButtonTapped), for: .touchUpInside)
+        undoButton.addTarget(self, action: #selector(undoButtonTapped), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(arrowButtonTapped),   for: .touchUpInside)
+        prevButton.addTarget(self, action: #selector(arrowButtonTapped),   for: .touchUpInside)
     }
     
     private func configureTargetsForIncrementButtons() {
@@ -136,6 +103,13 @@ class GameVC: UIViewController {
         }
     }
     
+    private func incrementButtonsStackView() -> UIStackView {
+        let sv = UIStackView(arrangedSubviews: scoreButtons)
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        sv.axis    = .horizontal
+        sv.spacing = 15
+        return sv
+    }
     
     // MARK: - Action Methods
     @objc private func diceButtonTapped() {
@@ -157,8 +131,8 @@ class GameVC: UIViewController {
         guard let turnToRevert = turns.popLast() else { return }
         currentPosition = turnToRevert.position
         playerScores[currentPosition].score -= turnToRevert.score
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         collectionView.reloadItems(at: [IndexPath(row: currentPosition, section: 0)])
-        scrollToCurrentPosition()
     }
     
     @objc private func newGameButtonTapped() {
@@ -196,9 +170,39 @@ class GameVC: UIViewController {
         scoreBubble.addValue(sender.value!)
     }
     
-    private func centralizeNavScrollView() {
-        let scrollViewCenter = (scrollView.bounds.width - 15) / 2
-        scrollView.setContentOffset(CGPoint(x: currentPosition * 25 - Int(scrollViewCenter) + 7, y: 0), animated: true)
+    @objc func arrowButtonTapped(sender: RSButton) {
+        currentPosition = sender.imageName!.starts(with: "next")
+            ? currentPosition + 1
+            : currentPosition - 1
+    }
+    
+    
+    //MARK: Update UI
+    private func updateUI() {
+        adjustCurrentPositionToFitBorders()
+        minibar.updateAppearance(for: playerNames, focusedOn: currentPosition)
+        updateArrowButtonsAppearance()
+        scrollToCurrentPosition()
+        timerView.reset()
+    }
+    
+    private func adjustCurrentPositionToFitBorders() {
+        guard playerScores.count > 1 else { return }
+
+        let lastPage = playerScores.count - 1
+        if currentPosition < 0 {
+            currentPosition = lastPage
+        } else if (currentPosition > lastPage) {
+            currentPosition = 0
+        }
+    }
+    
+    private func updateArrowButtonsAppearance() {
+        let nextButtonImageName = (currentPosition == playerScores.count - 1) ? "next_last" : "next"
+        nextButton.setImage(UIImage(named: nextButtonImageName), for: .normal)
+
+        let previousButtonImageName = (currentPosition == 0) ? "previous_last" : "previous"
+        prevButton.setImage(UIImage(named: previousButtonImageName), for: .normal)
     }
     
     
@@ -207,8 +211,7 @@ class GameVC: UIViewController {
         let buttonsStackView = incrementButtonsStackView()
         headerView.placeByDefault(at: view)
         headerView.addSubviews(diceButton)
-        view.addSubviews(scrollView, timerView, collectionView, undoButton, navStackView, plusOneButton, buttonsStackView, nextButton, prevButton, scoreBubble)
-        configureNavStackView()
+        view.addSubviews(minibar, timerView, collectionView, undoButton, plusOneButton, buttonsStackView, nextButton, prevButton, scoreBubble)
         
         NSLayoutConstraint.activate([
             diceButton.heightAnchor.constraint(equalToConstant: 30),
@@ -221,10 +224,10 @@ class GameVC: UIViewController {
             undoButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
             undoButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32),
             
-            scrollView.heightAnchor.constraint(equalToConstant: 30),
-            scrollView.centerYAnchor.constraint(equalTo: undoButton.centerYAnchor, constant: 3),
-            scrollView.leadingAnchor.constraint(equalTo: undoButton.trailingAnchor, constant: 16),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -74),
+            minibar.heightAnchor.constraint(equalToConstant: 30),
+            minibar.centerYAnchor.constraint(equalTo: undoButton.centerYAnchor, constant: 3),
+            minibar.leadingAnchor.constraint(equalTo: undoButton.trailingAnchor, constant: 16),
+            minibar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -74),
             
             buttonsStackView.bottomAnchor.constraint(equalTo: undoButton.topAnchor, constant: -22),
             buttonsStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -259,21 +262,5 @@ class GameVC: UIViewController {
             scoreBubble.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
             scoreBubble.widthAnchor.constraint(equalToConstant: UIConstants.playerCellWidth * 0.3)
         ])
-    }
-    
-    private func configureNavStackView() {
-        scrollView.addSubview(navStackView)
-        navStackView.pinToEdges(of: scrollView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.isScrollEnabled = false
-    }
-    
-    private func incrementButtonsStackView() -> UIStackView {
-        let sv = UIStackView(arrangedSubviews: scoreButtons)
-        sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.axis    = .horizontal
-        sv.spacing = 15
-        return sv
     }
 }

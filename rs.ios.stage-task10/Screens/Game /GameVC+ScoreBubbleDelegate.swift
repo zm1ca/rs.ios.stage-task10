@@ -9,9 +9,16 @@ import UIKit
 
 extension GameVC: ScoreBubbleDelegate {
     
+    func applyValueFromScoreBubble() {
+        if scoreBubble.isPresented {
+            let lastValue = scoreBubble.reset()
+            updateCurrentPlayerCell(with: lastValue)
+        }
+    }
+    
     func switchTurn(adding value: Int) {
         updateCurrentPlayerCell(with: value)
-        scrollToNextPlayer(sender: UIButton())
+        currentPosition += 1
     }
     
     func updateCurrentPlayerCell(with value: Int) {
@@ -20,6 +27,7 @@ extension GameVC: ScoreBubbleDelegate {
         playerScores.insert(newPlayerScore, at: currentPosition)
         collectionView.reloadItems(at: [IndexPath(row: currentPosition, section: 0)])
         turns.append((playerScores[currentPosition].name, currentPosition, value))
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
 }
 

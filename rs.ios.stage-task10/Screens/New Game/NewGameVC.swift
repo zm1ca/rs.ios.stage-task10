@@ -9,16 +9,19 @@ import UIKit
 
 class NewGameVC: UIViewController {
     
-    var presentingGameVC: GameVC? {
+    var playerNames = ["Me", "You"]
+    private var tableViewHeightConstraint: NSLayoutConstraint!
+    
+    
+    //MARK: Computed
+    private var presentingGameVC: GameVC? {
         (presentingViewController as? UINavigationController)?.viewControllers.first as? GameVC
     }
     
-    var isPresentedModally: Bool {
+    private var isPresentedModally: Bool {
         presentingGameVC != nil
     }
-    
-    var playerNames = ["Me", "You"]
-    var tableViewHeightConstraint: NSLayoutConstraint!
+
     
     //MARK: Views
     let headerView = HeaderView(title: "Game Counter",
@@ -31,14 +34,7 @@ class NewGameVC: UIViewController {
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(UIView())
-        title = "Game Counter"
-        view.backgroundColor = UIColor.RSBackground
-        startButton.addTarget(self, action: #selector(startGameButtonTapped), for: .touchUpInside)
-        
-        configureTableView()
-        configureCancelButton()
-        layoutUI()
+        applyInitialSetup()
     }
     
     override func viewWillLayoutSubviews() {
@@ -50,6 +46,18 @@ class NewGameVC: UIViewController {
     
     
     // MARK: Configurations
+    private func applyInitialSetup() {
+        title = "Game Counter"
+        view.backgroundColor = UIColor.RSBackground
+        
+        startButton.addTarget(self,
+                              action: #selector(startGameButtonTapped),
+                              for: .touchUpInside)
+        configureTableView()
+        configureCancelButton()
+        layoutUI()
+    }
+    
     private func configureCancelButton() {
         headerView.leftBarButton?.isHidden = !isPresentedModally
         headerView.leftBarButton?.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
@@ -101,5 +109,4 @@ class NewGameVC: UIViewController {
             tableViewHeightConstraint
         ])
     }
-
 }
