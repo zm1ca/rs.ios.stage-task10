@@ -13,8 +13,8 @@ class ResultsVC: UIViewController {
         (presentingViewController as? UINavigationController)?.viewControllers.first as? GameVC
     }
     
-    var turns:        [(name: String, position: Int, score: Int)]!
-    var playerScores: [(name: String, score: Int)]!
+    var turns:        [Turn]!
+    var playerScores: [PlayerScore]!
     lazy var sortedPlayerScores = playerScores.sorted {
         $0.score == $1.score ? ($0.name < $1.name) : ($0.score > $1.score)
     }

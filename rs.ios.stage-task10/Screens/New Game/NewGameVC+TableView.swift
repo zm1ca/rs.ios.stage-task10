@@ -102,4 +102,22 @@ extension NewGameVC: UITableViewDelegate, UITableViewDataSource  {
         navigationController?.pushViewController(addPlayerVC, animated: true)
     }
     
+//    func tableView(_ tableView: UITableView,
+//                   willDisplay cell: UITableViewCell,
+//                   forRowAt indexPath: IndexPath) {
+//        cell.subviews
+//            .filter { $0.isMember(of: NSClassFromString("UITableViewCellReorderControl")!)}
+//            .compactMap { $0.value(forKey: "imageView") as? UIImageView}
+//            .forEach {
+//                $0.image = $0.image?.withRenderingMode(.alwaysTemplate)
+//                $0.tintColor = .white
+//            }
+//
+//        let imageView = cell.subviews
+//            .first(where: { $0.description.contains("Edit")})?
+//            .subviews.first(where: {$0 is UIImageView}) as? UIImageView
+//
+//        imageView?.contentMode = .center
+//        imageView?.image = UIImage(named: "delete")
+//     }
 }

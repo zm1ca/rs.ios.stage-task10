@@ -11,7 +11,7 @@ extension GameVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlayerScoreCell.reuseID, for: indexPath) as! PlayerScoreCell
-        cell.set(with: playerScores[indexPath.row].0, and: playerScores[indexPath.row].1)
+        cell.set(with: playerScores[indexPath.row].name, and: playerScores[indexPath.row].score)
         return cell
     }
     

@@ -13,11 +13,19 @@ class GameVC: UIViewController {
         willSet { applyValueFromScoreBubble() }
         didSet  { updateUI() }
     }
-    var playerScores = [(name: String, score: Int)]()
-    var turns        = [(name: String, position: Int, score: Int)]()
+    var playerScores = [PlayerScore]()
+    var turns        = [Turn]()
     
     var playerNames: [String] {
         playerScores.map({ $0.name })
+    }
+    
+    var state: GameState {
+        return GameState(playerScores: playerScores,
+                         turns: turns,
+                         currentPosition: currentPosition,
+                         startTime: timerView.startTime,
+                         pauseTime: timerView.pauseTime)
     }
     
     
@@ -70,6 +78,15 @@ class GameVC: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         minibar.focus(at: currentPosition)
+        scrollToCurrentPosition()
+        
+        if !flag {
+            flag = true
+            timerView.reset()
+            timerView.startTime = startTime
+            timerView.pauseTime = pauseTime
+            timerView.start()
+        }
     }
     
     
@@ -77,11 +94,32 @@ class GameVC: UIViewController {
     func setUpNewGame(with playerNames: [String]) {
         currentPosition = 0
         timerView.reset()
+        timerView.start()
         turns.removeAll()
         playerScores.removeAll()
-        playerNames.forEach { playerScores.append(($0, 0)) }
+        playerNames.forEach { playerScores.append(PlayerScore(name: $0, score: 0)) }
         collectionView.reloadData()
         minibar.resetNavScrollView(with: playerNames)
+    }
+    
+    //Damn crutch
+    var startTime: TimeInterval?
+    var pauseTime: TimeInterval?
+    var flag = false
+    
+    func loadGame(from gameState: GameState) {
+        currentPosition     = gameState.currentPosition
+        playerScores        = gameState.playerScores
+        turns               = gameState.turns
+        
+        //Damn crutch
+        startTime = gameState.startTime
+        pauseTime = gameState.pauseTime
+
+        collectionView.reloadData()
+        let playerNames = playerScores.map { $0.name }
+        minibar.resetNavScrollView(with: playerNames)
+        minibar.updateAppearance(for: playerNames, focusedOn: currentPosition)
     }
     
     
@@ -183,7 +221,9 @@ class GameVC: UIViewController {
         minibar.updateAppearance(for: playerNames, focusedOn: currentPosition)
         updateArrowButtonsAppearance()
         scrollToCurrentPosition()
+        
         timerView.reset()
+        timerView.start()
     }
     
     private func adjustCurrentPositionToFitBorders() {

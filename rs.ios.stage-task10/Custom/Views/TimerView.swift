@@ -10,8 +10,8 @@ import UIKit
 class TimerView: UIView {
     
     private var timer = Timer()
-    private var startTime: TimeInterval?
-    private var pauseTime: TimeInterval?
+    var startTime: TimeInterval?
+    var pauseTime: TimeInterval?
     
     //MARK: Views
     private let timeLabel: UILabel = {
@@ -34,6 +34,7 @@ class TimerView: UIView {
     
     //MARK: API
     func start() {
+        guard !timer.isValid else { return }
         playPauseButton.setImage(UIImage(named: "pause"), for: .normal)
         timeLabel.textColor = .white
         timer = Timer.scheduledTimer(timeInterval: 0.01,
@@ -52,9 +53,11 @@ class TimerView: UIView {
     }
     
     func pause() {
+        guard timer.isValid else { return }
+        timer.invalidate()
+        
         playPauseButton.setImage(UIImage(named: "play"), for: .normal)
         timeLabel.textColor = .RSTable
-        timer.invalidate()
         pauseTime = Date.timeIntervalSinceReferenceDate
     }
     
@@ -62,8 +65,8 @@ class TimerView: UIView {
         startTime = nil
         pauseTime = nil
         timer.invalidate()
-        start()
     }
+    
 
     
     //MARK: Initizalization

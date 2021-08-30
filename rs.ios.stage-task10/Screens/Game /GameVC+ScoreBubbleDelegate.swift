@@ -22,11 +22,9 @@ extension GameVC: ScoreBubbleDelegate {
     }
     
     func updateCurrentPlayerCell(with value: Int) {
-        let newPlayerScore = (playerScores[currentPosition].name, playerScores[currentPosition].score + value)
-        playerScores.remove(at: currentPosition)
-        playerScores.insert(newPlayerScore, at: currentPosition)
+        playerScores[currentPosition].score += value
         collectionView.reloadItems(at: [IndexPath(row: currentPosition, section: 0)])
-        turns.append((playerScores[currentPosition].name, currentPosition, value))
+        turns.append(Turn(name: playerScores[currentPosition].name, position: currentPosition, score: value))
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
 }
