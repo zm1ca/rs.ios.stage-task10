@@ -20,14 +20,6 @@ class GameVC: UIViewController {
         playerScores.map({ $0.name })
     }
     
-    var state: GameState {
-        return GameState(playerScores: playerScores,
-                         turns: turns,
-                         currentPosition: currentPosition,
-                         startTime: timerView.startTime,
-                         pauseTime: timerView.pauseTime)
-    }
-    
     
     //MARK: Views
     let headerView = HeaderView(title: "Game",
@@ -73,6 +65,8 @@ class GameVC: UIViewController {
         configureButtonTargets()
         configureTargetsForIncrementButtons()
         layoutUI()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(saveData), name: .applicationWillResignActive, object: nil)
     }
     
     override func viewWillLayoutSubviews() {
@@ -120,6 +114,18 @@ class GameVC: UIViewController {
         let playerNames = playerScores.map { $0.name }
         minibar.resetNavScrollView(with: playerNames)
         minibar.updateAppearance(for: playerNames, focusedOn: currentPosition)
+    }
+    
+    @objc private func saveData() {
+        timerView.pause()
+        let state = GameState(playerScores: playerScores,
+                              turns: turns,
+                              currentPosition: currentPosition,
+                              startTime: timerView.startTime,
+                              pauseTime: timerView.pauseTime)
+        if let data = try? JSONEncoder().encode(state) {
+            UserDefaults.standard.set(data, forKey: "PlayerScores")
+        }
     }
     
     
